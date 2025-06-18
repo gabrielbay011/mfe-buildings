@@ -1,4 +1,4 @@
-import { mockBalances, mockUsers } from "../../utils/mock-users";
+import { mockBalances } from "../../utils/mock-users";
 import { Balances } from "../types/balance-types";
 
 export function listBalances(userId: string) {

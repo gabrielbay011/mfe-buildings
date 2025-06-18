@@ -35,7 +35,8 @@ export default function Buildings() {
     useForm<Search>();
   const [modalBuildingOpen, setModalBuildingOpen] = useState(false);
   const [buildings, setBuildings] = useState<Building[]>([]);
-  const [filteredBuildings, setFilteredBuildings] = useState(mockBuildings);
+  const [filteredBuildings, setFilteredBuildings] =
+    useState<Building[]>(mockBuildings);
   const [modalBalanceOpen, setModalBalanceOpen] = useState(false);
   const [balances, setBalances] = useState<Balances[]>([]);
   const [sortOption, setSortOption] = useState("");
@@ -129,7 +130,7 @@ export default function Buildings() {
         )}
       </div>
       <div>
-        <button onClick={() => navigate("/buildings")}>Edifícios</button>
+        <button onClick={() => navigate("/")}>Edifícios</button>
         <button>Dashboards</button>
       </div>
     </div>
