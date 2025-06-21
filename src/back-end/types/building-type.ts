@@ -36,11 +36,13 @@ export type Building = {
   }[];
   equipamentosQuebrados: {
     tipo: string;
+    andar?: string;
     status: string;
-    custo: string;
+    custo: number;
   }[];
   equipamentosManutencao: {
     tipo: string;
+    andar?: string;
     dataInicio: string;
     dataPrevista: string;
   }[];

@@ -1,4 +1,4 @@
-import { Building } from "../types/building-type";
+import { Building } from "../../types/building-type";
 
 export function filterBuildings(
   buildings: Building[],

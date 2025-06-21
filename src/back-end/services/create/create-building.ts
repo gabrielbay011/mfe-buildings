@@ -1,4 +1,4 @@
-import { buildingAlreadyExists } from "../validators/building-validations";
+import { buildingAlreadyExists } from "../../validators/building-validations";
 
 export async function createBuilding(data: any) {
   try {

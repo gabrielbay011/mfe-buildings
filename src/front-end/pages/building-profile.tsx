@@ -1,21 +1,36 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { listBuildingsId } from "../../back-end/services/list-building-id";
+import { listBuildingsId } from "../../back-end/services/list/list-building-id";
 import { useState } from "react";
 import Modal from "../../utils/components/modal";
-import {
-  listFlowHistory,
-  renderFlowHistory,
-} from "../../back-end/services/render-flow-history";
-import { renderPerson } from "../../back-end/services/render-person";
+import { RenderFlowHistory } from "../../back-end/services/render/render-flow-history";
+import { listFlowHistory } from "../../back-end/services/list/list-flow-history";
+import { renderPerson } from "../../back-end/services/render/render-person";
+import { renderEquipment } from "../../back-end/services/render/render-equipment";
 
 export default function BuildingProfile() {
   const navigate = useNavigate();
   const { id } = useParams();
   const mockData = listBuildingsId(id);
-  const [modalFlowOpen, setModalFlowOpen] = useState(false);
-  const [modalPersonOpen, setModalPersonOpen] = useState(false);
   const building = listFlowHistory(id);
+
+  const [modalFlowOpen, setModalFlowOpen] = useState(false);
+  const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
+  const [modalPersonOpen, setModalPersonOpen] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<any>(null);
+  const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
+
+  const [visibleEntriesCount, setVisibleEntriesCount] = useState(3);
+  const [visibleMaintenanceCount, setVisibleMaintenanceCount] = useState(3);
+  const [visibleBrokenCount, setVisibleBrokenCount] = useState(3);
+
+  const toggleList = (
+    current: number,
+    total: number,
+    set: React.Dispatch<React.SetStateAction<number>>
+  ) => {
+    const isExpanded = current >= total;
+    set(isExpanded ? 3 : Math.min(current + 10, total));
+  };
 
   if (!mockData) {
     return <p>Prédio não encontrado.</p>;
@@ -32,38 +47,39 @@ export default function BuildingProfile() {
         </button>
         <h1>Perfil de Edifício</h1>
       </div>
+
       <div>
         <h2>Dados Gerais:</h2>
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
-              <td style={{ border: "1px solid black" }}>
+              <th style={{ border: "1px solid black" }}>
                 {mockData.foto || "--"}
-              </td>
-              <td style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>
                 {mockData.nome || "--"}
-              </td>
+              </th>
             </tr>
             <tr>
-              <td style={{ border: "1px solid black" }}>andares</td>
+              <th style={{ border: "1px solid black" }}>Andares</th>
               <td style={{ border: "1px solid black" }}>
                 {mockData.qtdAndares || "--"}
               </td>
             </tr>
             <tr>
-              <td style={{ border: "1px solid black" }}>catracas</td>
+              <th style={{ border: "1px solid black" }}>Catracas</th>
               <td style={{ border: "1px solid black" }}>
                 {mockData.qtdCatracas || "--"}
               </td>
             </tr>
             <tr>
-              <td style={{ border: "1px solid black" }}>câmeras</td>
+              <th style={{ border: "1px solid black" }}>Câmeras</th>
               <td style={{ border: "1px solid black" }}>
                 {mockData.qtdCameras || "--"}
               </td>
             </tr>
             <tr>
-              <td style={{ border: "1px solid black" }}>elevadores</td>
+              <th style={{ border: "1px solid black" }}>Elevadores</th>
               <td style={{ border: "1px solid black" }}>
                 {mockData.qtdElevadores || "--"}
               </td>
@@ -71,15 +87,16 @@ export default function BuildingProfile() {
           </tbody>
         </table>
       </div>
+
       <div>
         <h2>Fluxo de Pessoas:</h2>
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
-              <td style={{ border: "1px solid black" }}>hora</td>
-              <td style={{ border: "1px solid black" }}>dia</td>
-              <td style={{ border: "1px solid black" }}>semana</td>
-              <td style={{ border: "1px solid black" }}>mês</td>
+              <th style={{ border: "1px solid black" }}>Hora</th>
+              <th style={{ border: "1px solid black" }}>Dia</th>
+              <th style={{ border: "1px solid black" }}>Semana</th>
+              <th style={{ border: "1px solid black" }}>Mês</th>
             </tr>
             <tr>
               <td style={{ border: "1px solid black" }}>
@@ -102,65 +119,83 @@ export default function BuildingProfile() {
         </button>
         <Modal isOpen={modalFlowOpen} onClose={() => setModalFlowOpen(false)}>
           <h2>Fluxo por Mês</h2>
-          {renderFlowHistory(building)}
+          <RenderFlowHistory building={building} />
         </Modal>
       </div>
+
       <div>
         <h2>Entradas e Saídas:</h2>
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
-              <td style={{ border: "1px solid black" }}>foto</td>
-              <td style={{ border: "1px solid black" }}>nome</td>
-              <td style={{ border: "1px solid black" }}>entrou</td>
-              <td style={{ border: "1px solid black" }}>saiu</td>
+              <th style={{ border: "1px solid black" }}>Foto</th>
+              <th style={{ border: "1px solid black" }}>Nome</th>
+              <th style={{ border: "1px solid black" }}>Entrou</th>
+              <th style={{ border: "1px solid black" }}>Saiu</th>
             </tr>
             {mockData.entradasESaidas?.length > 0 ? (
-              mockData.entradasESaidas.map((pessoa, index) => (
-                <tr key={index}>
-                  <td
-                    style={{ border: "1px solid black", cursor: "pointer" }}
-                    onClick={() => {
-                      setSelectedPerson(pessoa);
-                      setModalPersonOpen(true);
-                    }}
-                  >
-                    {pessoa.foto || "--"}
-                  </td>
-                  <td
-                    style={{ border: "1px solid black", cursor: "pointer" }}
-                    onClick={() => {
-                      setSelectedPerson(pessoa);
-                      setModalPersonOpen(true);
-                    }}
-                  >
-                    {pessoa.nome || "--"}
-                  </td>
-                  <td
-                    style={{
-                      border: "1px solid black",
-                      backgroundColor: pessoa.entrou === true ? "green" : "",
-                    }}
-                  >
-                    entrou
-                  </td>
-                  <td
-                    style={{
-                      border: "1px solid black",
-                      backgroundColor: pessoa.saiu === true ? "green" : "",
-                    }}
-                  >
-                    saiu
-                  </td>
-                </tr>
-              ))
+              mockData.entradasESaidas
+                .slice(0, visibleEntriesCount)
+                .map((pessoa, index) => (
+                  <tr key={index}>
+                    <td
+                      style={{ border: "1px solid black", cursor: "pointer" }}
+                      onClick={() => {
+                        setSelectedPerson(pessoa);
+                        setModalPersonOpen(true);
+                      }}
+                    >
+                      {pessoa.foto || "--"}
+                    </td>
+                    <td
+                      style={{ border: "1px solid black", cursor: "pointer" }}
+                      onClick={() => {
+                        setSelectedPerson(pessoa);
+                        setModalPersonOpen(true);
+                      }}
+                    >
+                      {pessoa.nome || "--"}
+                    </td>
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        backgroundColor: pessoa.entrou === true ? "green" : "",
+                      }}
+                    >
+                      entrou
+                    </td>
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        backgroundColor: pessoa.saiu === true ? "green" : "",
+                      }}
+                    >
+                      saiu
+                    </td>
+                  </tr>
+                ))
             ) : (
               <tr>
-                <td>Nenhuma movimentação</td>
+                <td colSpan={4}>Nenhuma movimentação</td>
               </tr>
             )}
           </tbody>
         </table>
+        {mockData.entradasESaidas.length > 3 && (
+          <button
+            onClick={() =>
+              toggleList(
+                visibleEntriesCount,
+                mockData.entradasESaidas.length,
+                setVisibleEntriesCount
+              )
+            }
+          >
+            {visibleEntriesCount >= mockData.entradasESaidas.length
+              ? "Mostrar menos"
+              : "Expandir lista"}
+          </button>
+        )}
         <Modal
           isOpen={modalPersonOpen}
           onClose={() => setModalPersonOpen(false)}
@@ -168,71 +203,136 @@ export default function BuildingProfile() {
           <h2>Dados Cadastrais</h2>
           {renderPerson(selectedPerson)}
         </Modal>
-        <button>Expandir lista</button>
       </div>
+
       <div>
         <h2>Equipamentos Quebrados:</h2>
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
-              <td style={{ border: "1px solid black" }}>tipo</td>
-              <td style={{ border: "1px solid black" }}>status</td>
-              <td style={{ border: "1px solid black" }}>custo</td>
+              <th style={{ border: "1px solid black" }}>Tipo</th>
+              <th style={{ border: "1px solid black" }}>Status</th>
+              <th style={{ border: "1px solid black" }}>Custo</th>
             </tr>
             {mockData.equipamentosQuebrados.length > 0 ? (
-              mockData.equipamentosQuebrados.map((equipamento, index) => (
-                <tr key={index}>
-                  <td style={{ border: "1px solid black" }}>
-                    {equipamento.tipo}
-                  </td>
-                  <td style={{ border: "1px solid black" }}>
-                    {equipamento.status}
-                  </td>
-                  <td style={{ border: "1px solid black" }}>
-                    {equipamento.custo}
-                  </td>
-                </tr>
-              ))
+              mockData.equipamentosQuebrados
+                .slice(0, visibleBrokenCount)
+                .map((equipamento, index) => (
+                  <tr
+                    key={index}
+                    onClick={() => {
+                      setSelectedEquipment(equipamento);
+                      setModalBrokenOpen(true);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <td
+                      style={{ border: "1px solid black" }}
+                      title={
+                        equipamento.tipo === "Câmera"
+                          ? "Andar: " + equipamento.andar
+                          : undefined
+                      }
+                    >
+                      {equipamento.tipo}
+                    </td>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipamento.status}
+                    </td>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipamento.custo}
+                    </td>
+                  </tr>
+                ))
             ) : (
               <tr>
-                <td>Nenhum equipamento quebrado</td>
+                <td colSpan={3}>Nenhum equipamento quebrado</td>
               </tr>
             )}
           </tbody>
         </table>
-        <button>Expandir lista</button>
+        {mockData.equipamentosQuebrados.length > 3 && (
+          <button
+            onClick={() =>
+              toggleList(
+                visibleBrokenCount,
+                mockData.equipamentosQuebrados.length,
+                setVisibleBrokenCount
+              )
+            }
+          >
+            {visibleBrokenCount >= mockData.equipamentosQuebrados.length
+              ? "Mostrar menos"
+              : "Expandir lista"}
+          </button>
+        )}
+        <Modal
+          isOpen={modalBrokenOpen}
+          onClose={() => setModalBrokenOpen(false)}
+        >
+          <h2>Arcar com custo</h2>
+          {renderEquipment(selectedEquipment)}
+        </Modal>
       </div>
+
       <div>
         <h2>Equipamentos em manutenção:</h2>
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
-              <td style={{ border: "1px solid black" }}>tipo</td>
-              <td style={{ border: "1px solid black" }}>data inicial</td>
-              <td style={{ border: "1px solid black" }}>data prevista</td>
+              <th style={{ border: "1px solid black" }}>Tipo</th>
+              <th style={{ border: "1px solid black" }}>
+                Data Inicial do Conserto
+              </th>
+              <th style={{ border: "1px solid black" }}>
+                Data Prevista do Fim do Conserto
+              </th>
             </tr>
             {mockData.equipamentosManutencao.length > 0 ? (
-              mockData.equipamentosManutencao.map((equipamento, index) => (
-                <tr key={index}>
-                  <td style={{ border: "1px solid black" }}>
-                    {equipamento.tipo}
-                  </td>
-                  <td style={{ border: "1px solid black" }}>
-                    {equipamento.dataInicio}
-                  </td>
-                  <td style={{ border: "1px solid black" }}>
-                    {equipamento.dataPrevista}
-                  </td>
-                </tr>
-              ))
+              mockData.equipamentosManutencao
+                .slice(0, visibleMaintenanceCount)
+                .map((equipamento, index) => (
+                  <tr key={index}>
+                    <td
+                      style={{ border: "1px solid black" }}
+                      title={
+                        equipamento.tipo === "Câmera"
+                          ? "Andar: " + equipamento.andar
+                          : undefined
+                      }
+                    >
+                      {equipamento.tipo}
+                    </td>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipamento.dataInicio}
+                    </td>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipamento.dataPrevista}
+                    </td>
+                  </tr>
+                ))
             ) : (
               <tr>
-                <td>Nenhum equipamento em manutenção</td>
+                <td colSpan={3}>Nenhum equipamento em manutenção</td>
               </tr>
             )}
           </tbody>
         </table>
-        <button>Expandir lista</button>
+        {mockData.equipamentosManutencao.length > 3 && (
+          <button
+            onClick={() =>
+              toggleList(
+                visibleMaintenanceCount,
+                mockData.equipamentosManutencao.length,
+                setVisibleMaintenanceCount
+              )
+            }
+          >
+            {visibleMaintenanceCount >= mockData.equipamentosManutencao.length
+              ? "Mostrar menos"
+              : "Expandir lista"}
+          </button>
+        )}
       </div>
     </div>
   );

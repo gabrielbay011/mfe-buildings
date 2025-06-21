@@ -1,5 +1,3 @@
-import { Building } from "../types/building-type";
-
 export function renderPerson(person: any) {
   if (!person) {
     return <p>Dados da pessoa não encontrados</p>;
@@ -62,7 +60,7 @@ export function renderPerson(person: any) {
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>QR Code</td>
-          <td style={{ border: "1px solid black" }}>{person.qrcode || "--"}</td>
+          <td style={{ border: "1px solid black" }}>{person.qrCode || "--"}</td>
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Data de Cadastro</td>

@@ -1,4 +1,4 @@
-import { mockUsers } from "../../utils/mock-users";
+import { mockUsers } from "../mock-data";
 
 export function isAuthenticated(userId: string): boolean {
   const user = mockUsers.find((user) => user.id === userId);

@@ -1,4 +1,4 @@
-import { mockBuildings } from "../../utils/mock-users";
+import { mockBuildings } from "../../utils/mock-data";
 
 export function buildingAlreadyExists(building: string): boolean {
   const nameBuilding = building;
