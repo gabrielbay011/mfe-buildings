@@ -19,8 +19,33 @@ export const mockBuildings = [
     dataCriacao: "2024-06-01",
     qtdAndares: "3",
     qtdCatracas: "2",
-    qtdCameras: "10",
+    qtdCameras: "15",
     qtdElevadores: "1",
+
+    andares: [
+      {
+        nome: "Recepção",
+        atendentes: 2,
+        cameras: 5,
+      },
+      {
+        nome: "2ºAndar",
+        empresas: [
+          { nome: "Empresa A", trafego: 60 },
+          { nome: "Empresa B", trafego: 70 },
+        ],
+        cameras: 5,
+      },
+      {
+        nome: "3ºAndar",
+        empresas: [{ nome: "Empresa C", trafego: 30 }],
+        cameras: 5,
+      },
+      {
+        nome: "4ºAndar",
+        cameras: 5,
+      },
+    ],
 
     fluxoPessoas: {
       hora: 25,
@@ -225,6 +250,27 @@ export const mockBuildings = [
     qtdCatracas: "2",
     qtdCameras: "10",
     qtdElevadores: "1",
+
+    andares: [
+      {
+        nome: "Recepção",
+        atendentes: 2,
+        cameras: 5,
+      },
+      {
+        nome: "2ºAndar",
+        empresas: [
+          { nome: "Empresa A", trafego: 30 },
+          { nome: "Empresa B", trafego: 50 },
+        ],
+        cameras: 5,
+      },
+      {
+        nome: "3ºAndar",
+        empresas: [{ nome: "Empresa C", trafego: 40 }],
+        cameras: 5,
+      },
+    ],
 
     fluxoPessoas: {
       hora: 25,

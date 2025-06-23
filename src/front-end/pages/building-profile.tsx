@@ -61,7 +61,12 @@ export default function BuildingProfile() {
               </th>
             </tr>
             <tr>
-              <th style={{ border: "1px solid black" }}>Andares</th>
+              <th
+                style={{ border: "1px solid black", cursor: "pointer" }}
+                onClick={() => navigate(`/floor/${mockData.id}`)}
+              >
+                Andares
+              </th>
               <td style={{ border: "1px solid black" }}>
                 {mockData.qtdAndares || "--"}
               </td>

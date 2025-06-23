@@ -1,6 +1,24 @@
 import { z } from "zod";
 import { createBuildingSchema } from "../schemas/create-building-schema";
 
+type Empresa = {
+  nome: string;
+  trafego: number;
+};
+
+export type Andar = {
+  nome: string;
+  cameras: number;
+  atendentes?: number;
+  empresas?: Empresa[];
+};
+
+export type RenderConfirmProps = {
+  cost: number;
+  onConfirm: () => void;
+  onClose: () => void;
+};
+
 export type Building = {
   id: string;
   nome: string;
@@ -10,6 +28,7 @@ export type Building = {
   qtdCatracas: string;
   qtdCameras: string;
   qtdElevadores: string;
+  andares: Andar[];
   fluxoPessoas: {
     hora: number;
     dia: number;
