@@ -28,7 +28,19 @@ export type Building = {
   qtdCatracas: string;
   qtdCameras: string;
   qtdElevadores: string;
+  totalCapturaHora: number;
+  totalCapturaHoje: number;
+  totalCapturaMes: number;
+  totalCaptura: number;
   andares: Andar[];
+  cameras: {
+    id: string;
+    qtdCapturaHora: number;
+    qtdCapturaHoje: number;
+    qtdCapturaMes: number;
+    totalCapturas: number;
+    horarioCaptura: string;
+  }[];
   fluxoPessoas: {
     hora: number;
     dia: number;
@@ -54,12 +66,14 @@ export type Building = {
     dataCadastro: string;
   }[];
   equipamentosQuebrados: {
+    id: string;
     tipo: string;
     andar?: string;
     status: string;
     custo: number;
   }[];
   equipamentosManutencao: {
+    id: string;
     tipo: string;
     andar?: string;
     dataInicio: string;

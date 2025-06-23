@@ -1,10 +1,28 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { listBuildingsId } from "../../back-end/services/list/list-building-id";
+import { useState } from "react";
+import Modal from "../../utils/components/modal";
+import { renderEquipment } from "../../back-end/services/render/render-equipment";
 
 export default function BuildingCamera() {
   const navigate = useNavigate();
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
+  const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
+  const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
+
+  const [visibleCameraCount, setVisibleCameraCount] = useState(3);
+  const [visibleMaintenanceCount, setVisibleMaintenanceCount] = useState(3);
+  const [visibleBrokenCount, setVisibleBrokenCount] = useState(3);
+
+  const toggleList = (
+    current: number,
+    total: number,
+    set: React.Dispatch<React.SetStateAction<number>>
+  ) => {
+    const isExpanded = current >= total;
+    set(isExpanded ? 3 : Math.min(current + 10, total));
+  };
 
   return (
     <div>
@@ -31,67 +49,120 @@ export default function BuildingCamera() {
               <th style={{ border: "1px solid black" }}>
                 Quantidade de câmeras
               </th>
-              <td style={{ border: "1px solid black" }}>10</td>
+              <td style={{ border: "1px solid black" }}>
+                {buildingData.qtdCameras || "--"}
+              </td>
             </tr>
             <tr>
               <th style={{ border: "1px solid black" }}>
                 Qtd de Capturas Hora
               </th>
-              <td style={{ border: "1px solid black" }}>50</td>
+              <td style={{ border: "1px solid black" }}>
+                {buildingData.totalCapturaHora || "--"}
+              </td>
             </tr>
             <tr>
               <th style={{ border: "1px solid black" }}>
                 Qtd de Capturas Hoje
               </th>
-              <td style={{ border: "1px solid black" }}>50</td>
+              <td style={{ border: "1px solid black" }}>
+                {buildingData.totalCapturaHoje || "--"}
+              </td>
             </tr>
             <tr>
               <th style={{ border: "1px solid black" }}>Qtd de Capturas Mês</th>
-              <td style={{ border: "1px solid black" }}>50</td>
+              <td style={{ border: "1px solid black" }}>
+                {buildingData.totalCapturaMes || "--"}
+              </td>
             </tr>
             <tr>
               <th style={{ border: "1px solid black" }}>Total de Capturas</th>
-              <td style={{ border: "1px solid black" }}>50</td>
+              <td style={{ border: "1px solid black" }}>
+                {buildingData.totalCaptura || "--"}
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div>
-        <h2>Capturas por Câmera</h2>
+        <h2 style={{ margin: "0px", marginTop: "20px" }}>
+          Capturas por Câmera
+        </h2>
         <table>
-          <tbody>
+          {buildingData.cameras.length > 0 ? (
+            buildingData.cameras.slice(0, visibleCameraCount).map((camera) => (
+              <tbody key={camera.id}>
+                {visibleCameraCount > 0 && (
+                  <tr>
+                    <td colSpan={2} style={{ height: "20px" }}></td>
+                  </tr>
+                )}
+                <tr>
+                  <th style={{ border: "1px solid black" }}>Id Câmera</th>
+                  <td style={{ border: "1px solid black" }}>{camera.id}</td>
+                </tr>
+                <tr>
+                  <th style={{ border: "1px solid black" }}>
+                    Qtd de Capturas Hora
+                  </th>
+                  <td style={{ border: "1px solid black" }}>
+                    {camera.qtdCapturaHora}
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ border: "1px solid black" }}>
+                    Qtd de Capturas Hoje
+                  </th>
+                  <td style={{ border: "1px solid black" }}>
+                    {camera.qtdCapturaHoje}
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ border: "1px solid black" }}>
+                    Qtd de Capturas Mês
+                  </th>
+                  <td style={{ border: "1px solid black" }}>
+                    {camera.qtdCapturaMes}
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ border: "1px solid black" }}>
+                    Total de Capturas
+                  </th>
+                  <td style={{ border: "1px solid black" }}>
+                    {camera.totalCapturas}
+                  </td>
+                </tr>
+                <tr>
+                  <th style={{ border: "1px solid black" }}>Horário Captura</th>
+                  <td style={{ border: "1px solid black" }}>
+                    {camera.horarioCaptura}
+                  </td>
+                </tr>
+              </tbody>
+            ))
+          ) : (
             <tr>
-              <th style={{ border: "1px solid black" }}>Id Câmera</th>
-              <td style={{ border: "1px solid black" }}>10</td>
+              <td>Nenhuma câmera encontrada</td>
             </tr>
-            <tr>
-              <th style={{ border: "1px solid black" }}>
-                Qtd de Capturas Hora
-              </th>
-              <td style={{ border: "1px solid black" }}>50</td>
-            </tr>
-            <tr>
-              <th style={{ border: "1px solid black" }}>
-                Qtd de Capturas Hoje
-              </th>
-              <td style={{ border: "1px solid black" }}>50</td>
-            </tr>
-            <tr>
-              <th style={{ border: "1px solid black" }}>Qtd de Capturas Mês</th>
-              <td style={{ border: "1px solid black" }}>50</td>
-            </tr>
-            <tr>
-              <th style={{ border: "1px solid black" }}>Total de Capturas</th>
-              <td style={{ border: "1px solid black" }}>50</td>
-            </tr>
-            <tr>
-              <th style={{ border: "1px solid black" }}>Horário Captura</th>
-              <td style={{ border: "1px solid black" }}>50</td>
-            </tr>
-            <button>Expandir Lista</button>
-          </tbody>
+          )}
         </table>
+        {buildingData.cameras.length > 3 && (
+          <button
+            onClick={() =>
+              toggleList(
+                visibleCameraCount,
+                buildingData.cameras.length,
+                setVisibleCameraCount
+              )
+            }
+          >
+            {visibleCameraCount >= buildingData.cameras.length
+              ? "Mostrar menos"
+              : "Expandir lista"}
+          </button>
+        )}
       </div>
 
       <div>
@@ -103,14 +174,59 @@ export default function BuildingCamera() {
               <th style={{ border: "1px solid black" }}>Status</th>
               <th style={{ border: "1px solid black" }}>Custo</th>
             </tr>
-            <tr>
-              <td style={{ border: "1px solid black" }}>1</td>
-              <td style={{ border: "1px solid black" }}>Baixo</td>
-              <td style={{ border: "1px solid black" }}>400</td>
-            </tr>
-            <button>Expandir lista</button>
+            {buildingData.equipamentosQuebrados.length > 0 ? (
+              buildingData.equipamentosQuebrados
+                .filter((equipments) => equipments.tipo === "Câmera")
+                .slice(0, visibleBrokenCount)
+                .map((equipment) => (
+                  <tr
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setSelectedEquipment(equipment);
+                      setModalBrokenOpen(true);
+                    }}
+                    key={equipment.id}
+                  >
+                    <td style={{ border: "1px solid black" }}>
+                      {equipment.id}
+                    </td>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipment.status}
+                    </td>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipment.custo}
+                    </td>
+                  </tr>
+                ))
+            ) : (
+              <tr>
+                <td>Nenhum equipamento quebrado</td>
+              </tr>
+            )}
+            <Modal
+              isOpen={modalBrokenOpen}
+              onClose={() => setModalBrokenOpen(false)}
+            >
+              <h2>Arcar com custo</h2>
+              {renderEquipment(selectedEquipment)}
+            </Modal>
           </tbody>
         </table>
+        {buildingData.equipamentosQuebrados.length > 3 && (
+          <button
+            onClick={() =>
+              toggleList(
+                visibleBrokenCount,
+                buildingData.equipamentosQuebrados.length,
+                setVisibleBrokenCount
+              )
+            }
+          >
+            {visibleBrokenCount >= buildingData.equipamentosQuebrados.length
+              ? "Mostrar menos"
+              : "Expandir lista"}
+          </button>
+        )}
       </div>
 
       <div>
@@ -126,14 +242,46 @@ export default function BuildingCamera() {
                 Data Prevista do Fim do Concerto
               </th>
             </tr>
-            <tr>
-              <td style={{ border: "1px solid black" }}>2</td>
-              <td style={{ border: "1px solid black" }}>2024-04-2</td>
-              <td style={{ border: "1px solid black" }}>2024-04-30</td>
-            </tr>
-            <button>Expandir lista</button>
+            {buildingData.equipamentosManutencao.length > 0 ? (
+              buildingData.equipamentosManutencao
+                .filter((equipment) => equipment.tipo === "Câmera")
+                .slice(0, visibleMaintenanceCount)
+                .map((equipment) => (
+                  <tr key={equipment.id}>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipment.id}
+                    </td>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipment.dataInicio}
+                    </td>
+                    <td style={{ border: "1px solid black" }}>
+                      {equipment.dataPrevista}
+                    </td>
+                  </tr>
+                ))
+            ) : (
+              <tr>
+                <td colSpan={3}>Nenhum equipamento em manutenção</td>
+              </tr>
+            )}
           </tbody>
         </table>
+        {buildingData.equipamentosManutencao.length > 3 && (
+          <button
+            onClick={() =>
+              toggleList(
+                visibleMaintenanceCount,
+                buildingData.equipamentosManutencao.length,
+                setVisibleMaintenanceCount
+              )
+            }
+          >
+            {visibleMaintenanceCount >=
+            buildingData.equipamentosManutencao.length
+              ? "Mostrar menos"
+              : "Expandir lista"}
+          </button>
+        )}
       </div>
     </div>
   );

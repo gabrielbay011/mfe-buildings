@@ -19,8 +19,12 @@ export const mockBuildings = [
     dataCriacao: "2024-06-01",
     qtdAndares: "3",
     qtdCatracas: "2",
-    qtdCameras: "15",
+    qtdCameras: "5",
     qtdElevadores: "1",
+    totalCapturaHora: 500,
+    totalCapturaHoje: 1090,
+    totalCapturaMes: 2300,
+    totalCaptura: 3890,
 
     andares: [
       {
@@ -44,6 +48,49 @@ export const mockBuildings = [
       {
         nome: "4ºAndar",
         cameras: 5,
+      },
+    ],
+
+    cameras: [
+      {
+        id: "1",
+        qtdCapturaHora: 100,
+        qtdCapturaHoje: 300,
+        qtdCapturaMes: 600,
+        totalCapturas: 1000,
+        horarioCaptura: "14:30",
+      },
+      {
+        id: "2",
+        qtdCapturaHora: 100,
+        qtdCapturaHoje: 300,
+        qtdCapturaMes: 500,
+        totalCapturas: 900,
+        horarioCaptura: "15:24",
+      },
+      {
+        id: "3",
+        qtdCapturaHora: 100,
+        qtdCapturaHoje: 100,
+        qtdCapturaMes: 600,
+        totalCapturas: 800,
+        horarioCaptura: "18:56",
+      },
+      {
+        id: "4",
+        qtdCapturaHora: 100,
+        qtdCapturaHoje: 90,
+        qtdCapturaMes: 500,
+        totalCapturas: 690,
+        horarioCaptura: "21:34",
+      },
+      {
+        id: "5",
+        qtdCapturaHora: 100,
+        qtdCapturaHoje: 300,
+        qtdCapturaMes: 100,
+        totalCapturas: 500,
+        horarioCaptura: "12:07",
       },
     ],
 
@@ -167,34 +214,26 @@ export const mockBuildings = [
 
     equipamentosQuebrados: [
       {
+        id: "3",
         tipo: "Câmera",
         andar: "1",
         status: "Baixo",
         custo: 200,
       },
       {
+        id: "5",
         tipo: "Catraca",
         status: "Moderado",
         custo: 400,
       },
       {
-        tipo: "Câmera",
-        andar: "2",
-        status: "Grave",
-        custo: 350,
-      },
-      {
-        tipo: "Câmera",
-        andar: "3",
-        status: "Grave",
-        custo: 500,
-      },
-      {
+        id: "2",
         tipo: "Elevador",
         status: "Moderado",
         custo: 600,
       },
       {
+        id: "3",
         tipo: "Catraca",
         status: "Baixo",
         custo: 150,
@@ -203,151 +242,37 @@ export const mockBuildings = [
 
     equipamentosManutencao: [
       {
+        id: "5",
         tipo: "Elevador",
         dataInicio: "2025-06-15",
         dataPrevista: "2025-06-20",
       },
       {
+        id: "4",
         tipo: "Câmera",
         andar: "1",
         dataInicio: "2025-06-17",
         dataPrevista: "2025-06-22",
       },
       {
+        id: "2",
         tipo: "Câmera",
         andar: "2",
         dataInicio: "2025-06-18",
         dataPrevista: "2025-06-24",
       },
       {
+        id: "1",
         tipo: "Câmera",
         andar: "3",
         dataInicio: "2025-06-16",
         dataPrevista: "2025-06-23",
       },
       {
+        id: "5",
         tipo: "Catraca",
         dataInicio: "2025-06-14",
         dataPrevista: "2025-06-21",
-      },
-    ],
-
-    fluxoCompleto: [
-      { mes: "Jan/2025", quantidade: 1200 },
-      { mes: "Fev/2025", quantidade: 1100 },
-      { mes: "Mar/2025", quantidade: 1400 },
-      { mes: "Abr/2025", quantidade: 1000 },
-      { mes: "Mai/2025", quantidade: 1350 },
-      { mes: "Jun/2025", quantidade: 1600 },
-    ],
-  },
-  {
-    id: "2",
-    foto: "FotoPredio2",
-    nome: "The members",
-    dataCriacao: "2024-03-21",
-    qtdAndares: "3",
-    qtdCatracas: "2",
-    qtdCameras: "10",
-    qtdElevadores: "1",
-
-    andares: [
-      {
-        nome: "Recepção",
-        atendentes: 2,
-        cameras: 5,
-      },
-      {
-        nome: "2ºAndar",
-        empresas: [
-          { nome: "Empresa A", trafego: 30 },
-          { nome: "Empresa B", trafego: 50 },
-        ],
-        cameras: 5,
-      },
-      {
-        nome: "3ºAndar",
-        empresas: [{ nome: "Empresa C", trafego: 40 }],
-        cameras: 5,
-      },
-    ],
-
-    fluxoPessoas: {
-      hora: 25,
-      dia: 300,
-      semana: 1500,
-      mes: 6000,
-    },
-
-    entradasESaidas: [
-      {
-        foto: "FotoPessoa1",
-        nome: "João Silva",
-        entrou: false,
-        saiu: true,
-        cpf: "987.654.321-00",
-        rg: "98.765.432-1",
-        sobrenome: "Souza",
-        telefone: "(21) 99876-5432",
-        cep: "22040-002",
-        estado: "RJ",
-        cidade: "Rio de Janeiro",
-        bairro: "Copacabana",
-        rua: "Avenida Atlântica",
-        numero: "456",
-        qrCode: "987654",
-        dataCadastro: "2023-07-22T09:15:00Z",
-      },
-      {
-        foto: "FotoPessoa2",
-        nome: "Maria Souza",
-        entrou: true,
-        saiu: false,
-        cpf: "987.654.321-00",
-        rg: "98.765.432-1",
-        sobrenome: "Souza",
-        telefone: "(21) 99876-5432",
-        cep: "22040-002",
-        estado: "RJ",
-        cidade: "Rio de Janeiro",
-        bairro: "Copacabana",
-        rua: "Avenida Atlântica",
-        numero: "456",
-        qrCode: "987654",
-        dataCadastro: "2023-07-22T09:15:00Z",
-      },
-    ],
-
-    equipamentosQuebrados: [
-      {
-        tipo: "Câmera",
-        andar: "3",
-        status: "Baixo",
-        custo: 200,
-      },
-      {
-        tipo: "Catraca",
-        status: "Moderado",
-        custo: 400,
-      },
-      {
-        tipo: "Catraca",
-        status: "Grave",
-        custo: 400,
-      },
-    ],
-
-    equipamentosManutencao: [
-      {
-        tipo: "Elevador",
-        dataInicio: "2025-06-15",
-        dataPrevista: "2025-06-20",
-      },
-      {
-        tipo: "Câmera",
-        andar: "3",
-        dataInicio: "2025-06-17",
-        dataPrevista: "2025-06-22",
       },
     ],
 

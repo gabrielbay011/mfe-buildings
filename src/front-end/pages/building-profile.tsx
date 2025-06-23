@@ -156,30 +156,30 @@ export default function BuildingProfile() {
             {mockData.entradasESaidas?.length > 0 ? (
               mockData.entradasESaidas
                 .slice(0, visibleEntriesCount)
-                .map((pessoa, index) => (
+                .map((person, index) => (
                   <tr key={index}>
                     <td
                       style={{ border: "1px solid black", cursor: "pointer" }}
                       onClick={() => {
-                        setSelectedPerson(pessoa);
+                        setSelectedPerson(person);
                         setModalPersonOpen(true);
                       }}
                     >
-                      {pessoa.foto || "--"}
+                      {person.foto || "--"}
                     </td>
                     <td
                       style={{ border: "1px solid black", cursor: "pointer" }}
                       onClick={() => {
-                        setSelectedPerson(pessoa);
+                        setSelectedPerson(person);
                         setModalPersonOpen(true);
                       }}
                     >
-                      {pessoa.nome || "--"}
+                      {person.nome || "--"}
                     </td>
                     <td
                       style={{
                         border: "1px solid black",
-                        backgroundColor: pessoa.entrou === true ? "green" : "",
+                        backgroundColor: person.entrou === true ? "green" : "",
                       }}
                     >
                       entrou
@@ -187,7 +187,7 @@ export default function BuildingProfile() {
                     <td
                       style={{
                         border: "1px solid black",
-                        backgroundColor: pessoa.saiu === true ? "green" : "",
+                        backgroundColor: person.saiu === true ? "green" : "",
                       }}
                     >
                       saiu
@@ -237,11 +237,11 @@ export default function BuildingProfile() {
             {mockData.equipamentosQuebrados.length > 0 ? (
               mockData.equipamentosQuebrados
                 .slice(0, visibleBrokenCount)
-                .map((equipamento, index) => (
+                .map((equipment, index) => (
                   <tr
                     key={index}
                     onClick={() => {
-                      setSelectedEquipment(equipamento);
+                      setSelectedEquipment(equipment);
                       setModalBrokenOpen(true);
                     }}
                     style={{ cursor: "pointer" }}
@@ -249,18 +249,18 @@ export default function BuildingProfile() {
                     <td
                       style={{ border: "1px solid black" }}
                       title={
-                        equipamento.tipo === "Câmera"
-                          ? "Andar: " + equipamento.andar
+                        equipment.tipo === "Câmera"
+                          ? "Andar: " + equipment.andar
                           : undefined
                       }
                     >
-                      {equipamento.tipo}
+                      {equipment.tipo}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipamento.status}
+                      {equipment.status}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipamento.custo}
+                      {equipment.custo}
                     </td>
                   </tr>
                 ))
@@ -311,23 +311,23 @@ export default function BuildingProfile() {
             {mockData.equipamentosManutencao.length > 0 ? (
               mockData.equipamentosManutencao
                 .slice(0, visibleMaintenanceCount)
-                .map((equipamento, index) => (
+                .map((equipment, index) => (
                   <tr key={index}>
                     <td
                       style={{ border: "1px solid black" }}
                       title={
-                        equipamento.tipo === "Câmera"
-                          ? "Andar: " + equipamento.andar
+                        equipment.tipo === "Câmera"
+                          ? "Andar: " + equipment.andar
                           : undefined
                       }
                     >
-                      {equipamento.tipo}
+                      {equipment.tipo}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipamento.dataInicio}
+                      {equipment.dataInicio}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipamento.dataPrevista}
+                      {equipment.dataPrevista}
                     </td>
                   </tr>
                 ))
