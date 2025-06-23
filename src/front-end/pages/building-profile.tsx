@@ -88,7 +88,12 @@ export default function BuildingProfile() {
               </td>
             </tr>
             <tr>
-              <th style={{ border: "1px solid black" }}>Câmeras</th>
+              <th
+                style={{ border: "1px solid black", cursor: "pointer" }}
+                onClick={() => navigate(`/camera/${mockData.id}`)}
+              >
+                Câmeras
+              </th>
               <td style={{ border: "1px solid black" }}>
                 {mockData.qtdCameras || "--"}
               </td>

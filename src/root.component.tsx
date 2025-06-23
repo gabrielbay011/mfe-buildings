@@ -4,6 +4,7 @@ import NotFound from "./front-end/pages/not-found";
 import BuildingProfile from "./front-end/pages/building-profile";
 import BuildingFloor from "./front-end/pages/building-floor";
 import BuildingTurnstile from "./front-end/pages/building-turnstile";
+import BuildingCamera from "./front-end/pages/building-camera";
 
 export default function Root(props) {
   return (
@@ -13,6 +14,7 @@ export default function Root(props) {
         <Route path="/profile/:id" element={<BuildingProfile />} />
         <Route path="/floor/:id" element={<BuildingFloor />} />
         <Route path="/turnstile/:id" element={<BuildingTurnstile />} />
+        <Route path="/camera/:id" element={<BuildingCamera />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
