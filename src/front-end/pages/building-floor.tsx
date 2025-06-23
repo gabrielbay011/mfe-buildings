@@ -24,7 +24,12 @@ export default function BuildingFloor() {
     <div>
       <div style={{ display: "flex", gap: "10px" }}>
         <button
-          style={{ height: "30px", width: "30px", marginTop: "25px" }}
+          style={{
+            height: "30px",
+            width: "30px",
+            marginTop: "25px",
+            cursor: "pointer",
+          }}
           onClick={() => navigate(`/profile/${buildingData.id}`)}
         >
           &lt;-

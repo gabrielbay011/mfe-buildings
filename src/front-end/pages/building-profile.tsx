@@ -40,7 +40,12 @@ export default function BuildingProfile() {
     <div>
       <div style={{ display: "flex", gap: "10px" }}>
         <button
-          style={{ height: "30px", width: "30px", marginTop: "25px" }}
+          style={{
+            height: "30px",
+            width: "30px",
+            marginTop: "25px",
+            cursor: "pointer",
+          }}
           onClick={() => navigate("/")}
         >
           &lt;-
@@ -72,7 +77,12 @@ export default function BuildingProfile() {
               </td>
             </tr>
             <tr>
-              <th style={{ border: "1px solid black" }}>Catracas</th>
+              <th
+                style={{ border: "1px solid black", cursor: "pointer" }}
+                onClick={() => navigate(`/turnstile/${mockData.id}`)}
+              >
+                Catracas
+              </th>
               <td style={{ border: "1px solid black" }}>
                 {mockData.qtdCatracas || "--"}
               </td>

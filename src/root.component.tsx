@@ -3,6 +3,7 @@ import Buildings from "./front-end/pages/buildings";
 import NotFound from "./front-end/pages/not-found";
 import BuildingProfile from "./front-end/pages/building-profile";
 import BuildingFloor from "./front-end/pages/building-floor";
+import BuildingTurnstile from "./front-end/pages/building-turnstile";
 
 export default function Root(props) {
   return (
@@ -11,6 +12,7 @@ export default function Root(props) {
         <Route path="/" element={<Buildings />} />
         <Route path="/profile/:id" element={<BuildingProfile />} />
         <Route path="/floor/:id" element={<BuildingFloor />} />
+        <Route path="/turnstile/:id" element={<BuildingTurnstile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
