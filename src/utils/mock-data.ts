@@ -103,6 +103,7 @@ export const mockBuildings = [
 
     entradasESaidas: [
       {
+        idCatraca: "1",
         foto: "FotoPessoa1",
         nome: "João Silva",
         sobrenome: "Silva",
@@ -121,6 +122,7 @@ export const mockBuildings = [
         dataCadastro: "2024-10-15T14:30:00Z",
       },
       {
+        idCatraca: "1",
         foto: "FotoPessoa2",
         nome: "Maria Souza",
         sobrenome: "Souza",
@@ -139,6 +141,7 @@ export const mockBuildings = [
         dataCadastro: "2023-07-22T09:15:00Z",
       },
       {
+        idCatraca: "1",
         foto: "FotoPessoa3",
         nome: "Carlos Mendes",
         sobrenome: "Mendes",
@@ -157,6 +160,7 @@ export const mockBuildings = [
         dataCadastro: "2023-03-12T11:45:00Z",
       },
       {
+        idCatraca: "1",
         foto: "FotoPessoa4",
         nome: "Ana Clara",
         sobrenome: "Ferreira",
@@ -175,6 +179,7 @@ export const mockBuildings = [
         dataCadastro: "2024-01-10T08:00:00Z",
       },
       {
+        idCatraca: "1",
         foto: "FotoPessoa5",
         nome: "Lucas Rocha",
         sobrenome: "Rocha",
@@ -193,6 +198,7 @@ export const mockBuildings = [
         dataCadastro: "2023-11-30T16:20:00Z",
       },
       {
+        idCatraca: "1",
         foto: "FotoPessoa6",
         nome: "Beatriz Lima",
         sobrenome: "Lima",
