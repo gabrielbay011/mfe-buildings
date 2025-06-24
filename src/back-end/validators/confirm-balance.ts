@@ -1,7 +1,9 @@
 import { mockUsers } from "../../utils/mock-data";
 
+//Função para verifiar se o usuário tem saldo suficiente
 export function confirmBalance(cost: number): boolean {
   const hasInsufficientBalance = mockUsers.some((user) => user.saldo < cost);
+
   if (hasInsufficientBalance) {
     alert("Erro: Saldo insuficiente");
     return false;

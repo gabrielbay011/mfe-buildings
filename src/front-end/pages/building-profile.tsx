@@ -3,26 +3,31 @@ import { listBuildingsId } from "../../back-end/services/list/list-building-id";
 import { useState } from "react";
 import Modal from "../../utils/components/modal";
 import { RenderFlowHistory } from "../../back-end/services/render/render-flow-history";
-import { listFlowHistory } from "../../back-end/services/list/list-flow-history";
 import { renderPerson } from "../../back-end/services/render/render-person";
 import { renderEquipment } from "../../back-end/services/render/render-equipment";
 
 export default function BuildingProfile() {
   const navigate = useNavigate();
+
+  //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const mockData = listBuildingsId(id);
-  const building = listFlowHistory(id);
 
+  //States relacioandos a abertura da modal
   const [modalFlowOpen, setModalFlowOpen] = useState(false);
   const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
   const [modalPersonOpen, setModalPersonOpen] = useState(false);
+
+  //States que armazenam o equipamento selecionado e a pessoa selecioanda
   const [selectedPerson, setSelectedPerson] = useState<any>(null);
   const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
 
+  //States relacionados a quantidade de itens visíveis
   const [visibleEntriesCount, setVisibleEntriesCount] = useState(3);
   const [visibleMaintenanceCount, setVisibleMaintenanceCount] = useState(3);
   const [visibleBrokenCount, setVisibleBrokenCount] = useState(3);
 
+  //Função que alterna entre expandir e recolher a lista de itens
   const toggleList = (
     current: number,
     total: number,
@@ -38,6 +43,7 @@ export default function BuildingProfile() {
 
   return (
     <div>
+      {/* Botão para voltar ao perfil e título */}
       <div style={{ display: "flex", gap: "10px" }}>
         <button
           style={{
@@ -50,11 +56,14 @@ export default function BuildingProfile() {
         >
           &lt;-
         </button>
+
         <h1>Perfil de Edifício</h1>
       </div>
 
+      {/* Exibe os dados gerais do edifício */}
       <div>
         <h2>Dados Gerais:</h2>
+
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
@@ -108,8 +117,10 @@ export default function BuildingProfile() {
         </table>
       </div>
 
+      {/* Exibe o fluxo de pessoas e modal pra ver fluxo completo */}
       <div>
         <h2>Fluxo de Pessoas:</h2>
+
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
@@ -134,17 +145,21 @@ export default function BuildingProfile() {
             </tr>
           </tbody>
         </table>
+
         <button onClick={() => setModalFlowOpen(true)}>
           Ver histórico completo
         </button>
+
         <Modal isOpen={modalFlowOpen} onClose={() => setModalFlowOpen(false)}>
           <h2>Fluxo por Mês</h2>
-          <RenderFlowHistory building={building} />
+          <RenderFlowHistory building={mockData} />
         </Modal>
       </div>
 
+      {/* Exibe os registros de entrada e saída e modal para exibir as informações das pessoas */}
       <div>
         <h2>Entradas e Saídas:</h2>
+
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
@@ -201,6 +216,7 @@ export default function BuildingProfile() {
             )}
           </tbody>
         </table>
+
         {mockData.entradasESaidas.length > 3 && (
           <button
             onClick={() =>
@@ -216,6 +232,7 @@ export default function BuildingProfile() {
               : "Expandir lista"}
           </button>
         )}
+
         <Modal
           isOpen={modalPersonOpen}
           onClose={() => setModalPersonOpen(false)}
@@ -225,8 +242,10 @@ export default function BuildingProfile() {
         </Modal>
       </div>
 
+      {/* Exibe os equipamentos quebrados e modal para arcar com o custo do equipamento */}
       <div>
         <h2>Equipamentos Quebrados:</h2>
+
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
@@ -271,6 +290,7 @@ export default function BuildingProfile() {
             )}
           </tbody>
         </table>
+
         {mockData.equipamentosQuebrados.length > 3 && (
           <button
             onClick={() =>
@@ -286,6 +306,7 @@ export default function BuildingProfile() {
               : "Expandir lista"}
           </button>
         )}
+
         <Modal
           isOpen={modalBrokenOpen}
           onClose={() => setModalBrokenOpen(false)}
@@ -295,8 +316,10 @@ export default function BuildingProfile() {
         </Modal>
       </div>
 
+      {/* Exibe os equipamento em manutenção */}
       <div>
         <h2>Equipamentos em manutenção:</h2>
+
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
@@ -338,6 +361,7 @@ export default function BuildingProfile() {
             )}
           </tbody>
         </table>
+
         {mockData.equipamentosManutencao.length > 3 && (
           <button
             onClick={() =>

@@ -1,5 +1,6 @@
 import { Building } from "../../types/building-type";
 
+//Função para ordenar os edifícios referente ao 'select' da página de edifícios
 export function sortBuildings(
   buildings: Building[],
   option: string

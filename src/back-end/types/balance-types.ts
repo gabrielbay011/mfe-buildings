@@ -1,3 +1,4 @@
+//Tipo referente ao saldo
 export type Balances = {
   id: string;
   tipo: string;

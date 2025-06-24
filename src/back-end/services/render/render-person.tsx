@@ -1,3 +1,4 @@
+//Função para renderizar as informações das pessoas
 export function renderPerson(person: any) {
   if (!person) {
     return <p>Dados da pessoa não encontrados</p>;

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+//Validação do campo do fomulário de criar edifícios
 export const createBuildingSchema = z.object({
-  nome: z.string().min(1, "O campo nome é origatório"),
+  //Validação nome: campo obrigatório
+  nome: z.string().min(1, "O campo nome é obrigatório"),
 });

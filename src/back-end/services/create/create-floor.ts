@@ -1,5 +1,6 @@
 import { Andar } from "../../types/building-type";
 
+//função para criar um andar
 export function createFloor(
   floors: Andar[],
   setFloors: React.Dispatch<React.SetStateAction<Andar[]>>

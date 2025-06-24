@@ -1,11 +1,13 @@
 import { z } from "zod";
 import { createBuildingSchema } from "../schemas/create-building-schema";
 
+//Tipo referente a empresa
 type Empresa = {
   nome: string;
   trafego: number;
 };
 
+//Tipo referente ao andar
 export type Andar = {
   nome: string;
   cameras: number;
@@ -13,12 +15,7 @@ export type Andar = {
   empresas?: Empresa[];
 };
 
-export type RenderConfirmProps = {
-  cost: number;
-  onConfirm: () => void;
-  onClose: () => void;
-};
-
+//Tipo referente ao edifício
 export type Building = {
   id: string;
   nome: string;
@@ -85,4 +82,5 @@ export type Building = {
   }[];
 };
 
+//Tipo referente ao formulário de criar edifício
 export type CreateBuildingType = z.infer<typeof createBuildingSchema>;

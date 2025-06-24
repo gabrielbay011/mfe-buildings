@@ -1,5 +1,6 @@
 import { Andar } from "../../types/building-type";
 
+//Função para criar uma empresa no andar
 export function createEnterprise(floor: Andar) {
   const qtyEnterprises = floor.empresas?.length ?? 0;
 

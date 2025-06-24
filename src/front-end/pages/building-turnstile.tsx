@@ -8,17 +8,25 @@ import { addTurnstile } from "../../back-end/services/create/add-turnstile";
 
 export default function BuildingTurnstile() {
   const navigate = useNavigate();
+
+  //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
-  const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
-  const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
   const [building, setBuilding] = useState(buildingData);
+
+  //State que armazena o equipamento selecionado
+  const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
+
+  //States relacioandos a abertura da modal
+  const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
   const [modalAddTurnstileOpen, setModalAddTurnstileOpen] = useState(false);
 
+  //States relacionados a quantidade de itens visíveis
   const [visibleTurnstileCount, setVisibleTurnstileCount] = useState(3);
   const [visibleMaintenanceCount, setVisibleMaintenanceCount] = useState(3);
   const [visibleBrokenCount, setVisibleBrokenCount] = useState(3);
 
+  //Função que alterna entre expandir e recolher a lista de itens
   const toggleList = (
     current: number,
     total: number,
@@ -30,6 +38,7 @@ export default function BuildingTurnstile() {
 
   return (
     <div>
+      {/* Botão para voltar ao perfil e título */}
       <div style={{ display: "flex", gap: "10px" }}>
         <button
           style={{
@@ -42,15 +51,19 @@ export default function BuildingTurnstile() {
         >
           &lt;-
         </button>
+
         <h1>Catracas</h1>
       </div>
 
+      {/* Exibe quantidade de catracas e botão para adicionar uma nova catraca */}
       <div>
         <h2>Informações Gerais:</h2>
+
         <p>
           <b>Quantidade de catracas: </b>
           {building.qtdCatracas}
         </p>
+
         <button
           onClick={() => {
             setModalAddTurnstileOpen(true);
@@ -58,6 +71,7 @@ export default function BuildingTurnstile() {
         >
           Adicionar catraca por 10
         </button>
+
         <Modal
           isOpen={modalAddTurnstileOpen}
           onClose={() => setModalAddTurnstileOpen(false)}
@@ -71,8 +85,10 @@ export default function BuildingTurnstile() {
         </Modal>
       </div>
 
+      {/* Exibe o fluxo de pessos por catraca */}
       <div>
         <h2>Tráfego de Pessoas por Catraca:</h2>
+
         <table>
           {buildingData.entradasESaidas.length > 0 ? (
             buildingData.entradasESaidas
@@ -125,6 +141,7 @@ export default function BuildingTurnstile() {
             </tr>
           )}
         </table>
+
         {buildingData.entradasESaidas.length > 3 && (
           <button
             onClick={() =>
@@ -142,8 +159,10 @@ export default function BuildingTurnstile() {
         )}
       </div>
 
+      {/* Exibe os equipamentos quebrados e modal para arcar com o custo do equipamento */}
       <div>
         <h2>Equipamentos Quebrados:</h2>
+
         <table>
           <tbody>
             <tr>
@@ -189,6 +208,7 @@ export default function BuildingTurnstile() {
             </Modal>
           </tbody>
         </table>
+
         {buildingData.equipamentosQuebrados.length > 3 && (
           <button
             onClick={() =>
@@ -206,8 +226,10 @@ export default function BuildingTurnstile() {
         )}
       </div>
 
+      {/* Exibe as catracas que estão em manutenção */}
       <div>
         <h2>Equipamentos em Manutenção:</h2>
+
         <table>
           <tbody>
             <tr>
@@ -243,6 +265,7 @@ export default function BuildingTurnstile() {
             )}
           </tbody>
         </table>
+
         {buildingData.equipamentosManutencao.length > 3 && (
           <button
             onClick={() =>

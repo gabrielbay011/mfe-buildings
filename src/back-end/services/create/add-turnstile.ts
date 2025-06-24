@@ -1,3 +1,4 @@
+//Função para adicionar uma catraca
 export function addTurnstile(building) {
   return {
     ...building,

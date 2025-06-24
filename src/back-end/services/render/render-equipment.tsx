@@ -1,5 +1,6 @@
 import { mockUsers } from "../../../utils/mock-data";
 
+//Função para renderizar
 export function renderEquipment(equipment: any) {
   if (!equipment) {
     return <p>Equipment não encontrados</p>;

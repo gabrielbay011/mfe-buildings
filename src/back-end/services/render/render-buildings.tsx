@@ -5,6 +5,7 @@ type Props = {
   building: Building[];
 };
 
+//Função para renderizar os edifícios
 export function RenderBuildings({ building }: Props) {
   const navigate = useNavigate();
 

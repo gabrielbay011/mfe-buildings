@@ -1,6 +1,7 @@
 import { mockBalances } from "../../../utils/mock-data";
 import { Balances } from "../../types/balance-types";
 
+//Função para rendererizar o hitórico de saldo
 export function renderBalances(balances: Balances[]) {
   if (mockBalances.length == 0) {
     return <p>Você ainda não tem nenhuma movimentação no saldo</p>;

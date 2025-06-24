@@ -5,6 +5,7 @@ type Props = {
   building?: Building;
 };
 
+//Função para renderizar o histórico de saldo do usuário
 export function RenderFlowHistory({ building }: Props) {
   const [visibleCount, setVisibleCount] = useState(3);
 

@@ -6,15 +6,23 @@ import { renderEquipment } from "../../back-end/services/render/render-equipment
 
 export default function BuildingCamera() {
   const navigate = useNavigate();
+
+  //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
+
+  //State relacioando a abertura da modal
   const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
+
+  //State que armazena equipamento selecionado
   const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
 
+  //States relacionados a quantidade de itens visíveis
   const [visibleCameraCount, setVisibleCameraCount] = useState(3);
   const [visibleMaintenanceCount, setVisibleMaintenanceCount] = useState(3);
   const [visibleBrokenCount, setVisibleBrokenCount] = useState(3);
 
+  //Função que alterna entre expandir e recolher a lista de itens
   const toggleList = (
     current: number,
     total: number,
@@ -26,6 +34,7 @@ export default function BuildingCamera() {
 
   return (
     <div>
+      {/* Botão para voltar ao perfil e título */}
       <div style={{ display: "flex", gap: "10px" }}>
         <button
           style={{
@@ -38,11 +47,14 @@ export default function BuildingCamera() {
         >
           &lt;-
         </button>
+
         <h1>Câmeras</h1>
       </div>
 
+      {/* Exibe as informações gerais da câmeras */}
       <div>
         <h2>Informações Gerais:</h2>
+
         <table>
           <tbody>
             <tr>
@@ -85,10 +97,12 @@ export default function BuildingCamera() {
         </table>
       </div>
 
+      {/* Exibe as informações de captura por câmera */}
       <div>
         <h2 style={{ margin: "0px", marginTop: "20px" }}>
           Capturas por Câmera
         </h2>
+
         <table>
           {buildingData.cameras.length > 0 ? (
             buildingData.cameras.slice(0, visibleCameraCount).map((camera) => (
@@ -148,6 +162,7 @@ export default function BuildingCamera() {
             </tr>
           )}
         </table>
+
         {buildingData.cameras.length > 3 && (
           <button
             onClick={() =>
@@ -165,8 +180,10 @@ export default function BuildingCamera() {
         )}
       </div>
 
+      {/* Exibe os equipamentos quebrados e modal para arcar com o custo do equipamento */}
       <div>
         <h2>Equipamentos Quebrados:</h2>
+
         <table>
           <tbody>
             <tr>
@@ -212,6 +229,7 @@ export default function BuildingCamera() {
             </Modal>
           </tbody>
         </table>
+
         {buildingData.equipamentosQuebrados.length > 3 && (
           <button
             onClick={() =>
@@ -229,8 +247,10 @@ export default function BuildingCamera() {
         )}
       </div>
 
+      {/*  */}
       <div>
         <h2>Equipamentos em Manutenção:</h2>
+
         <table>
           <tbody>
             <tr>
@@ -266,6 +286,7 @@ export default function BuildingCamera() {
             )}
           </tbody>
         </table>
+
         {buildingData.equipamentosManutencao.length > 3 && (
           <button
             onClick={() =>

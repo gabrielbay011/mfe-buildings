@@ -19,9 +19,11 @@ import { renderBalances } from "../../back-end/services/render/render-balances";
 import { listBalances } from "../../back-end/services/list/list-balance";
 import { Balances } from "../../back-end/types/balance-types";
 
+//Página de edifícios
 export default function Buildings() {
   const navigate = useNavigate();
 
+  //Inicialização do formulário de criar edifiício
   const {
     register: registerCreate,
     handleSubmit: handleSubmitCreate,
@@ -30,23 +32,29 @@ export default function Buildings() {
   } = useForm<CreateBuildingType>({
     resolver: zodResolver(createBuildingSchema),
   });
+
+  //Inicialização do formulário de buscar edifício
   const { register: registerSearch, handleSubmit: handleSubmitSearch } =
     useForm<Search>();
 
+  //States relacionados ao edifício
   const [modalBuildingOpen, setModalBuildingOpen] = useState(false);
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [filteredBuildings, setFilteredBuildings] =
     useState<Building[]>(mockBuildings);
 
+  //States relaciondados ao saldo
   const [modalBalanceOpen, setModalBalanceOpen] = useState(false);
   const [balances, setBalances] = useState<Balances[]>([]);
   const [sortOption, setSortOption] = useState("");
 
+  //Função que filtra os edifícios com base no que o usuário pesquisou
   const handleSearch = (data: Search) => {
     const filtered = filterBuildings(buildings, data.search);
     setFilteredBuildings(filtered);
   };
 
+  //Função executada no envio do formulário e retorna sucesso ou erro ao tentar criar uma empresa
   async function handleCreateBuilding(data: Building) {
     try {
       await createBuilding(data);
@@ -56,17 +64,20 @@ export default function Buildings() {
     }
   }
 
+  //Lista todos os edifícios ao iniciar o componente
   useEffect(() => {
     const allBuildings = listBuildings();
     setBuildings(allBuildings);
   }, []);
 
+  //Carrega o histórico dos saldos do usuário ao iniciar o componente
   useEffect(() => {
     const loggedUser = mockUsers[0];
     const userBalances = listBalances(loggedUser.id);
     setBalances(userBalances);
   }, []);
 
+  //Atualiza a lista de edifícios ordenados quando muda a opção de ordenação
   useEffect(() => {
     const ordered = sortBuildings(filteredBuildings, sortOption);
     setFilteredBuildings(ordered);
@@ -75,6 +86,8 @@ export default function Buildings() {
   return (
     <div>
       <h1>Edifícios</h1>
+
+      {/* Select para ordenar os edifícios e modal para exibir o histórico de saldo */}
       <div style={{ display: "flex", gap: "10px" }}>
         <select
           value={sortOption}
@@ -86,8 +99,10 @@ export default function Buildings() {
           <option value="date-asc">Ordem data (Mais recente)</option>
           <option value="date-desc">Ordem data (Mais antigo)</option>
         </select>
+
         <div>
           <button onClick={() => setModalBalanceOpen(true)}>Saldo</button>
+
           <Modal
             isOpen={modalBalanceOpen}
             onClose={() => setModalBalanceOpen(false)}
@@ -98,17 +113,21 @@ export default function Buildings() {
         </div>
       </div>
 
+      {/* Campo para pesquisar edifício */}
       <div>
         <form onSubmit={handleSubmitSearch(handleSearch)}>
           <input type="text" {...registerSearch("search")} />
+
           <button type="submit">Buscar</button>
         </form>
       </div>
 
+      {/* Botão e modal para criar novos edifícios */}
       <div>
         <button onClick={() => setModalBuildingOpen(true)}>
           Criar Edifício
         </button>
+
         <Modal
           isOpen={modalBuildingOpen}
           onClose={() => setModalBuildingOpen(false)}
@@ -121,11 +140,13 @@ export default function Buildings() {
               <p style={{ color: "red" }}>{createErrors.nome.message}</p>
             )}
             <br />
+
             <button type="submit">Salvar</button>
           </form>
         </Modal>
       </div>
 
+      {/* Renderiza todos os edifícios */}
       <div
         style={{
           border: "1px solid black",
@@ -141,6 +162,7 @@ export default function Buildings() {
         )}
       </div>
 
+      {/* Botões para navegar entra as telas de edifícios e dashboards */}
       <div>
         <button onClick={() => navigate("/")}>Edifícios</button>
         <button>Dashboards</button>

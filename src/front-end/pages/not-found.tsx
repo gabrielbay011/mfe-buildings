@@ -1,3 +1,4 @@
+//Página de rota não encontrada
 export default function NotFound() {
   return (
     <div>

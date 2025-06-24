@@ -1,5 +1,6 @@
 import { buildingAlreadyExists } from "../../validators/building-validations";
 
+//Função para criar um edifício
 export async function createBuilding(data: any) {
   try {
     const newBuilding = {

@@ -11,17 +11,24 @@ import { AddCamera } from "../../back-end/services/create/add-camera";
 
 export default function BuildingFloor() {
   const navigate = useNavigate();
+
+  //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
+  const [floors, setFloors] = useState<Andar[]>(buildingData.andares);
+
+  //State que armazena o andar selecionado
   const [selectedFloorIndex, setSelectedFloorIndex] = useState<number | null>(
     null
   );
-  const [floors, setFloors] = useState<Andar[]>(buildingData.andares);
+
+  //States relacioandos a abertura da modal
   const [modalAttendantOpen, setModalAttendantOpen] = useState(false);
   const [modalCameraOpen, setModalCameraOpen] = useState(false);
 
   return (
     <div>
+      {/* Botão para voltar ao perfil e título */}
       <div style={{ display: "flex", gap: "10px" }}>
         <button
           style={{
@@ -34,9 +41,11 @@ export default function BuildingFloor() {
         >
           &lt;-
         </button>
+
         <h1>Andares</h1>
       </div>
 
+      {/* Exibe as infomaçoes dos andares(empresas, número de câmeras e recepção) */}
       {floors.map((floor, index) => (
         <div
           key={`${index}-${floor.nome}`}
@@ -105,6 +114,7 @@ export default function BuildingFloor() {
         </div>
       ))}
 
+      {/* Modal para adicionar um novo atendente */}
       <Modal
         isOpen={modalAttendantOpen}
         onClose={() => setModalAttendantOpen(false)}
@@ -120,6 +130,7 @@ export default function BuildingFloor() {
         />
       </Modal>
 
+      {/* Modal para adicionar uma nova câmera */}
       <Modal isOpen={modalCameraOpen} onClose={() => setModalCameraOpen(false)}>
         <h2>Confirmar Instalação</h2>
         <RenderConfirm

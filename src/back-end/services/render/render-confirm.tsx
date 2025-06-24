@@ -1,6 +1,7 @@
-import { RenderConfirmProps } from "../../types/building-type";
+import { RenderConfirmProps } from "../../types/render-confirm-type";
 import { confirmBalance } from "../../validators/confirm-balance";
 
+//Função para renderizar a confirmação da operação
 export default function RenderConfirm({
   cost,
   onConfirm,

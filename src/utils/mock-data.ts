@@ -1,5 +1,6 @@
 import sha512 from "crypto-js/sha512";
 
+//Dados fictícios dos usuários
 export const mockUsers = [
   {
     id: "1",
@@ -11,6 +12,7 @@ export const mockUsers = [
   },
 ];
 
+//Dados ficitícios dos edifícios
 export const mockBuildings = [
   {
     id: "1",
@@ -293,6 +295,7 @@ export const mockBuildings = [
   },
 ];
 
+//Dados fictícios do saldo
 export const mockBalances = [
   {
     id: "1",
