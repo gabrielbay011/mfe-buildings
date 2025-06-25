@@ -10,6 +10,12 @@ export default function BuildingCamera() {
   //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
+  const [brokenEquipments, setBrokenEquipments] = useState(
+    buildingData.equipamentosQuebrados
+  );
+  const [maintenanceEquipments, setMaintenanceEquipments] = useState(
+    buildingData.equipamentosManutencao
+  );
 
   //State relacioando a abertura da modal
   const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
@@ -192,8 +198,8 @@ export default function BuildingCamera() {
               <th style={{ border: "1px solid black" }}>Status</th>
               <th style={{ border: "1px solid black" }}>Custo</th>
             </tr>
-            {buildingData.equipamentosQuebrados.length > 0 ? (
-              buildingData.equipamentosQuebrados
+            {brokenEquipments.length > 0 ? (
+              brokenEquipments
                 .filter((equipments) => equipments.tipo === "Câmera")
                 .slice(0, visibleBrokenCount)
                 .map((equipment) => (
@@ -218,31 +224,39 @@ export default function BuildingCamera() {
                 ))
             ) : (
               <tr>
-                <td>Nenhum equipamento quebrado</td>
+                <td colSpan={3}>Nenhum equipamento quebrado</td>
               </tr>
             )}
+
             <Modal
               isOpen={modalBrokenOpen}
               onClose={() => setModalBrokenOpen(false)}
             >
               <h2>Arcar com custo</h2>
-              {renderEquipment(selectedEquipment)}
+              {renderEquipment(
+                selectedEquipment,
+                brokenEquipments,
+                setBrokenEquipments,
+                maintenanceEquipments,
+                setMaintenanceEquipments,
+                () => setModalBrokenOpen(false)
+              )}
             </Modal>
           </tbody>
         </table>
 
-        {buildingData.equipamentosQuebrados.length > 3 && (
+        {brokenEquipments.length > 3 && (
           <button
             style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
-                buildingData.equipamentosQuebrados.length,
+                brokenEquipments.length,
                 setVisibleBrokenCount
               )
             }
           >
-            {visibleBrokenCount >= buildingData.equipamentosQuebrados.length
+            {visibleBrokenCount >= brokenEquipments.length
               ? "Mostrar menos"
               : "Expandir lista"}
           </button>
@@ -264,8 +278,8 @@ export default function BuildingCamera() {
                 Data Prevista do Fim do Concerto
               </th>
             </tr>
-            {buildingData.equipamentosManutencao.length > 0 ? (
-              buildingData.equipamentosManutencao
+            {maintenanceEquipments.length > 0 ? (
+              maintenanceEquipments
                 .filter((equipment) => equipment.tipo === "Câmera")
                 .slice(0, visibleMaintenanceCount)
                 .map((equipment) => (
@@ -289,19 +303,18 @@ export default function BuildingCamera() {
           </tbody>
         </table>
 
-        {buildingData.equipamentosManutencao.length > 3 && (
+        {maintenanceEquipments.length > 3 && (
           <button
             style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,
-                buildingData.equipamentosManutencao.length,
+                maintenanceEquipments.length,
                 setVisibleMaintenanceCount
               )
             }
           >
-            {visibleMaintenanceCount >=
-            buildingData.equipamentosManutencao.length
+            {visibleMaintenanceCount >= maintenanceEquipments.length
               ? "Mostrar menos"
               : "Expandir lista"}
           </button>

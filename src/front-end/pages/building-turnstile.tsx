@@ -13,6 +13,12 @@ export default function BuildingTurnstile() {
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
   const [building, setBuilding] = useState(buildingData);
+  const [brokenEquipments, setBrokenEquipments] = useState(
+    buildingData.equipamentosQuebrados
+  );
+  const [maintenanceEquipments, setMaintenanceEquipments] = useState(
+    buildingData.equipamentosManutencao
+  );
 
   //State que armazena o equipamento selecionado
   const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
@@ -94,8 +100,8 @@ export default function BuildingTurnstile() {
           {buildingData.entradasESaidas.length > 0 ? (
             buildingData.entradasESaidas
               .slice(0, visibleTurnstileCount)
-              .map((turnslite) => (
-                <tbody>
+              .map((turnslite, index) => (
+                <tbody key={index}>
                   <tr>
                     <th style={{ border: "1px solid black" }}>Id Catraca</th>
                     <td style={{ border: "1px solid black" }}>
@@ -172,8 +178,8 @@ export default function BuildingTurnstile() {
               <th style={{ border: "1px solid black" }}>Status</th>
               <th style={{ border: "1px solid black" }}>Custo</th>
             </tr>
-            {buildingData.equipamentosQuebrados.length > 0 ? (
-              buildingData.equipamentosQuebrados
+            {brokenEquipments.length > 0 ? (
+              brokenEquipments
                 .filter((equipments) => equipments.tipo === "Catraca")
                 .slice(0, visibleBrokenCount)
                 .map((equipment) => (
@@ -201,28 +207,36 @@ export default function BuildingTurnstile() {
                 <td>Nenhum equipamento quebrado</td>
               </tr>
             )}
+
             <Modal
               isOpen={modalBrokenOpen}
               onClose={() => setModalBrokenOpen(false)}
             >
               <h2>Arcar com custo</h2>
-              {renderEquipment(selectedEquipment)}
+              {renderEquipment(
+                selectedEquipment,
+                brokenEquipments,
+                setBrokenEquipments,
+                maintenanceEquipments,
+                setMaintenanceEquipments,
+                () => setModalBrokenOpen(false)
+              )}
             </Modal>
           </tbody>
         </table>
 
-        {buildingData.equipamentosQuebrados.length > 3 && (
+        {brokenEquipments.length > 3 && (
           <button
             style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
-                buildingData.equipamentosQuebrados.length,
+                brokenEquipments.length,
                 setVisibleBrokenCount
               )
             }
           >
-            {visibleBrokenCount >= buildingData.equipamentosQuebrados.length
+            {visibleBrokenCount >= brokenEquipments.length
               ? "Mostrar menos"
               : "Expandir lista"}
           </button>
@@ -244,8 +258,8 @@ export default function BuildingTurnstile() {
                 Data Prevista do Fim do Concerto
               </th>
             </tr>
-            {buildingData.equipamentosManutencao.length > 0 ? (
-              buildingData.equipamentosManutencao
+            {maintenanceEquipments.length > 0 ? (
+              maintenanceEquipments
                 .filter((equipment) => equipment.tipo === "Catraca")
                 .slice(0, visibleMaintenanceCount)
                 .map((equipment) => (
@@ -269,19 +283,18 @@ export default function BuildingTurnstile() {
           </tbody>
         </table>
 
-        {buildingData.equipamentosManutencao.length > 3 && (
+        {maintenanceEquipments.length > 3 && (
           <button
             style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,
-                buildingData.equipamentosManutencao.length,
+                maintenanceEquipments.length,
                 setVisibleMaintenanceCount
               )
             }
           >
-            {visibleMaintenanceCount >=
-            buildingData.equipamentosManutencao.length
+            {visibleMaintenanceCount >= maintenanceEquipments.length
               ? "Mostrar menos"
               : "Expandir lista"}
           </button>

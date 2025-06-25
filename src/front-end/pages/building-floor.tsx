@@ -8,7 +8,7 @@ import { Andar } from "../../back-end/types/building-type";
 import { createFloor } from "../../back-end/services/create/create-floor";
 import { addAttendant } from "../../back-end/services/create/add-attendant";
 import { AddCamera } from "../../back-end/services/create/add-camera";
-import { deleteEnterprise } from "../../back-end/services/delete-enterprise";
+import { deleteEnterprise } from "../../back-end/services/delete/delete-enterprise";
 
 export default function BuildingFloor() {
   const navigate = useNavigate();

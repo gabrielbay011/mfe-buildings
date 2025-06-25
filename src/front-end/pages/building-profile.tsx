@@ -15,6 +15,12 @@ export default function BuildingProfile() {
   //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const mockData = listBuildingsId(id);
+  const [brokenEquipments, setBrokenEquipments] = useState(
+    mockData.equipamentosQuebrados
+  );
+  const [maintenanceEquipments, setMaintenanceEquipments] = useState(
+    mockData.equipamentosManutencao
+  );
 
   //States relacioandos a abertura da modal
   const [modalFlowOpen, setModalFlowOpen] = useState(false);
@@ -334,8 +340,8 @@ export default function BuildingProfile() {
               <th style={{ border: "1px solid black" }}>Status</th>
               <th style={{ border: "1px solid black" }}>Custo</th>
             </tr>
-            {mockData.equipamentosQuebrados.length > 0 ? (
-              mockData.equipamentosQuebrados
+            {brokenEquipments.length > 0 ? (
+              brokenEquipments
                 .slice(0, visibleBrokenCount)
                 .map((equipment, index) => (
                   <tr
@@ -372,18 +378,18 @@ export default function BuildingProfile() {
           </tbody>
         </table>
 
-        {mockData.equipamentosQuebrados.length > 3 && (
+        {brokenEquipments.length > 3 && (
           <button
             style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
-                mockData.equipamentosQuebrados.length,
+                brokenEquipments.length,
                 setVisibleBrokenCount
               )
             }
           >
-            {visibleBrokenCount >= mockData.equipamentosQuebrados.length
+            {visibleBrokenCount >= brokenEquipments.length
               ? "Mostrar menos"
               : "Expandir lista"}
           </button>
@@ -394,7 +400,14 @@ export default function BuildingProfile() {
           onClose={() => setModalBrokenOpen(false)}
         >
           <h2>Arcar com custo</h2>
-          {renderEquipment(selectedEquipment)}
+          {renderEquipment(
+            selectedEquipment,
+            brokenEquipments,
+            setBrokenEquipments,
+            maintenanceEquipments,
+            setMaintenanceEquipments,
+            () => setModalBrokenOpen(false)
+          )}
         </Modal>
       </div>
 
@@ -413,8 +426,8 @@ export default function BuildingProfile() {
                 Data Prevista do Fim do Conserto
               </th>
             </tr>
-            {mockData.equipamentosManutencao.length > 0 ? (
-              mockData.equipamentosManutencao
+            {maintenanceEquipments.length > 0 ? (
+              maintenanceEquipments
                 .slice(0, visibleMaintenanceCount)
                 .map((equipment, index) => (
                   <tr key={index}>
@@ -444,18 +457,18 @@ export default function BuildingProfile() {
           </tbody>
         </table>
 
-        {mockData.equipamentosManutencao.length > 3 && (
+        {maintenanceEquipments.length > 3 && (
           <button
             style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,
-                mockData.equipamentosManutencao.length,
+                maintenanceEquipments.length,
                 setVisibleMaintenanceCount
               )
             }
           >
-            {visibleMaintenanceCount >= mockData.equipamentosManutencao.length
+            {visibleMaintenanceCount >= maintenanceEquipments.length
               ? "Mostrar menos"
               : "Expandir lista"}
           </button>
