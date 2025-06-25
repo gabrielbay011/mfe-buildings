@@ -165,6 +165,7 @@ export default function BuildingCamera() {
 
         {buildingData.cameras.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleCameraCount,
@@ -232,6 +233,7 @@ export default function BuildingCamera() {
 
         {buildingData.equipamentosQuebrados.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
@@ -289,6 +291,7 @@ export default function BuildingCamera() {
 
         {buildingData.equipamentosManutencao.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,

@@ -8,9 +8,11 @@ import { Andar } from "../../back-end/types/building-type";
 import { createFloor } from "../../back-end/services/create/create-floor";
 import { addAttendant } from "../../back-end/services/create/add-attendant";
 import { AddCamera } from "../../back-end/services/create/add-camera";
+import { deleteEnterprise } from "../../back-end/services/delete-enterprise";
 
 export default function BuildingFloor() {
   const navigate = useNavigate();
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   //States realacionados aos dados que serão exibidos
   const { id } = useParams();
@@ -65,6 +67,7 @@ export default function BuildingFloor() {
                 <b>Quantidade de atendentes:</b> {floor.atendentes}
               </p>
               <button
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   setSelectedFloorIndex(index);
                   setModalAttendantOpen(true);
@@ -80,20 +83,41 @@ export default function BuildingFloor() {
               </p>
               {floor.empresas && floor.empresas.length > 0 ? (
                 <>
-                  {floor.empresas.map((enterprise) => (
+                  {floor.empresas.map((enterprise, index) => (
                     <div key={enterprise.nome}>
-                      <h3>{enterprise.nome}</h3>
+                      <div
+                        key={index}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                      >
+                        <h3>{enterprise.nome}</h3>
+
+                        {hoveredIndex === index && (
+                          <button
+                            style={{ cursor: "pointer" }}
+                            onClick={() => deleteEnterprise(enterprise.id)}
+                          >
+                            Deletar
+                          </button>
+                        )}
+                      </div>
                       <p>Tráfego de pessoas: {enterprise.trafego}</p>
                     </div>
                   ))}
                   {floor.empresas.length < 2 && (
-                    <button onClick={() => createEnterprise(floor)}>
+                    <button
+                      style={{ cursor: "pointer" }}
+                      onClick={() => createEnterprise(floor)}
+                    >
                       Adicionar empresa
                     </button>
                   )}
                 </>
               ) : (
-                <button onClick={() => createEnterprise(floor)}>
+                <button
+                  style={{ cursor: "pointer" }}
+                  onClick={() => createEnterprise(floor)}
+                >
                   Adicionar empresa
                 </button>
               )}
@@ -104,6 +128,7 @@ export default function BuildingFloor() {
             <b>Quantidade de câmeras:</b> {floor.cameras}
           </p>
           <button
+            style={{ cursor: "pointer" }}
             onClick={() => {
               setSelectedFloorIndex(index);
               setModalCameraOpen(true);
@@ -143,7 +168,10 @@ export default function BuildingFloor() {
         />
       </Modal>
 
-      <button onClick={() => createFloor(floors, setFloors)}>
+      <button
+        style={{ cursor: "pointer" }}
+        onClick={() => createFloor(floors, setFloors)}
+      >
         Adicionar Andar
       </button>
     </div>

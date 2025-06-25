@@ -33,6 +33,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
     position: "absolute",
     top: 10,
     right: 10,
+    cursor: "pointer",
   };
 
   return (

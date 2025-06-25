@@ -65,6 +65,7 @@ export default function BuildingTurnstile() {
         </p>
 
         <button
+          style={{ cursor: "pointer" }}
           onClick={() => {
             setModalAddTurnstileOpen(true);
           }}
@@ -144,6 +145,7 @@ export default function BuildingTurnstile() {
 
         {buildingData.entradasESaidas.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleTurnstileCount,
@@ -211,6 +213,7 @@ export default function BuildingTurnstile() {
 
         {buildingData.equipamentosQuebrados.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
@@ -268,6 +271,7 @@ export default function BuildingTurnstile() {
 
         {buildingData.equipamentosManutencao.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,

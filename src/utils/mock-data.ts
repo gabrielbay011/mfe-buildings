@@ -37,14 +37,14 @@ export const mockBuildings = [
       {
         nome: "2ºAndar",
         empresas: [
-          { nome: "Empresa A", trafego: 60 },
-          { nome: "Empresa B", trafego: 70 },
+          { id: "1", nome: "Empresa A", trafego: 60 },
+          { id: "2", nome: "Empresa B", trafego: 70 },
         ],
         cameras: 5,
       },
       {
         nome: "3ºAndar",
-        empresas: [{ nome: "Empresa C", trafego: 30 }],
+        empresas: [{ id: "3", nome: "Empresa C", trafego: 30 }],
         cameras: 5,
       },
       {

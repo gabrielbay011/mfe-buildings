@@ -3,6 +3,7 @@ import { createBuildingSchema } from "../schemas/create-building-schema";
 
 //Tipo referente a empresa
 type Empresa = {
+  id: string;
   nome: string;
   trafego: number;
 };

@@ -21,7 +21,9 @@ export function renderEquipment(equipment: any) {
       <p>Equipamento: {equipment.tipo}</p>
       <p>Status: {equipment.status}</p>
       <p>Custo: {equipment.custo}</p>
-      <button onClick={handleEquipment}>Sim</button>
+      <button style={{ cursor: "pointer" }} onClick={handleEquipment}>
+        Sim
+      </button>
     </div>
   );
 }

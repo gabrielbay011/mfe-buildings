@@ -101,8 +101,12 @@ export default function Buildings() {
         </select>
 
         <div>
-          <button onClick={() => setModalBalanceOpen(true)}>Saldo</button>
-
+          <button
+            style={{ cursor: "pointer" }}
+            onClick={() => setModalBalanceOpen(true)}
+          >
+            Saldo
+          </button>
           <Modal
             isOpen={modalBalanceOpen}
             onClose={() => setModalBalanceOpen(false)}
@@ -118,13 +122,18 @@ export default function Buildings() {
         <form onSubmit={handleSubmitSearch(handleSearch)}>
           <input type="text" {...registerSearch("search")} />
 
-          <button type="submit">Buscar</button>
+          <button style={{ cursor: "pointer" }} type="submit">
+            Buscar
+          </button>
         </form>
       </div>
 
       {/* Botão e modal para criar novos edifícios */}
       <div>
-        <button onClick={() => setModalBuildingOpen(true)}>
+        <button
+          style={{ cursor: "pointer" }}
+          onClick={() => setModalBuildingOpen(true)}
+        >
           Criar Edifício
         </button>
 
@@ -141,7 +150,9 @@ export default function Buildings() {
             )}
             <br />
 
-            <button type="submit">Salvar</button>
+            <button style={{ cursor: "pointer" }} type="submit">
+              Salvar
+            </button>
           </form>
         </Modal>
       </div>
@@ -164,8 +175,10 @@ export default function Buildings() {
 
       {/* Botões para navegar entra as telas de edifícios e dashboards */}
       <div>
-        <button onClick={() => navigate("/")}>Edifícios</button>
-        <button>Dashboards</button>
+        <button style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
+          Edifícios
+        </button>
+        <button style={{ cursor: "pointer" }}>Dashboards</button>
       </div>
     </div>
   );

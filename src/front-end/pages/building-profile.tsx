@@ -5,6 +5,9 @@ import Modal from "../../utils/components/modal";
 import { RenderFlowHistory } from "../../back-end/services/render/render-flow-history";
 import { renderPerson } from "../../back-end/services/render/render-person";
 import { renderEquipment } from "../../back-end/services/render/render-equipment";
+import { required } from "zod/dist/types/v4/core/util";
+import { useForm } from "react-hook-form";
+import { Building } from "../../back-end/types/building-type";
 
 export default function BuildingProfile() {
   const navigate = useNavigate();
@@ -17,15 +20,31 @@ export default function BuildingProfile() {
   const [modalFlowOpen, setModalFlowOpen] = useState(false);
   const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
   const [modalPersonOpen, setModalPersonOpen] = useState(false);
+  const [modalNameOpen, setModalNameOpen] = useState(false);
+  const [modalPhotoOpen, setModalPhotoOpen] = useState(false);
 
   //States que armazenam o equipamento selecionado e a pessoa selecioanda
   const [selectedPerson, setSelectedPerson] = useState<any>(null);
   const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
+  const [name, setName] = useState<any>(mockData.nome);
+  const [photo, setPhoto] = useState<any>(mockData.foto);
 
   //States relacionados a quantidade de itens visíveis
   const [visibleEntriesCount, setVisibleEntriesCount] = useState(3);
   const [visibleMaintenanceCount, setVisibleMaintenanceCount] = useState(3);
   const [visibleBrokenCount, setVisibleBrokenCount] = useState(3);
+
+  const {
+    register: registerName,
+    handleSubmit: handleSubmitName,
+    formState: { errors: nameErrors },
+  } = useForm();
+
+  const {
+    register: registerPhoto,
+    handleSubmit: handleSubmitPhoto,
+    formState: { errors: photoErrors },
+  } = useForm();
 
   //Função que alterna entre expandir e recolher a lista de itens
   const toggleList = (
@@ -67,11 +86,21 @@ export default function BuildingProfile() {
         <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
-              <th style={{ border: "1px solid black" }}>
-                {mockData.foto || "--"}
+              <th
+                style={{ border: "1px solid black", cursor: "pointer" }}
+                onClick={() => {
+                  setModalPhotoOpen(true);
+                }}
+              >
+                {photo || "--"}
               </th>
-              <th style={{ border: "1px solid black" }}>
-                {mockData.nome || "--"}
+              <th
+                style={{ border: "1px solid black", cursor: "pointer" }}
+                onClick={() => {
+                  setModalNameOpen(true);
+                }}
+              >
+                {name || "--"}
               </th>
             </tr>
             <tr>
@@ -115,6 +144,54 @@ export default function BuildingProfile() {
             </tr>
           </tbody>
         </table>
+
+        <Modal isOpen={modalPhotoOpen} onClose={() => setModalPhotoOpen(false)}>
+          <h2>Alterar foto do edifício</h2>
+
+          <form
+            onSubmit={handleSubmitPhoto((data) => {
+              setPhoto(data.photo);
+              setModalPhotoOpen(false);
+            })}
+          >
+            <input
+              type="text"
+              {...registerPhoto("photo", {
+                required: "O campo foto é obrigatório",
+              })}
+            />
+            <button style={{ cursor: "pointer" }} type="submit">
+              Alterar
+            </button>
+            {typeof photoErrors.photo?.message === "string" && (
+              <p style={{ color: "red" }}>{photoErrors.photo.message}</p>
+            )}
+          </form>
+        </Modal>
+
+        <Modal isOpen={modalNameOpen} onClose={() => setModalNameOpen(false)}>
+          <h2>Alterar nome do edifício</h2>
+
+          <form
+            onSubmit={handleSubmitName((data) => {
+              setName(data.name);
+              setModalPhotoOpen(false);
+            })}
+          >
+            <input
+              type="text"
+              {...registerName("name", {
+                required: "O campo nome é obrigatório",
+              })}
+            />
+            <button style={{ cursor: "pointer" }} type="submit">
+              Alterar
+            </button>
+            {typeof nameErrors.name?.message === "string" && (
+              <p style={{ color: "red" }}>{nameErrors.name.message}</p>
+            )}
+          </form>
+        </Modal>
       </div>
 
       {/* Exibe o fluxo de pessoas e modal pra ver fluxo completo */}
@@ -146,7 +223,10 @@ export default function BuildingProfile() {
           </tbody>
         </table>
 
-        <button onClick={() => setModalFlowOpen(true)}>
+        <button
+          style={{ cursor: "pointer" }}
+          onClick={() => setModalFlowOpen(true)}
+        >
           Ver histórico completo
         </button>
 
@@ -219,6 +299,7 @@ export default function BuildingProfile() {
 
         {mockData.entradasESaidas.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleEntriesCount,
@@ -293,6 +374,7 @@ export default function BuildingProfile() {
 
         {mockData.equipamentosQuebrados.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
@@ -364,6 +446,7 @@ export default function BuildingProfile() {
 
         {mockData.equipamentosManutencao.length > 3 && (
           <button
+            style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,

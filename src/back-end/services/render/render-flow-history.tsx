@@ -40,7 +40,7 @@ export function RenderFlowHistory({ building }: Props) {
       </table>
 
       {total > 3 && (
-        <button onClick={toggleList}>
+        <button style={{ cursor: "pointer" }} onClick={toggleList}>
           {isExpanded ? "Mostrar menos" : "Expandir lista"}
         </button>
       )}
