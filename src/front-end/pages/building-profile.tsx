@@ -5,9 +5,9 @@ import Modal from "../../utils/components/modal";
 import { RenderFlowHistory } from "../../back-end/services/render/render-flow-history";
 import { renderPerson } from "../../back-end/services/render/render-person";
 import { renderEquipment } from "../../back-end/services/render/render-equipment";
-import { required } from "zod/dist/types/v4/core/util";
 import { useForm } from "react-hook-form";
-import { Building } from "../../back-end/types/building-type";
+import { Person } from "../../back-end/types/person-type";
+import { Equipment } from "../../back-end/types/equipment-type";
 
 export default function BuildingProfile() {
   const navigate = useNavigate();
@@ -16,10 +16,10 @@ export default function BuildingProfile() {
   const { id } = useParams();
   const mockData = listBuildingsId(id);
   const [brokenEquipments, setBrokenEquipments] = useState(
-    mockData.equipamentosQuebrados
+    mockData.equipmentBroken
   );
   const [maintenanceEquipments, setMaintenanceEquipments] = useState(
-    mockData.equipamentosManutencao
+    mockData.equipmentMaintenance
   );
 
   //States relacioandos a abertura da modal
@@ -30,10 +30,10 @@ export default function BuildingProfile() {
   const [modalPhotoOpen, setModalPhotoOpen] = useState(false);
 
   //States que armazenam o equipamento selecionado e a pessoa selecioanda
-  const [selectedPerson, setSelectedPerson] = useState<any>(null);
-  const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
-  const [name, setName] = useState<any>(mockData.nome);
-  const [photo, setPhoto] = useState<any>(mockData.foto);
+  const [selectedPerson, setSelectedPerson] = useState<Person>(null);
+  const [selectedEquipment, setSelectedEquipment] = useState<Equipment>(null);
+  const [name, setName] = useState<any>(mockData.name);
+  const [photo, setPhoto] = useState<any>(mockData.photo);
 
   //States relacionados a quantidade de itens visíveis
   const [visibleEntriesCount, setVisibleEntriesCount] = useState(3);
@@ -117,7 +117,7 @@ export default function BuildingProfile() {
                 Andares
               </th>
               <td style={{ border: "1px solid black" }}>
-                {mockData.qtdAndares || "--"}
+                {mockData.qtyFloors || "--"}
               </td>
             </tr>
             <tr>
@@ -128,7 +128,7 @@ export default function BuildingProfile() {
                 Catracas
               </th>
               <td style={{ border: "1px solid black" }}>
-                {mockData.qtdCatracas || "--"}
+                {mockData.qtyTurnstiles || "--"}
               </td>
             </tr>
             <tr>
@@ -139,13 +139,13 @@ export default function BuildingProfile() {
                 Câmeras
               </th>
               <td style={{ border: "1px solid black" }}>
-                {mockData.qtdCameras || "--"}
+                {mockData.qtyCameras || "--"}
               </td>
             </tr>
             <tr>
               <th style={{ border: "1px solid black" }}>Elevadores</th>
               <td style={{ border: "1px solid black" }}>
-                {mockData.qtdElevadores || "--"}
+                {mockData.qtyElevators || "--"}
               </td>
             </tr>
           </tbody>
@@ -181,7 +181,7 @@ export default function BuildingProfile() {
           <form
             onSubmit={handleSubmitName((data) => {
               setName(data.name);
-              setModalPhotoOpen(false);
+              setModalNameOpen(false);
             })}
           >
             <input
@@ -214,16 +214,16 @@ export default function BuildingProfile() {
             </tr>
             <tr>
               <td style={{ border: "1px solid black" }}>
-                {mockData.fluxoPessoas.hora || "--"}
+                {mockData.flowPeople.time || "--"}
               </td>
               <td style={{ border: "1px solid black" }}>
-                {mockData.fluxoPessoas.dia || "--"}
+                {mockData.flowPeople.day || "--"}
               </td>
               <td style={{ border: "1px solid black" }}>
-                {mockData.fluxoPessoas.semana || "--"}
+                {mockData.flowPeople.week || "--"}
               </td>
               <td style={{ border: "1px solid black" }}>
-                {mockData.fluxoPessoas.mes || "--"}
+                {mockData.flowPeople.month || "--"}
               </td>
             </tr>
           </tbody>
@@ -254,8 +254,8 @@ export default function BuildingProfile() {
               <th style={{ border: "1px solid black" }}>Entrou</th>
               <th style={{ border: "1px solid black" }}>Saiu</th>
             </tr>
-            {mockData.entradasESaidas?.length > 0 ? (
-              mockData.entradasESaidas
+            {mockData.inputsAndOutput?.length > 0 ? (
+              mockData.inputsAndOutput
                 .slice(0, visibleEntriesCount)
                 .map((person, index) => (
                   <tr key={index}>
@@ -266,7 +266,7 @@ export default function BuildingProfile() {
                         setModalPersonOpen(true);
                       }}
                     >
-                      {person.foto || "--"}
+                      {person.photo || "--"}
                     </td>
                     <td
                       style={{ border: "1px solid black", cursor: "pointer" }}
@@ -275,12 +275,12 @@ export default function BuildingProfile() {
                         setModalPersonOpen(true);
                       }}
                     >
-                      {person.nome || "--"}
+                      {person.name || "--"}
                     </td>
                     <td
                       style={{
                         border: "1px solid black",
-                        backgroundColor: person.entrou === true ? "green" : "",
+                        backgroundColor: person.entered === true ? "green" : "",
                       }}
                     >
                       entrou
@@ -288,7 +288,7 @@ export default function BuildingProfile() {
                     <td
                       style={{
                         border: "1px solid black",
-                        backgroundColor: person.saiu === true ? "green" : "",
+                        backgroundColor: person.exit === true ? "green" : "",
                       }}
                     >
                       saiu
@@ -303,18 +303,18 @@ export default function BuildingProfile() {
           </tbody>
         </table>
 
-        {mockData.entradasESaidas.length > 3 && (
+        {mockData.inputsAndOutput.length > 3 && (
           <button
             style={{ cursor: "pointer" }}
             onClick={() =>
               toggleList(
                 visibleEntriesCount,
-                mockData.entradasESaidas.length,
+                mockData.inputsAndOutput.length,
                 setVisibleEntriesCount
               )
             }
           >
-            {visibleEntriesCount >= mockData.entradasESaidas.length
+            {visibleEntriesCount >= mockData.inputsAndOutput.length
               ? "Mostrar menos"
               : "Expandir lista"}
           </button>
@@ -355,18 +355,18 @@ export default function BuildingProfile() {
                     <td
                       style={{ border: "1px solid black" }}
                       title={
-                        equipment.tipo === "Câmera"
-                          ? "Andar: " + equipment.andar
+                        equipment.type === "Câmera"
+                          ? "Andar: " + equipment.floor
                           : undefined
                       }
                     >
-                      {equipment.tipo}
+                      {equipment.type}
                     </td>
                     <td style={{ border: "1px solid black" }}>
                       {equipment.status}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.custo}
+                      {equipment.cost}
                     </td>
                   </tr>
                 ))
@@ -434,18 +434,18 @@ export default function BuildingProfile() {
                     <td
                       style={{ border: "1px solid black" }}
                       title={
-                        equipment.tipo === "Câmera"
-                          ? "Andar: " + equipment.andar
+                        equipment.type === "Câmera"
+                          ? "Andar: " + equipment.floor
                           : undefined
                       }
                     >
-                      {equipment.tipo}
+                      {equipment.type}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.dataInicio}
+                      {equipment.dateStart}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.dataPrevista}
+                      {equipment.scheduledDate}
                     </td>
                   </tr>
                 ))

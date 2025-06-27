@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { listBuildingsId } from "../../back-end/services/list/list-building-id";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Modal from "../../utils/components/modal";
 import { renderEquipment } from "../../back-end/services/render/render-equipment";
 import RenderConfirm from "../../back-end/services/render/render-confirm";
 import { addTurnstile } from "../../back-end/services/create/add-turnstile";
+import { Building } from "../../back-end/types/building-type";
 
 export default function BuildingTurnstile() {
   const navigate = useNavigate();
@@ -12,13 +13,18 @@ export default function BuildingTurnstile() {
   //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
-  const [building, setBuilding] = useState(buildingData);
+  const [building, setBuilding] = useState<Building>(buildingData);
   const [brokenEquipments, setBrokenEquipments] = useState(
-    buildingData.equipamentosQuebrados
+    buildingData.equipmentBroken
   );
   const [maintenanceEquipments, setMaintenanceEquipments] = useState(
-    buildingData.equipamentosManutencao
+    buildingData.equipmentMaintenance
   );
+  const groupedEntries = buildingData.inputsAndOutput.reduce((acc, entry) => {
+    if (!acc[entry.idTurnstile]) acc[entry.idTurnstile] = [];
+    acc[entry.idTurnstile].push(entry);
+    return acc;
+  }, {} as Record<string, typeof buildingData.inputsAndOutput>);
 
   //State que armazena o equipamento selecionado
   const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
@@ -28,7 +34,9 @@ export default function BuildingTurnstile() {
   const [modalAddTurnstileOpen, setModalAddTurnstileOpen] = useState(false);
 
   //States relacionados a quantidade de itens visíveis
-  const [visibleTurnstileCount, setVisibleTurnstileCount] = useState(3);
+  const [visibleTurnstileCounts, setVisibleTurnstileCounts] = useState<
+    Record<string, number>
+  >({});
   const [visibleMaintenanceCount, setVisibleMaintenanceCount] = useState(3);
   const [visibleBrokenCount, setVisibleBrokenCount] = useState(3);
 
@@ -40,6 +48,17 @@ export default function BuildingTurnstile() {
   ) => {
     const isExpanded = current >= total;
     set(isExpanded ? 3 : Math.min(current + 10, total));
+  };
+
+  const toggleGroupedList = (catracaId: string, total: number) => {
+    setVisibleTurnstileCounts((prev) => {
+      const current = prev[catracaId] ?? 3;
+      const isExpanded = current >= total;
+      return {
+        ...prev,
+        [catracaId]: isExpanded ? 3 : Math.min(current + 10, total),
+      };
+    });
   };
 
   return (
@@ -67,7 +86,7 @@ export default function BuildingTurnstile() {
 
         <p>
           <b>Quantidade de catracas: </b>
-          {building.qtdCatracas}
+          {building.qtyTurnstiles}
         </p>
 
         <button
@@ -97,35 +116,29 @@ export default function BuildingTurnstile() {
         <h2>Tráfego de Pessoas por Catraca:</h2>
 
         <table>
-          {buildingData.entradasESaidas.length > 0 ? (
-            buildingData.entradasESaidas
-              .slice(0, visibleTurnstileCount)
-              .map((turnslite, index) => (
-                <tbody key={index}>
-                  <tr>
-                    <th style={{ border: "1px solid black" }}>Id Catraca</th>
-                    <td style={{ border: "1px solid black" }}>
-                      {turnslite.idCatraca}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th style={{ border: "1px solid black" }}>Foto</th>
-                    <th style={{ border: "1px solid black" }}>Nome</th>
-                    <th style={{ border: "1px solid black" }}>Entrou</th>
-                    <th style={{ border: "1px solid black" }}>Saiu</th>
-                  </tr>
-                  <tr>
-                    <td style={{ border: "1px solid black" }}>
-                      {turnslite.foto}
-                    </td>
-                    <td style={{ border: "1px solid black" }}>
-                      {turnslite.nome}
-                    </td>
+          {Object.entries(groupedEntries).map(([catracaId, entries]) => {
+            const visibleCount = visibleTurnstileCounts[catracaId] ?? 3;
+
+            return (
+              <tbody key={catracaId}>
+                <tr>
+                  <th style={{ border: "1px solid black" }}>Id Catraca</th>
+                  <td style={{ border: "1px solid black" }}>{catracaId}</td>
+                </tr>
+                <tr>
+                  <th style={{ border: "1px solid black" }}>Foto</th>
+                  <th style={{ border: "1px solid black" }}>Nome</th>
+                  <th style={{ border: "1px solid black" }}>Entrou</th>
+                  <th style={{ border: "1px solid black" }}>Saiu</th>
+                </tr>
+                {entries.slice(0, visibleCount).map((entry, index) => (
+                  <tr key={index}>
+                    <td style={{ border: "1px solid black" }}>{entry.photo}</td>
+                    <td style={{ border: "1px solid black" }}>{entry.name}</td>
                     <td
                       style={{
                         border: "1px solid black",
-                        backgroundColor:
-                          turnslite.entrou === true ? "green" : "",
+                        backgroundColor: entry.entered ? "green" : "",
                       }}
                     >
                       entrou
@@ -133,38 +146,33 @@ export default function BuildingTurnstile() {
                     <td
                       style={{
                         border: "1px solid black",
-                        backgroundColor:
-                          turnslite.entrou === false ? "green" : "",
+                        backgroundColor: !entry.entered ? "green" : "",
                       }}
                     >
                       saiu
                     </td>
                   </tr>
-                </tbody>
-              ))
-          ) : (
-            <tr>
-              <td>Nenhum registro encontrado</td>
-            </tr>
-          )}
+                ))}
+                {entries.length > 3 && (
+                  <tr>
+                    <td>
+                      <button
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          toggleGroupedList(catracaId, entries.length)
+                        }
+                      >
+                        {visibleCount >= entries.length
+                          ? "Mostrar menos"
+                          : "Expandir lista"}
+                      </button>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            );
+          })}
         </table>
-
-        {buildingData.entradasESaidas.length > 3 && (
-          <button
-            style={{ cursor: "pointer" }}
-            onClick={() =>
-              toggleList(
-                visibleTurnstileCount,
-                buildingData.entradasESaidas.length,
-                setVisibleTurnstileCount
-              )
-            }
-          >
-            {visibleTurnstileCount >= buildingData.entradasESaidas.length
-              ? "Mostrar menos"
-              : "Expandir lista"}
-          </button>
-        )}
       </div>
 
       {/* Exibe os equipamentos quebrados e modal para arcar com o custo do equipamento */}
@@ -180,7 +188,7 @@ export default function BuildingTurnstile() {
             </tr>
             {brokenEquipments.length > 0 ? (
               brokenEquipments
-                .filter((equipments) => equipments.tipo === "Catraca")
+                .filter((equipments) => equipments.type === "Catraca")
                 .slice(0, visibleBrokenCount)
                 .map((equipment) => (
                   <tr
@@ -198,7 +206,7 @@ export default function BuildingTurnstile() {
                       {equipment.status}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.custo}
+                      {equipment.cost}
                     </td>
                   </tr>
                 ))
@@ -260,7 +268,7 @@ export default function BuildingTurnstile() {
             </tr>
             {maintenanceEquipments.length > 0 ? (
               maintenanceEquipments
-                .filter((equipment) => equipment.tipo === "Catraca")
+                .filter((equipment) => equipment.type === "Catraca")
                 .slice(0, visibleMaintenanceCount)
                 .map((equipment) => (
                   <tr key={equipment.id}>
@@ -268,10 +276,10 @@ export default function BuildingTurnstile() {
                       {equipment.id}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.dataInicio}
+                      {equipment.dateStart}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.dataPrevista}
+                      {equipment.scheduledDate}
                     </td>
                   </tr>
                 ))

@@ -23,6 +23,13 @@ import { Balances } from "../../back-end/types/balance-types";
 export default function Buildings() {
   const navigate = useNavigate();
 
+  //States relacionados aos dados que serão exiidos
+  const [buildings, setBuildings] = useState<Building[]>([]);
+  const [filteredBuildings, setFilteredBuildings] =
+    useState<Building[]>(mockBuildings);
+  const [balances, setBalances] = useState<Balances[]>([]);
+  const [sortOption, setSortOption] = useState("");
+
   //Inicialização do formulário de criar edifiício
   const {
     register: registerCreate,
@@ -37,27 +44,22 @@ export default function Buildings() {
   const { register: registerSearch, handleSubmit: handleSubmitSearch } =
     useForm<Search>();
 
-  //States relacionados ao edifício
+  //State relacionado a modal de edifício
   const [modalBuildingOpen, setModalBuildingOpen] = useState(false);
-  const [buildings, setBuildings] = useState<Building[]>([]);
-  const [filteredBuildings, setFilteredBuildings] =
-    useState<Building[]>(mockBuildings);
 
-  //States relaciondados ao saldo
+  //State relaciondado a modal de saldo
   const [modalBalanceOpen, setModalBalanceOpen] = useState(false);
-  const [balances, setBalances] = useState<Balances[]>([]);
-  const [sortOption, setSortOption] = useState("");
 
   //Função que filtra os edifícios com base no que o usuário pesquisou
-  const handleSearch = (data: Search) => {
+  const handleSearchBuilding = (data: Search) => {
     const filtered = filterBuildings(buildings, data.search);
     setFilteredBuildings(filtered);
   };
 
   //Função executada no envio do formulário e retorna sucesso ou erro ao tentar criar uma empresa
-  async function handleCreateBuilding(data: Building) {
+  function handleCreateBuilding(data: Building) {
     try {
-      await createBuilding(data);
+      createBuilding(data);
       resetCreate();
     } catch (err: any) {
       alert("Erro: " + err.message);
@@ -90,14 +92,25 @@ export default function Buildings() {
       {/* Select para ordenar os edifícios e modal para exibir o histórico de saldo */}
       <div style={{ display: "flex", gap: "10px" }}>
         <select
+          id="sort-select"
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
         >
-          <option value="">Ordenar por</option>
-          <option value="name-asc">Ordem nome (A-Z)</option>
-          <option value="name-desc">Ordem nome (Z-A)</option>
-          <option value="date-asc">Ordem data (Mais recente)</option>
-          <option value="date-desc">Ordem data (Mais antigo)</option>
+          <option value="" id="sort-default">
+            Ordenar por
+          </option>
+          <option value="name-asc" id="name-asc">
+            Ordem nome (A-Z)
+          </option>
+          <option value="name-desc" id="name-desc">
+            Ordem nome (Z-A)
+          </option>
+          <option value="date-asc" id="date-asc">
+            Ordem data (Mais recente)
+          </option>
+          <option value="date-desc" id="date-desc">
+            Ordem data (Mais antigo)
+          </option>
         </select>
 
         <div>
@@ -119,8 +132,13 @@ export default function Buildings() {
 
       {/* Campo para pesquisar edifício */}
       <div>
-        <form onSubmit={handleSubmitSearch(handleSearch)}>
-          <input type="text" {...registerSearch("search")} />
+        <form
+          onSubmit={handleSubmitSearch(handleSearchBuilding)}
+          autoComplete="off"
+        >
+          <label htmlFor="search">Pesquisar edifiício:</label>
+          <br />
+          <input type="text" id="search" {...registerSearch("search")} />
 
           <button style={{ cursor: "pointer" }} type="submit">
             Buscar
@@ -142,11 +160,15 @@ export default function Buildings() {
           onClose={() => setModalBuildingOpen(false)}
         >
           <h2>Criar Edifício</h2>
-          <form onSubmit={handleSubmitCreate(handleCreateBuilding)}>
-            <label htmlFor="buildingName">Nome</label>
-            <input type="text" {...registerCreate("nome")} />
-            {createErrors.nome && (
-              <p style={{ color: "red" }}>{createErrors.nome.message}</p>
+          <form
+            onSubmit={handleSubmitCreate(handleCreateBuilding)}
+            autoComplete="off"
+          >
+            <label htmlFor="name">Nome:</label>
+            <br />
+            <input type="text" id="name" {...registerCreate("name")} />
+            {createErrors.name && (
+              <p style={{ color: "red" }}>{createErrors.name.message}</p>
             )}
             <br />
 

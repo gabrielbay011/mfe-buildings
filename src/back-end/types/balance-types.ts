@@ -1,9 +1,9 @@
 //Tipo referente ao saldo
 export type Balances = {
   id: string;
-  tipo: string;
-  data: string;
-  valor: string;
-  hora: string;
-  saldoAtual: string;
+  type: string;
+  date: string;
+  value: string;
+  time: string;
+  currentBalance: string;
 };

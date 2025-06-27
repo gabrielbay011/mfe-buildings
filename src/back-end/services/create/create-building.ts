@@ -1,21 +1,16 @@
+import { Building, CreateBuildingType } from "../../types/building-type";
 import { buildingAlreadyExists } from "../../validators/building-validations";
 
 //Função para criar um edifício
-export async function createBuilding(data: any) {
-  try {
-    const newBuilding = {
-      nome: data.nome,
-    };
+export function createBuilding(data: CreateBuildingType): CreateBuildingType {
+  const newBuilding: CreateBuildingType = {
+    name: data.name,
+  };
 
-    if (buildingAlreadyExists(data.nome)) {
-      throw new Error("Prédio já cadastrado");
-    }
-
-    // eslint-disable-next-line no-console
-    console.log("Prédio cadastrado: ", newBuilding);
-
-    return newBuilding;
-  } catch (err) {
-    throw err;
+  if (buildingAlreadyExists(data.name)) {
+    throw new Error("Prédio já cadastrado");
   }
+
+  alert("Edifício criado com sucesso");
+  return newBuilding;
 }

@@ -11,14 +11,14 @@ export function renderEquipment(
   if (!equipment) return <p>Equipamento não encontrado</p>;
 
   const handleEquipment = () => {
-    if (mockUsers[0].saldo < equipment.custo) {
+    if (mockUsers[0].profit < equipment.cost) {
       alert("Erro: Saldo insuficiente");
       return;
     }
 
     const now = new Date();
-    const dataInicio = now.toISOString().split("T")[0];
-    const dataPrevista = new Date(now.setDate(now.getDate() + 5))
+    const dateStart = now.toISOString().split("T")[0];
+    const scheduledDate = new Date(now.setDate(now.getDate() + 5))
       .toISOString()
       .split("T")[0];
 
@@ -29,8 +29,8 @@ export function renderEquipment(
     //Adiciona equipamento na manutenção
     const newEquipment = {
       ...equipment,
-      dataInicio,
-      dataPrevista,
+      dateStart,
+      scheduledDate,
     };
     setMaintenanceEquipments([...maintenanceEquipments, newEquipment]);
 
@@ -40,9 +40,9 @@ export function renderEquipment(
 
   return (
     <div>
-      <p>Equipamento: {equipment.tipo}</p>
+      <p>Equipamento: {equipment.type}</p>
       <p>Status: {equipment.status}</p>
-      <p>Custo: {equipment.custo}</p>
+      <p>Custo: {equipment.cost}</p>
       <button style={{ cursor: "pointer" }} onClick={handleEquipment}>
         Sim
       </button>

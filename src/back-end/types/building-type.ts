@@ -2,84 +2,85 @@ import { z } from "zod";
 import { createBuildingSchema } from "../schemas/create-building-schema";
 
 //Tipo referente a empresa
-type Empresa = {
+export type Enterprise = {
   id: string;
-  nome: string;
-  trafego: number;
+  name: string;
+  traffic: number;
 };
 
 //Tipo referente ao andar
-export type Andar = {
-  nome: string;
+export type Floor = {
+  name: string;
   cameras: number;
-  atendentes?: number;
-  empresas?: Empresa[];
+  attendants?: number;
+  enterprises?: Enterprise[];
 };
 
 //Tipo referente ao edifício
 export type Building = {
   id: string;
-  nome: string;
-  foto: string;
-  dataCriacao: string;
-  qtdAndares: string;
-  qtdCatracas: string;
-  qtdCameras: string;
-  qtdElevadores: string;
-  totalCapturaHora: number;
-  totalCapturaHoje: number;
-  totalCapturaMes: number;
-  totalCaptura: number;
-  andares: Andar[];
+  name: string;
+  photo: string;
+  creationDate: string;
+  qtyFloors: number;
+  qtyTurnstiles: number;
+  qtyCameras: number;
+  qtyElevators: number;
+  totalCaptureTime: number;
+  totalCaptureToday: number;
+  totalCaptureMonth: number;
+  totalCaptures: number;
+  floors: Floor[];
   cameras: {
     id: string;
-    qtdCapturaHora: number;
-    qtdCapturaHoje: number;
-    qtdCapturaMes: number;
-    totalCapturas: number;
-    horarioCaptura: string;
+    qtyCaptureTime: number;
+    qtyCaptureToday: number;
+    qtyCaptureMonth: number;
+    totalCaptures: number;
+    scheduledCapture: string;
   }[];
-  fluxoPessoas: {
-    hora: number;
-    dia: number;
-    semana: number;
-    mes: number;
+  flowPeople: {
+    time: number;
+    day: number;
+    week: number;
+    month: number;
   };
-  entradasESaidas: {
-    foto: string;
-    nome: string;
-    entrou: boolean;
-    saiu: boolean;
+  inputsAndOutput: {
+    idTurnstile: string;
+    photo: string;
+    name: string;
+    entered: boolean;
+    exit: boolean;
     cpf: string;
     rg: string;
-    sobrenome: string;
-    telefone: string;
+    surname: string;
+    telphone: string;
     cep: string;
-    estado: string;
-    cidade: string;
-    bairro: string;
-    rua: string;
-    numero: string;
+    state: string;
+    city: string;
+    district: string;
+    road: string;
+    number: string;
     qrCode: string;
-    dataCadastro: string;
+    dateRegistration: string;
   }[];
-  equipamentosQuebrados: {
+  equipmentBroken: {
     id: string;
-    tipo: string;
-    andar?: string;
+    type: string;
+    floor?: string;
     status: string;
-    custo: number;
+    cost: number;
   }[];
-  equipamentosManutencao: {
+  equipmentMaintenance: {
     id: string;
-    tipo: string;
-    andar?: string;
-    dataInicio: string;
-    dataPrevista: string;
+    type: string;
+    floor?: string;
+    dateStart: string;
+    scheduledDate: string;
   }[];
-  fluxoCompleto: {
-    mes: string;
-    quantidade: number;
+  flowComplete: {
+    month: string;
+    amount: number;
   }[];
 };
 

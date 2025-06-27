@@ -1,16 +1,16 @@
-import { Andar } from "../../types/building-type";
+import { Floor } from "../../types/building-type";
 
 //função para criar um andar
 export function createFloor(
-  floors: Andar[],
-  setFloors: React.Dispatch<React.SetStateAction<Andar[]>>
+  floors: Floor[],
+  setFloors: React.Dispatch<React.SetStateAction<Floor[]>>
 ) {
   const newFloorNumber = floors.length + 1;
 
-  const newFloor: Andar = {
-    nome: `${newFloorNumber}º Andar`,
+  const newFloor: Floor = {
+    name: `${newFloorNumber}º Andar`,
     cameras: 0,
-    empresas: [],
+    enterprises: [],
   };
 
   setFloors([...floors, newFloor]);

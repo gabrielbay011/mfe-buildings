@@ -9,21 +9,23 @@ export function sortBuildings(
 
   switch (option) {
     case "name-asc":
-      return sorted.sort((a, b) => a.nome.localeCompare(b.nome));
+      return sorted.sort((a, b) => a.name.localeCompare(b.name));
 
     case "name-desc":
-      return sorted.sort((a, b) => b.nome.localeCompare(a.nome));
+      return sorted.sort((a, b) => b.name.localeCompare(a.name));
 
     case "date-asc":
       return sorted.sort(
         (a, b) =>
-          new Date(a.dataCriacao).getTime() - new Date(b.dataCriacao).getTime()
+          new Date(a.creationDate).getTime() -
+          new Date(b.creationDate).getTime()
       );
 
     case "date-desc":
       return sorted.sort(
         (a, b) =>
-          new Date(b.dataCriacao).getTime() - new Date(a.dataCriacao).getTime()
+          new Date(b.creationDate).getTime() -
+          new Date(a.creationDate).getTime()
       );
 
     default:

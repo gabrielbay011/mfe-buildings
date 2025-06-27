@@ -9,11 +9,11 @@ type Props = {
 export function RenderFlowHistory({ building }: Props) {
   const [visibleCount, setVisibleCount] = useState(3);
 
-  if (!building?.fluxoCompleto || building.fluxoCompleto.length === 0) {
+  if (!building?.flowComplete || building.flowComplete.length === 0) {
     return <p>Você ainda não tem dados de fluxo mensal</p>;
   }
 
-  const total = building.fluxoCompleto.length;
+  const total = building.flowComplete.length;
   const isExpanded = visibleCount >= total;
 
   const toggleList = () => {
@@ -30,10 +30,10 @@ export function RenderFlowHistory({ building }: Props) {
           </tr>
         </thead>
         <tbody>
-          {building.fluxoCompleto.slice(0, visibleCount).map((fluxo, index) => (
+          {building.flowComplete.slice(0, visibleCount).map((flow, index) => (
             <tr key={index}>
-              <td style={{ border: "1px solid black" }}>{fluxo.mes}</td>
-              <td style={{ border: "1px solid black" }}>{fluxo.quantidade}</td>
+              <td style={{ border: "1px solid black" }}>{flow.month}</td>
+              <td style={{ border: "1px solid black" }}>{flow.amount}</td>
             </tr>
           ))}
         </tbody>

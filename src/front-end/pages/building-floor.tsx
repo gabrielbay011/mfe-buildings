@@ -1,23 +1,26 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../utils/components/modal";
 import { listBuildingsId } from "../../back-end/services/list/list-building-id";
 import RenderConfirm from "../../back-end/services/render/render-confirm";
 import { createEnterprise } from "../../back-end/services/create/create-enterprise";
-import { Andar } from "../../back-end/types/building-type";
+import { Floor } from "../../back-end/types/building-type";
 import { createFloor } from "../../back-end/services/create/create-floor";
 import { addAttendant } from "../../back-end/services/create/add-attendant";
-import { AddCamera } from "../../back-end/services/create/add-camera";
+import { addCamera } from "../../back-end/services/create/add-camera";
 import { deleteEnterprise } from "../../back-end/services/delete/delete-enterprise";
 
 export default function BuildingFloor() {
   const navigate = useNavigate();
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<{
+    floorIndex: number;
+    entIndex: number;
+  } | null>(null);
 
   //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
-  const [floors, setFloors] = useState<Andar[]>(buildingData.andares);
+  const [floors, setFloors] = useState<Floor[]>(buildingData.floors);
 
   //State que armazena o andar selecionado
   const [selectedFloorIndex, setSelectedFloorIndex] = useState<number | null>(
@@ -47,10 +50,9 @@ export default function BuildingFloor() {
         <h1>Andares</h1>
       </div>
 
-      {/* Exibe as infomaçoes dos andares(empresas, número de câmeras e recepção) */}
       {floors.map((floor, index) => (
-        <div
-          key={`${index}-${floor.nome}`}
+        <table
+          key={`${index}-${floor.name}`}
           style={{
             border: "1px solid black",
             width: "400px",
@@ -58,85 +60,134 @@ export default function BuildingFloor() {
             marginBottom: "10px",
           }}
         >
-          <h2>{index + 1}º Andar:</h2>
+          <thead>
+            <tr>
+              <th>
+                <b>{index + 1}º Andar:</b>
+              </th>
+            </tr>
+          </thead>
 
-          {index === 0 ? (
-            <>
-              <h3>Recepção</h3>
-              <p>
-                <b>Quantidade de atendentes:</b> {floor.atendentes}
-              </p>
-              <button
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setSelectedFloorIndex(index);
-                  setModalAttendantOpen(true);
-                }}
-              >
-                Adicionar atendente por 20
-              </button>
-            </>
-          ) : (
-            <>
-              <p>
-                <b>Empresas:</b>
-              </p>
-              {floor.empresas && floor.empresas.length > 0 ? (
-                <>
-                  {floor.empresas.map((enterprise, index) => (
-                    <div key={enterprise.nome}>
-                      <div
-                        key={index}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                      >
-                        <h3>{enterprise.nome}</h3>
-
-                        {hoveredIndex === index && (
-                          <button
-                            style={{ cursor: "pointer" }}
-                            onClick={() => deleteEnterprise(enterprise.id)}
-                          >
-                            Deletar
-                          </button>
-                        )}
-                      </div>
-                      <p>Tráfego de pessoas: {enterprise.trafego}</p>
-                    </div>
-                  ))}
-                  {floor.empresas.length < 2 && (
+          <tbody>
+            {index === 0 ? (
+              <>
+                <tr>
+                  <td>
+                    <b>Recepção</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Quantidade de atendentes:</b> {floor.attendants}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     <button
                       style={{ cursor: "pointer" }}
-                      onClick={() => createEnterprise(floor)}
+                      onClick={() => {
+                        setSelectedFloorIndex(index);
+                        setModalAttendantOpen(true);
+                      }}
                     >
-                      Adicionar empresa
+                      Adicionar atendente por 20
                     </button>
-                  )}
-                </>
-              ) : (
+                  </td>
+                </tr>
+              </>
+            ) : (
+              <>
+                <tr>
+                  <td>
+                    <b>Empresas:</b>
+                  </td>
+                </tr>
+
+                {floor.enterprises && floor.enterprises.length > 0 ? (
+                  <>
+                    {floor.enterprises.map((enterprise, entIndex) => (
+                      <React.Fragment key={enterprise.name}>
+                        <tr>
+                          <td
+                            onMouseEnter={() =>
+                              setHovered({ floorIndex: index, entIndex })
+                            }
+                            onMouseLeave={() => setHovered(null)}
+                          >
+                            <b style={{ cursor: "pointer" }}>
+                              {enterprise.name}
+                            </b>
+                            {hovered &&
+                              hovered.floorIndex === index &&
+                              hovered.entIndex === entIndex && (
+                                <button
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() =>
+                                    deleteEnterprise(enterprise.id)
+                                  }
+                                >
+                                  Deletar
+                                </button>
+                              )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>Tráfego de pessoas: </b>
+                            {enterprise.traffic}
+                          </td>
+                        </tr>
+                      </React.Fragment>
+                    ))}
+
+                    {floor.enterprises.length < 2 && (
+                      <tr>
+                        <td>
+                          <button
+                            style={{ cursor: "pointer" }}
+                            onClick={() => createEnterprise(floor)}
+                          >
+                            Adicionar empresa
+                          </button>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                ) : (
+                  <tr>
+                    <td>
+                      <button
+                        style={{ cursor: "pointer" }}
+                        onClick={() => createEnterprise(floor)}
+                      >
+                        Adicionar empresa
+                      </button>
+                    </td>
+                  </tr>
+                )}
+              </>
+            )}
+
+            <tr>
+              <td>
+                <b>Quantidade de câmeras:</b> {floor.cameras}
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <button
                   style={{ cursor: "pointer" }}
-                  onClick={() => createEnterprise(floor)}
+                  onClick={() => {
+                    setSelectedFloorIndex(index);
+                    setModalCameraOpen(true);
+                  }}
                 >
-                  Adicionar empresa
+                  Adicionar câmera por 5
                 </button>
-              )}
-            </>
-          )}
-
-          <p>
-            <b>Quantidade de câmeras:</b> {floor.cameras}
-          </p>
-          <button
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              setSelectedFloorIndex(index);
-              setModalCameraOpen(true);
-            }}
-          >
-            Adicionar câmera por 5
-          </button>
-        </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       ))}
 
       {/* Modal para adicionar um novo atendente */}
@@ -162,7 +213,7 @@ export default function BuildingFloor() {
           cost={5}
           onConfirm={() =>
             selectedFloorIndex !== null &&
-            setFloors((prev) => AddCamera(prev, selectedFloorIndex))
+            setFloors((prev) => addCamera(prev, selectedFloorIndex))
           }
           onClose={() => setModalCameraOpen(false)}
         />

@@ -1,7 +1,9 @@
+import { Building } from "../../types/building-type";
+
 //Função para adicionar uma catraca
-export function addTurnstile(building) {
+export function addTurnstile(building: Building): Building {
   return {
     ...building,
-    qtdCatracas: (parseInt(building.qtdCatracas) + 1).toString(),
+    qtyTurnstiles: building.qtyTurnstiles + 1,
   };
 }

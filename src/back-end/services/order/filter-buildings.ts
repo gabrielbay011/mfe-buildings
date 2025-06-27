@@ -6,5 +6,5 @@ export function filterBuildings(
   searchTerm: string
 ): Building[] {
   const lowerSearch = searchTerm.toLowerCase();
-  return buildings.filter((b) => b.nome.toLowerCase().includes(lowerSearch));
+  return buildings.filter((b) => b.name.toLowerCase().includes(lowerSearch));
 }

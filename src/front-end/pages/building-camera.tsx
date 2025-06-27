@@ -11,17 +11,17 @@ export default function BuildingCamera() {
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
   const [brokenEquipments, setBrokenEquipments] = useState(
-    buildingData.equipamentosQuebrados
+    buildingData.equipmentBroken
   );
   const [maintenanceEquipments, setMaintenanceEquipments] = useState(
-    buildingData.equipamentosManutencao
+    buildingData.equipmentMaintenance
   );
 
   //State relacioando a abertura da modal
   const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
 
   //State que armazena equipamento selecionado
-  const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
+  const [selectedEquipment, setSelectedEquipment] = useState(null);
 
   //States relacionados a quantidade de itens visíveis
   const [visibleCameraCount, setVisibleCameraCount] = useState(3);
@@ -68,7 +68,7 @@ export default function BuildingCamera() {
                 Quantidade de câmeras
               </th>
               <td style={{ border: "1px solid black" }}>
-                {buildingData.qtdCameras || "--"}
+                {buildingData.qtyCameras || "--"}
               </td>
             </tr>
             <tr>
@@ -76,7 +76,7 @@ export default function BuildingCamera() {
                 Qtd de Capturas Hora
               </th>
               <td style={{ border: "1px solid black" }}>
-                {buildingData.totalCapturaHora || "--"}
+                {buildingData.totalCaptureTime || "--"}
               </td>
             </tr>
             <tr>
@@ -84,19 +84,19 @@ export default function BuildingCamera() {
                 Qtd de Capturas Hoje
               </th>
               <td style={{ border: "1px solid black" }}>
-                {buildingData.totalCapturaHoje || "--"}
+                {buildingData.totalCaptureToday || "--"}
               </td>
             </tr>
             <tr>
               <th style={{ border: "1px solid black" }}>Qtd de Capturas Mês</th>
               <td style={{ border: "1px solid black" }}>
-                {buildingData.totalCapturaMes || "--"}
+                {buildingData.totalCaptureMonth || "--"}
               </td>
             </tr>
             <tr>
               <th style={{ border: "1px solid black" }}>Total de Capturas</th>
               <td style={{ border: "1px solid black" }}>
-                {buildingData.totalCaptura || "--"}
+                {buildingData.totalCaptures || "--"}
               </td>
             </tr>
           </tbody>
@@ -127,7 +127,7 @@ export default function BuildingCamera() {
                     Qtd de Capturas Hora
                   </th>
                   <td style={{ border: "1px solid black" }}>
-                    {camera.qtdCapturaHora}
+                    {camera.qtyCaptureTime}
                   </td>
                 </tr>
                 <tr>
@@ -135,7 +135,7 @@ export default function BuildingCamera() {
                     Qtd de Capturas Hoje
                   </th>
                   <td style={{ border: "1px solid black" }}>
-                    {camera.qtdCapturaHoje}
+                    {camera.qtyCaptureToday}
                   </td>
                 </tr>
                 <tr>
@@ -143,7 +143,7 @@ export default function BuildingCamera() {
                     Qtd de Capturas Mês
                   </th>
                   <td style={{ border: "1px solid black" }}>
-                    {camera.qtdCapturaMes}
+                    {camera.qtyCaptureMonth}
                   </td>
                 </tr>
                 <tr>
@@ -151,13 +151,13 @@ export default function BuildingCamera() {
                     Total de Capturas
                   </th>
                   <td style={{ border: "1px solid black" }}>
-                    {camera.totalCapturas}
+                    {camera.totalCaptures}
                   </td>
                 </tr>
                 <tr>
                   <th style={{ border: "1px solid black" }}>Horário Captura</th>
                   <td style={{ border: "1px solid black" }}>
-                    {camera.horarioCaptura}
+                    {camera.scheduledCapture}
                   </td>
                 </tr>
               </tbody>
@@ -200,7 +200,7 @@ export default function BuildingCamera() {
             </tr>
             {brokenEquipments.length > 0 ? (
               brokenEquipments
-                .filter((equipments) => equipments.tipo === "Câmera")
+                .filter((equipments) => equipments.type === "Câmera")
                 .slice(0, visibleBrokenCount)
                 .map((equipment) => (
                   <tr
@@ -218,7 +218,7 @@ export default function BuildingCamera() {
                       {equipment.status}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.custo}
+                      {equipment.cost}
                     </td>
                   </tr>
                 ))
@@ -280,7 +280,7 @@ export default function BuildingCamera() {
             </tr>
             {maintenanceEquipments.length > 0 ? (
               maintenanceEquipments
-                .filter((equipment) => equipment.tipo === "Câmera")
+                .filter((equipment) => equipment.type === "Câmera")
                 .slice(0, visibleMaintenanceCount)
                 .map((equipment) => (
                   <tr key={equipment.id}>
@@ -288,10 +288,10 @@ export default function BuildingCamera() {
                       {equipment.id}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.dataInicio}
+                      {equipment.dateStart}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {equipment.dataPrevista}
+                      {equipment.scheduledDate}
                     </td>
                   </tr>
                 ))

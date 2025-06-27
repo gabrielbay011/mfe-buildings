@@ -35,13 +35,13 @@ export function RenderBuildings({ building }: Props) {
               onClick={() => navigate(`/profile/${building.id}`)}
               style={{ border: "1px solid black", cursor: "pointer" }}
             >
-              {building.foto}
+              {building.photo}
             </td>
             <td
               onClick={() => navigate(`/profile/${building.id}`)}
               style={{ border: "1px solid black", cursor: "pointer" }}
             >
-              {building.nome}
+              {building.name}
             </td>
           </tr>
         ))}

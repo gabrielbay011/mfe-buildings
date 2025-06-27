@@ -1,5 +1,7 @@
+import { Person } from "../../types/person-type";
+
 //Função para renderizar as informações das pessoas
-export function renderPerson(person: any) {
+export function renderPerson(person?: Person) {
   if (!person) {
     return <p>Dados da pessoa não encontrados</p>;
   }
@@ -21,18 +23,18 @@ export function renderPerson(person: any) {
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Nome</td>
-          <td style={{ border: "1px solid black" }}>{person.nome || "--"}</td>
+          <td style={{ border: "1px solid black" }}>{person.name || "--"}</td>
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Sobrenome</td>
           <td style={{ border: "1px solid black" }}>
-            {person.sobrenome || "--"}
+            {person.surname || "--"}
           </td>
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Telefone</td>
           <td style={{ border: "1px solid black" }}>
-            {person.telefone || "--"}
+            {person.telphone || "--"}
           </td>
         </tr>
         <tr>
@@ -41,23 +43,25 @@ export function renderPerson(person: any) {
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Estado</td>
-          <td style={{ border: "1px solid black" }}>{person.estado || "--"}</td>
+          <td style={{ border: "1px solid black" }}>{person.state || "--"}</td>
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Cidade</td>
-          <td style={{ border: "1px solid black" }}>{person.cidade || "--"}</td>
+          <td style={{ border: "1px solid black" }}>{person.city || "--"}</td>
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Bairro</td>
-          <td style={{ border: "1px solid black" }}>{person.bairro || "--"}</td>
+          <td style={{ border: "1px solid black" }}>
+            {person.district || "--"}
+          </td>
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Rua</td>
-          <td style={{ border: "1px solid black" }}>{person.rua || "--"}</td>
+          <td style={{ border: "1px solid black" }}>{person.road || "--"}</td>
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>Número</td>
-          <td style={{ border: "1px solid black" }}>{person.numero || "--"}</td>
+          <td style={{ border: "1px solid black" }}>{person.number || "--"}</td>
         </tr>
         <tr>
           <td style={{ border: "1px solid black" }}>QR Code</td>
@@ -66,7 +70,7 @@ export function renderPerson(person: any) {
         <tr>
           <td style={{ border: "1px solid black" }}>Data de Cadastro</td>
           <td style={{ border: "1px solid black" }}>
-            {person.dataCadastro || "--"}
+            {person.dateRegistration || "--"}
           </td>
         </tr>
       </tbody>

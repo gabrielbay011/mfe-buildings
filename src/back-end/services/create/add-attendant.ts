@@ -1,13 +1,17 @@
-import { Andar } from "../../types/building-type";
+import { Floor } from "../../types/building-type";
 
 //Função para adicionar um novo atendente
-export function addAttendant(floors: Andar[], index: number): Andar[] {
-  const newAttendant = [...floors];
+export function addAttendant(floors: Floor[], index: number): Floor[] {
+  if (index < 0 || index >= floors.length) {
+    throw new Error(`Índice ${index} fora dos limites do array de andares`);
+  }
 
-  newAttendant[index] = {
-    ...newAttendant[index],
-    atendentes: (newAttendant[index].atendentes ?? 0) + 1,
+  const updatedFloors = [...floors];
+
+  updatedFloors[index] = {
+    ...updatedFloors[index],
+    attendants: (updatedFloors[index].attendants ?? 0) + 1,
   };
 
-  return newAttendant;
+  return updatedFloors;
 }

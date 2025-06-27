@@ -1,13 +1,17 @@
-import { Andar } from "../../types/building-type";
+import { Floor } from "../../types/building-type";
 
 //Função para adicionar uma câmera
-export function AddCamera(floors: Andar[], index: number): Andar[] {
-  const newCamera = [...floors];
+export function addCamera(floors: Floor[], index: number): Floor[] {
+  if (index < 0 || index >= floors.length) {
+    throw new Error(`Índice ${index} fora dos limites do array de andares`);
+  }
 
-  newCamera[index] = {
-    ...newCamera[index],
-    cameras: (newCamera[index].cameras ?? 0) + 1,
+  const updatedFloors = [...floors];
+
+  updatedFloors[index] = {
+    ...updatedFloors[index],
+    cameras: (updatedFloors[index].cameras ?? 0) + 1,
   };
 
-  return newCamera;
+  return updatedFloors;
 }
