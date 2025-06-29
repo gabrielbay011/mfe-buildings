@@ -1,5 +1,5 @@
 import React from "react";
-import { ModalProps } from "../../back-end/types/modal-type";
+import { ModalProps } from "../types/modal-type";
 
 //Componente modal reutilizável
 export default function Modal({ isOpen, onClose, children }: ModalProps) {

@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Buildings from "./front-end/pages/buildings";
-import NotFound from "./front-end/pages/not-found";
-import BuildingProfile from "./front-end/pages/building-profile";
+import Buildings from "./buildings/pages/buildings";
+import NotFound from "./not-found/pages/not-found";
+import BuildingProfile from "./building-profile/pages/building-profile";
 import BuildingFloor from "./front-end/pages/building-floor";
-import BuildingTurnstile from "./front-end/pages/building-turnstile";
-import BuildingCamera from "./front-end/pages/building-camera";
+import BuildingTurnstile from "./building-turnstile/pages/building-turnstile";
+import BuildingCamera from "./building-camera/pages/building-camera";
 
 export default function Root(props) {
   return (
