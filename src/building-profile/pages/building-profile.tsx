@@ -7,7 +7,8 @@ import { renderPerson } from "../services/render/render-person";
 import { renderEquipment } from "../../utils/services/render/render-equipment";
 import { useForm } from "react-hook-form";
 import { Person } from "../types/person-type";
-import { Equipment } from "../../utils/types/equipment-type";
+import { MaintenanceEquipment } from "../../utils/types/maintenance-equipment";
+import { BrokenEquipment } from "../../utils/types/broken-equipment";
 
 export default function BuildingProfile() {
   const navigate = useNavigate();
@@ -15,12 +16,12 @@ export default function BuildingProfile() {
   //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const mockData = listBuildingsId(id);
-  const [brokenEquipments, setBrokenEquipments] = useState(
-    mockData.equipmentBroken
+  const [brokenEquipments, setBrokenEquipments] = useState<BrokenEquipment[]>(
+    mockData.equipmentBroken as BrokenEquipment[]
   );
-  const [maintenanceEquipments, setMaintenanceEquipments] = useState(
-    mockData.equipmentMaintenance
-  );
+  const [maintenanceEquipments, setMaintenanceEquipments] = useState<
+    MaintenanceEquipment[]
+  >(mockData.equipmentMaintenance as MaintenanceEquipment[]);
 
   //States relacionados a abertura da modal
   const [modalFlowOpen, setModalFlowOpen] = useState(false);
@@ -31,7 +32,8 @@ export default function BuildingProfile() {
 
   //States que armazenam o equipamento selecionado e a pessoa selecionada
   const [selectedPerson, setSelectedPerson] = useState<Person>(null);
-  const [selectedEquipment, setSelectedEquipment] = useState<Equipment>(null);
+  const [selectedEquipment, setSelectedEquipment] =
+    useState<BrokenEquipment | null>(null);
   const [name, setName] = useState<any>(mockData.name);
   const [photo, setPhoto] = useState<any>(mockData.photo);
 
@@ -162,12 +164,16 @@ export default function BuildingProfile() {
               setModalPhotoOpen(false);
             })}
           >
+            <label htmlFor="photo">Foto:</label>
+            <br />
             <input
               type="text"
+              id="photo"
               {...registerPhoto("photo", {
                 required: "O campo foto é obrigatório",
               })}
             />
+            <br />
             <button style={{ cursor: "pointer" }} type="submit">
               Alterar
             </button>
@@ -186,12 +192,16 @@ export default function BuildingProfile() {
               setModalNameOpen(false);
             })}
           >
+            <label htmlFor="name">Nome:</label>
+            <br />
             <input
               type="text"
+              id="name"
               {...registerName("name", {
                 required: "O campo nome é obrigatório",
               })}
             />
+            <br />
             <button style={{ cursor: "pointer" }} type="submit">
               Alterar
             </button>

@@ -1,7 +1,1 @@
-export type Equipment = {
-  id: string;
-  type: string;
-  floor?: string;
-  status: string;
-  cost: number;
-};
+export type EquipmentType = "Câmera" | "Catraca" | "Elevador";

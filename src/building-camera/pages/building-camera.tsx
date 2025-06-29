@@ -3,6 +3,8 @@ import { listBuildingsId } from "../../utils/services/list/list-building-id";
 import { useState } from "react";
 import Modal from "../../utils/components/modal";
 import { renderEquipment } from "../../utils/services/render/render-equipment";
+import { BrokenEquipment } from "../../utils/types/broken-equipment";
+import { MaintenanceEquipment } from "../../utils/types/maintenance-equipment";
 
 export default function BuildingCamera() {
   const navigate = useNavigate();
@@ -10,18 +12,22 @@ export default function BuildingCamera() {
   //States realacionados aos dados que serão exibidos
   const { id } = useParams();
   const buildingData = listBuildingsId(id);
-  const [brokenEquipments, setBrokenEquipments] = useState(
-    buildingData.equipmentBroken
+  const [brokenEquipments, setBrokenEquipments] = useState<BrokenEquipment[]>(
+    buildingData.equipmentBroken as BrokenEquipment[]
   );
-  const [maintenanceEquipments, setMaintenanceEquipments] = useState(
-    buildingData.equipmentMaintenance
+  const [maintenanceEquipments, setMaintenanceEquipments] = useState<
+    MaintenanceEquipment[]
+  >(buildingData.equipmentMaintenance as MaintenanceEquipment[]);
+  const brokenCameras = brokenEquipments.filter(
+    (equipment) => equipment.type === "Câmera"
   );
 
   //State relacionado a abertura da modal
   const [modalBrokenOpen, setModalBrokenOpen] = useState(false);
 
   //State que armazena equipamento selecionado
-  const [selectedEquipment, setSelectedEquipment] = useState(null);
+  const [selectedEquipment, setSelectedEquipment] =
+    useState<BrokenEquipment | null>(null);
 
   //States relacionados a quantidade de itens visíveis
   const [visibleCameraCount, setVisibleCameraCount] = useState(3);
@@ -61,7 +67,7 @@ export default function BuildingCamera() {
       <div>
         <h2>Informações Gerais:</h2>
 
-        <table>
+        <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
               <th style={{ border: "1px solid black" }}>
@@ -112,7 +118,7 @@ export default function BuildingCamera() {
         <table>
           {buildingData.cameras.length > 0 ? (
             buildingData.cameras.slice(0, visibleCameraCount).map((camera) => (
-              <tbody key={camera.id}>
+              <tbody key={camera.id} style={{ border: "1px solid black" }}>
                 {visibleCameraCount > 0 && (
                   <tr>
                     <td colSpan={2} style={{ height: "20px" }}></td>
@@ -191,37 +197,32 @@ export default function BuildingCamera() {
       <div>
         <h2>Equipamentos Quebrados:</h2>
 
-        <table>
+        <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
               <th style={{ border: "1px solid black" }}>Id Câmera</th>
               <th style={{ border: "1px solid black" }}>Status</th>
               <th style={{ border: "1px solid black" }}>Custo</th>
             </tr>
-            {brokenEquipments.length > 0 ? (
-              brokenEquipments
-                .filter((equipments) => equipments.type === "Câmera")
-                .slice(0, visibleBrokenCount)
-                .map((equipment) => (
-                  <tr
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setSelectedEquipment(equipment);
-                      setModalBrokenOpen(true);
-                    }}
-                    key={equipment.id}
-                  >
-                    <td style={{ border: "1px solid black" }}>
-                      {equipment.id}
-                    </td>
-                    <td style={{ border: "1px solid black" }}>
-                      {equipment.status}
-                    </td>
-                    <td style={{ border: "1px solid black" }}>
-                      {equipment.cost}
-                    </td>
-                  </tr>
-                ))
+            {brokenCameras.length > 0 ? (
+              brokenCameras.slice(0, visibleBrokenCount).map((equipment) => (
+                <tr
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setSelectedEquipment(equipment);
+                    setModalBrokenOpen(true);
+                  }}
+                  key={equipment.id}
+                >
+                  <td style={{ border: "1px solid black" }}>{equipment.id}</td>
+                  <td style={{ border: "1px solid black" }}>
+                    {equipment.status}
+                  </td>
+                  <td style={{ border: "1px solid black" }}>
+                    {equipment.cost}
+                  </td>
+                </tr>
+              ))
             ) : (
               <tr>
                 <td colSpan={3}>Nenhum equipamento quebrado</td>
@@ -267,7 +268,7 @@ export default function BuildingCamera() {
       <div>
         <h2>Equipamentos em Manutenção:</h2>
 
-        <table>
+        <table style={{ border: "1px solid black" }}>
           <tbody>
             <tr>
               <th style={{ border: "1px solid black" }}>Id Câmera</th>

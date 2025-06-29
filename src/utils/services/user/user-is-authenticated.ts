@@ -1,4 +1,4 @@
-import { mockUsers } from "../mock-data";
+import { mockUsers } from "../../mock-data";
 
 //Função para vertificar se o usuário está autenticado
 export function userIsAuthenticated(userId: string): boolean {

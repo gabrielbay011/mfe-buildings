@@ -1,11 +1,13 @@
 import { mockUsers } from "../../mock-data";
+import { BrokenEquipment } from "../../types/broken-equipment";
+import { MaintenanceEquipment } from "../../types/maintenance-equipment";
 
 export function renderEquipment(
-  equipment: any,
-  brokenEquipments: any[],
-  setBrokenEquipments: (items: any[]) => void,
-  maintenanceEquipments: any[],
-  setMaintenanceEquipments: (items: any[]) => void,
+  equipment: BrokenEquipment | null,
+  brokenEquipments: BrokenEquipment[],
+  setBrokenEquipments: (items: BrokenEquipment[]) => void,
+  maintenanceEquipments: MaintenanceEquipment[],
+  setMaintenanceEquipments: (items: MaintenanceEquipment[]) => void,
   closeModal: () => void
 ) {
   if (!equipment) return <p>Equipamento não encontrado</p>;
