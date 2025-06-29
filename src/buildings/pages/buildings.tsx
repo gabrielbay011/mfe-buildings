@@ -134,7 +134,7 @@ export default function Buildings() {
           onSubmit={handleSubmitSearch(handleSearchBuilding)}
           autoComplete="off"
         >
-          <label htmlFor="search">Pesquisar edifiício:</label>
+          <label htmlFor="search">Pesquisar edifício:</label>
           <br />
           <input type="text" id="search" {...registerSearch("search")} />
 
