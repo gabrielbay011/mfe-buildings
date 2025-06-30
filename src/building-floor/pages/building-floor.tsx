@@ -123,7 +123,11 @@ export default function BuildingFloor() {
                                 <button
                                   style={{ cursor: "pointer" }}
                                   onClick={() =>
-                                    deleteEnterprise(enterprise.id)
+                                    deleteEnterprise(
+                                      enterprise.id,
+                                      index,
+                                      setFloors
+                                    )
                                   }
                                 >
                                   Deletar
@@ -145,7 +149,7 @@ export default function BuildingFloor() {
                         <td>
                           <button
                             style={{ cursor: "pointer" }}
-                            onClick={() => createEnterprise(floor)}
+                            onClick={() => createEnterprise(index, setFloors)}
                           >
                             Adicionar empresa
                           </button>
@@ -158,7 +162,7 @@ export default function BuildingFloor() {
                     <td>
                       <button
                         style={{ cursor: "pointer" }}
-                        onClick={() => createEnterprise(floor)}
+                        onClick={() => createEnterprise(index, setFloors)}
                       >
                         Adicionar empresa
                       </button>
