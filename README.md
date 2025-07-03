@@ -22,6 +22,12 @@ npm install
 npm start
 ```
 
+Após iniciar a aplicação, acesse no navegador:
+
+```
+http://localhost:9000/buildings
+```
+
 ## Integração com o root-config
 
 - Nome do micro front-end registrado: `@mfe/buildings`
