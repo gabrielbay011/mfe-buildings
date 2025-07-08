@@ -24,6 +24,7 @@ import iconOrder from "../../public/images/icon-order.svg";
 import iconBalanceHover from "../../public/images/icon-balance-white.svg";
 import iconAddHover from "../../public/images/icon-add-white.svg";
 import iconOrderHover from "../../public/images/icon-order-white.svg";
+import iconCheck from "../../public/images/icon-check-checkbox.svg";
 
 //Página de edifícios
 export default function Buildings() {
@@ -94,31 +95,119 @@ export default function Buildings() {
   return (
     <div>
       {/* Campo para pesquisar edifício */}
-      <div className="ml-4 mr-4 flex justify-center">
-        <form
-          onSubmit={handleSubmitSearch(handleSearchBuilding)}
-          autoComplete="off"
-          className="flex"
-        >
-          <Input
-            type="search"
-            placeholder="Pesquisar"
-            register={registerSearch("search")}
-            id="search"
-          />
-        </form>
-      </div>
 
-      {/* Select para ordenar os edifícios e modal para exibir o histórico de saldo */}
-      <div className="m-4">
-        <div className="mb-3">
-          <Button type="button" styleType="button">
-            <img src={iconOrder} alt="Icone Ordenar" />
-            Ordenar
-          </Button>
+      <div className="m-10 md:mt-10 md:mb-10 md:ml-30 md:mr-30 lg:mt-20 lg:mb-15 lg:mr-40 lg:ml-40">
+        <div className="mb-5 md:mb-10 flex justify-center lg:mb-15">
+          <form
+            onSubmit={handleSubmitSearch(handleSearchBuilding)}
+            autoComplete="off"
+            className=" w-full"
+          >
+            <Input
+              type="search"
+              placeholder="Pesquisar"
+              register={registerSearch("search")}
+              id="search"
+            />
+          </form>
         </div>
+        <div className="flex flex-col md:flex-row md:justify-between">
+          <div className="mb-3 md:mb-0 md:w-40 lg:w-50">
+            <Button type="button" styleType="button">
+              <img
+                src={iconOrder}
+                alt="Icone Ordenar"
+                className="group-hover:hidden"
+              />
+              <img
+                src={iconOrderHover}
+                alt="Icone Ordenar"
+                className="hidden group-hover:block"
+              />
+              Ordenar
+            </Button>
+            <div className="bg-white border border-purpleOutro rounded-b-[10px]">
+              <div className="flex flex-col">
+                <span className="text-[14px] text-grayMedium m-2 mb-0">
+                  Ordem crescente
+                </span>
 
-        {/* <select
+                <div className="m-2">
+                  <label className="inline-flex items-center cursor-pointer select-none font-medium">
+                    <input
+                      type="checkbox"
+                      className="peer hidden"
+                      name=""
+                      id=""
+                    />
+                    <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                      <img src={iconCheck} alt="Icone Check" />
+                    </span>
+                    Data
+                  </label>
+                </div>
+
+                <hr className="border-purpleOutro" />
+
+                <div className="m-2">
+                  <label className="inline-flex items-center cursor-pointer select-none font-medium">
+                    <input
+                      type="checkbox"
+                      className="peer hidden"
+                      name=""
+                      id=""
+                    />
+                    <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                      <img src={iconCheck} alt="Icone Check" />
+                    </span>
+                    Nome
+                  </label>
+                </div>
+
+                <hr className="border-purpleOutro" />
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-[14px] text-grayMedium m-2 mb-0">
+                  Ordem decrescente
+                </span>
+
+                <div className="m-2">
+                  <label className="inline-flex items-center cursor-pointer select-none font-medium">
+                    <input
+                      type="checkbox"
+                      className="peer hidden"
+                      name=""
+                      id=""
+                    />
+                    <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                      <img src={iconCheck} alt="Icone Check" />
+                    </span>
+                    Data
+                  </label>
+                </div>
+
+                <hr className="border-purpleOutro" />
+
+                <div className="m-2">
+                  <label className="inline-flex items-center cursor-pointer select-none font-medium">
+                    <input
+                      type="checkbox"
+                      className="peer hidden"
+                      name=""
+                      id=""
+                    />
+                    <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                      <img src={iconCheck} alt="Icone Check" />
+                    </span>
+                    Nome
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* <select
           id="sort-select"
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
@@ -140,66 +229,76 @@ export default function Buildings() {
           </option>
         </select> */}
 
-        <div className="mb-3">
-          <Button
-            type="button"
-            styleType="button"
-            onClick={() => setModalBalanceOpen(true)}
-          >
-            <img
-              src={iconBalance}
-              alt="Icone Saldo"
-              className="group-hover:hidden"
-            />
-            <img
-              src={iconBalanceHover}
-              alt=""
-              className="hidden group-hover:block"
-            />
-            Saldo
-          </Button>
-          <Modal
-            isOpen={modalBalanceOpen}
-            onClose={() => setModalBalanceOpen(false)}
-          >
-            <h2>Histórico de Saldo</h2>
-            {renderBalances(balances)}
-          </Modal>
-        </div>
-
-        {/* Botão e modal para criar novos edifícios */}
-        <div className="mb-3">
-          <Button
-            type="button"
-            styleType="button"
-            onClick={() => setModalBuildingOpen(true)}
-          >
-            <img src={iconAdd} alt="Icone Adicionar" />
-            Criar Edifício
-          </Button>
-
-          <Modal
-            isOpen={modalBuildingOpen}
-            onClose={() => setModalBuildingOpen(false)}
-          >
-            <h2>Criar Edifício</h2>
-            <form
-              onSubmit={handleSubmitCreate(handleCreateBuilding)}
-              autoComplete="off"
+          <div className="mb-3 md:mb-0 md:w-40 lg:w-50">
+            <Button
+              type="button"
+              styleType="button"
+              onClick={() => setModalBalanceOpen(true)}
             >
-              <label htmlFor="name">Nome:</label>
-              <br />
-              <input type="text" id="name" {...registerCreate("name")} />
-              {createErrors.name && (
-                <p style={{ color: "red" }}>{createErrors.name.message}</p>
-              )}
-              <br />
+              <img
+                src={iconBalance}
+                alt="Icone Saldo"
+                className="group-hover:hidden"
+              />
+              <img
+                src={iconBalanceHover}
+                alt=""
+                className="hidden group-hover:block"
+              />
+              Saldo
+            </Button>
+            <Modal
+              isOpen={modalBalanceOpen}
+              onClose={() => setModalBalanceOpen(false)}
+            >
+              <h2>Histórico de Saldo</h2>
+              {renderBalances(balances)}
+            </Modal>
+          </div>
 
-              <button style={{ cursor: "pointer" }} type="submit">
-                Salvar
-              </button>
-            </form>
-          </Modal>
+          {/* Botão e modal para criar novos edifícios */}
+          <div className="mb-3 md:mb-0 md:w-40 lg:w-50">
+            <Button
+              type="button"
+              styleType="button"
+              onClick={() => setModalBuildingOpen(true)}
+            >
+              <img
+                src={iconAdd}
+                alt="Icone Adicionar"
+                className="group-hover:hidden"
+              />
+              <img
+                src={iconAddHover}
+                alt="Icone Adicionar"
+                className="hidden group-hover:block"
+              />
+              Criar Edifício
+            </Button>
+
+            <Modal
+              isOpen={modalBuildingOpen}
+              onClose={() => setModalBuildingOpen(false)}
+            >
+              <h2>Criar Edifício</h2>
+              <form
+                onSubmit={handleSubmitCreate(handleCreateBuilding)}
+                autoComplete="off"
+              >
+                <label htmlFor="name">Nome:</label>
+                <br />
+                <input type="text" id="name" {...registerCreate("name")} />
+                {createErrors.name && (
+                  <p style={{ color: "red" }}>{createErrors.name.message}</p>
+                )}
+                <br />
+
+                <button style={{ cursor: "pointer" }} type="submit">
+                  Salvar
+                </button>
+              </form>
+            </Modal>
+          </div>
         </div>
       </div>
 

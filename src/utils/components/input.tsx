@@ -21,9 +21,8 @@ export default function Input({
     "border-2 border-grayPrimary rounded-l-[15px] border-r-0 px-2 py-2 placeholder:text-grayPrimary text-[20px] w-full";
 
   return (
-    <div>
+    <div className="w-full">
       <label htmlFor={id}>{label}</label>
-      <br />
       <div className="relative flex">
         <input
           className={

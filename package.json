@@ -58,6 +58,7 @@
     "@apollo/client": "^3.13.8",
     "@hookform/resolvers": "^5.1.1",
     "@nhost/react": "^3.11.0",
+    "@tailwindcss/forms": "^0.5.10",
     "@types/jest": "^27.0.1",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
