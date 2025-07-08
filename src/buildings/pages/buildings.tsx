@@ -16,6 +16,14 @@ import { sortBuildings } from "../services/order/sort-buildings";
 import { renderBalances } from "../services/render/render-balances";
 import { listBalances } from "../services/list/list-balance";
 import { Balance } from "../types/balance-type";
+import Input from "../../utils/components/input";
+import Button from "../../utils/components/button";
+import iconBalance from "../../public/images/icon-balance.svg";
+import iconAdd from "../../public/images/icon-add.svg";
+import iconOrder from "../../public/images/icon-order.svg";
+import iconBalanceHover from "../../public/images/icon-balance-white.svg";
+import iconAddHover from "../../public/images/icon-add-white.svg";
+import iconOrderHover from "../../public/images/icon-order-white.svg";
 
 //Página de edifícios
 export default function Buildings() {
@@ -85,11 +93,32 @@ export default function Buildings() {
 
   return (
     <div>
-      <h1>Edifícios</h1>
+      {/* Campo para pesquisar edifício */}
+      <div className="ml-4 mr-4 flex justify-center">
+        <form
+          onSubmit={handleSubmitSearch(handleSearchBuilding)}
+          autoComplete="off"
+          className="flex"
+        >
+          <Input
+            type="search"
+            placeholder="Pesquisar"
+            register={registerSearch("search")}
+            id="search"
+          />
+        </form>
+      </div>
 
       {/* Select para ordenar os edifícios e modal para exibir o histórico de saldo */}
-      <div style={{ display: "flex", gap: "10px" }}>
-        <select
+      <div className="m-4">
+        <div className="mb-3">
+          <Button type="button" styleType="button">
+            <img src={iconOrder} alt="Icone Ordenar" />
+            Ordenar
+          </Button>
+        </div>
+
+        {/* <select
           id="sort-select"
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
@@ -109,15 +138,26 @@ export default function Buildings() {
           <option value="date-desc" id="date-desc">
             Ordem data (Mais antigo)
           </option>
-        </select>
+        </select> */}
 
-        <div>
-          <button
-            style={{ cursor: "pointer" }}
+        <div className="mb-3">
+          <Button
+            type="button"
+            styleType="button"
             onClick={() => setModalBalanceOpen(true)}
           >
+            <img
+              src={iconBalance}
+              alt="Icone Saldo"
+              className="group-hover:hidden"
+            />
+            <img
+              src={iconBalanceHover}
+              alt=""
+              className="hidden group-hover:block"
+            />
             Saldo
-          </button>
+          </Button>
           <Modal
             isOpen={modalBalanceOpen}
             onClose={() => setModalBalanceOpen(false)}
@@ -126,79 +166,50 @@ export default function Buildings() {
             {renderBalances(balances)}
           </Modal>
         </div>
-      </div>
 
-      {/* Campo para pesquisar edifício */}
-      <div>
-        <form
-          onSubmit={handleSubmitSearch(handleSearchBuilding)}
-          autoComplete="off"
-        >
-          <label htmlFor="search">Pesquisar edifício:</label>
-          <br />
-          <input type="text" id="search" {...registerSearch("search")} />
-
-          <button style={{ cursor: "pointer" }} type="submit">
-            Buscar
-          </button>
-        </form>
-      </div>
-
-      {/* Botão e modal para criar novos edifícios */}
-      <div>
-        <button
-          style={{ cursor: "pointer" }}
-          onClick={() => setModalBuildingOpen(true)}
-        >
-          Criar Edifício
-        </button>
-
-        <Modal
-          isOpen={modalBuildingOpen}
-          onClose={() => setModalBuildingOpen(false)}
-        >
-          <h2>Criar Edifício</h2>
-          <form
-            onSubmit={handleSubmitCreate(handleCreateBuilding)}
-            autoComplete="off"
+        {/* Botão e modal para criar novos edifícios */}
+        <div className="mb-3">
+          <Button
+            type="button"
+            styleType="button"
+            onClick={() => setModalBuildingOpen(true)}
           >
-            <label htmlFor="name">Nome:</label>
-            <br />
-            <input type="text" id="name" {...registerCreate("name")} />
-            {createErrors.name && (
-              <p style={{ color: "red" }}>{createErrors.name.message}</p>
-            )}
-            <br />
+            <img src={iconAdd} alt="Icone Adicionar" />
+            Criar Edifício
+          </Button>
 
-            <button style={{ cursor: "pointer" }} type="submit">
-              Salvar
-            </button>
-          </form>
-        </Modal>
+          <Modal
+            isOpen={modalBuildingOpen}
+            onClose={() => setModalBuildingOpen(false)}
+          >
+            <h2>Criar Edifício</h2>
+            <form
+              onSubmit={handleSubmitCreate(handleCreateBuilding)}
+              autoComplete="off"
+            >
+              <label htmlFor="name">Nome:</label>
+              <br />
+              <input type="text" id="name" {...registerCreate("name")} />
+              {createErrors.name && (
+                <p style={{ color: "red" }}>{createErrors.name.message}</p>
+              )}
+              <br />
+
+              <button style={{ cursor: "pointer" }} type="submit">
+                Salvar
+              </button>
+            </form>
+          </Modal>
+        </div>
       </div>
 
       {/* Renderiza todos os edifícios */}
-      <div
-        style={{
-          border: "1px solid black",
-          height: "60px",
-          width: "300px",
-          overflowY: "auto",
-        }}
-      >
+      <div className="flex justify-center border border-black">
         {filteredBuildings.length == 0 ? (
           <p>Nenhum edifício encontrado</p>
         ) : (
           <RenderBuildings building={filteredBuildings} />
         )}
-      </div>
-
-      {/* Botões para navegar entra as telas de edifícios e dashboards */}
-      <div>
-        <button style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
-          Edifícios
-        </button>
-        <button style={{ cursor: "pointer" }}>Dashboards</button>
       </div>
     </div>
   );
