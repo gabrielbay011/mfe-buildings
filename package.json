@@ -72,6 +72,7 @@
     "react-router-dom": "^7.6.2",
     "single-spa": "^5.9.3",
     "single-spa-react": "^6.0.2",
+    "swiper": "^11.2.10",
     "zod": "^3.25.67"
   },
   "types": "dist/mfe-buildings.d.ts"

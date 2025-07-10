@@ -319,6 +319,7 @@ export default function Buildings() {
               Criar Edifício
             </Button>
 
+            {/* Modal para cadastrar edifício */}
             <Modal isOpen={modalBuildingOpen}>
               <fieldset className="border-3 border-grayPrimary rounded-[20px] p-5">
                 <legend className="font-semibold pl-2 pr-2 text-[20px]">

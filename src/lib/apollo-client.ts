@@ -10,7 +10,7 @@ export const apolloPublicClient = new ApolloClient({
     uri: graphqlUrl,
     headers: {
       "x-hasura-role": "usr_no_user",
-      "x-hasura-admin-secret": "@2&B8u,c_2SHI^,xjHe;1'rf=^cRmEXm",
+      "x-hasura-admin-secret": "zn(--fiv5Rk7LSBrruDsQV,h#UTu_s7*",
     },
   }),
   cache: new InMemoryCache(),
