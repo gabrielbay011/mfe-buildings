@@ -25,6 +25,8 @@ import iconBalanceHover from "../../public/images/icon-balance-white.svg";
 import iconAddHover from "../../public/images/icon-add-white.svg";
 import iconOrderHover from "../../public/images/icon-order-white.svg";
 import iconCheck from "../../public/images/icon-check-checkbox.svg";
+import iconUncheck from "../../public/images/icon-uncheck.svg";
+import iconSuccess from "../../public/images/icon-success.svg";
 
 //Página de edifícios
 export default function Buildings() {
@@ -36,6 +38,9 @@ export default function Buildings() {
     useState<Building[]>(mockBuildings);
   const [balances, setBalances] = useState<Balance[]>([]);
   const [sortOption, setSortOption] = useState("");
+
+  //State relacioando a exibição das inputs de ordenação
+  const [inputOrderVisible, setInputOrderVisible] = useState(false);
 
   //Inicialização do formulário de criar edifiício
   const {
@@ -63,13 +68,26 @@ export default function Buildings() {
     setFilteredBuildings(filtered);
   };
 
+  //State reallcionado a modal de feedback
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  const [feedbackType, setFeedbackType] = useState<"success" | "error">(
+    "success"
+  );
+
   //Função executada no envio do formulário e retorna sucesso ou erro ao tentar criar uma empresa
   function handleCreateBuilding(data: Building) {
     try {
       createBuilding(data);
+      setFeedbackType("success");
+      setFeedbackMessage(data.name + " foi cadastrado com sucesso!");
+      setFeedbackModalOpen(true);
       resetCreate();
+      setModalBuildingOpen(false);
     } catch (err: any) {
-      alert("Erro: " + err.message);
+      setFeedbackType("error");
+      setFeedbackMessage(err.message || "Erro ao criar edifício");
+      setFeedbackModalOpen(true);
     }
   }
 
@@ -112,122 +130,138 @@ export default function Buildings() {
           </form>
         </div>
         <div className="flex flex-col md:flex-row md:justify-between">
-          <div className="mb-3 md:mb-0 md:w-40 lg:w-50">
-            <Button type="button" styleType="button">
-              <img
-                src={iconOrder}
-                alt="Icone Ordenar"
-                className="group-hover:hidden"
-              />
-              <img
-                src={iconOrderHover}
-                alt="Icone Ordenar"
-                className="hidden group-hover:block"
-              />
-              Ordenar
-            </Button>
-            <div className="bg-white border border-purpleOutro rounded-b-[10px]">
-              <div className="flex flex-col">
-                <span className="text-[14px] text-grayMedium m-2 mb-0">
-                  Ordem crescente
-                </span>
-
-                <div className="m-2">
-                  <label className="inline-flex items-center cursor-pointer select-none font-medium">
-                    <input
-                      type="checkbox"
-                      className="peer hidden"
-                      name=""
-                      id=""
-                    />
-                    <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
-                      <img src={iconCheck} alt="Icone Check" />
-                    </span>
-                    Data
-                  </label>
-                </div>
-
-                <hr className="border-purpleOutro" />
-
-                <div className="m-2">
-                  <label className="inline-flex items-center cursor-pointer select-none font-medium">
-                    <input
-                      type="checkbox"
-                      className="peer hidden"
-                      name=""
-                      id=""
-                    />
-                    <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
-                      <img src={iconCheck} alt="Icone Check" />
-                    </span>
-                    Nome
-                  </label>
-                </div>
-
-                <hr className="border-purpleOutro" />
-              </div>
-
-              <div className="flex flex-col">
-                <span className="text-[14px] text-grayMedium m-2 mb-0">
-                  Ordem decrescente
-                </span>
-
-                <div className="m-2">
-                  <label className="inline-flex items-center cursor-pointer select-none font-medium">
-                    <input
-                      type="checkbox"
-                      className="peer hidden"
-                      name=""
-                      id=""
-                    />
-                    <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
-                      <img src={iconCheck} alt="Icone Check" />
-                    </span>
-                    Data
-                  </label>
-                </div>
-
-                <hr className="border-purpleOutro" />
-
-                <div className="m-2">
-                  <label className="inline-flex items-center cursor-pointer select-none font-medium">
-                    <input
-                      type="checkbox"
-                      className="peer hidden"
-                      name=""
-                      id=""
-                    />
-                    <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
-                      <img src={iconCheck} alt="Icone Check" />
-                    </span>
-                    Nome
-                  </label>
-                </div>
-              </div>
+          <div
+            className={`mb-3 md:mb-0 md:w-40 ${
+              inputOrderVisible == true ? "lg:w-60" : "lg:w-50"
+            } ${
+              inputOrderVisible == true && "xl:w-85"
+            } flex flex-col lg:flex-row`}
+          >
+            <div className="lg:w-70 xl:w-50">
+              <Button
+                type="button"
+                styleType="button"
+                onClick={() =>
+                  inputOrderVisible == true
+                    ? setInputOrderVisible(false)
+                    : setInputOrderVisible(true)
+                }
+              >
+                <img
+                  src={iconOrder}
+                  alt="Icone Ordenar"
+                  className="group-hover:hidden"
+                />
+                <img
+                  src={iconOrderHover}
+                  alt="Icone Ordenar"
+                  className="hidden group-hover:block"
+                />
+                Ordenar
+              </Button>
             </div>
-          </div>
+            {inputOrderVisible == true && (
+              <div className="bg-white border border-purpleOutro rounded-b-[10px] lg:rounded-tr-[10px] lg:w-100 xl:w-36">
+                <div className="flex flex-col">
+                  <span className="text-[14px] text-grayMedium m-2 mb-0">
+                    Ordem crescente
+                  </span>
 
-          {/* <select
-          id="sort-select"
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-        >
-          <option value="" id="sort-default">
-            Ordenar por
-          </option>
-          <option value="name-asc" id="name-asc">
-            Ordem nome (A-Z)
-          </option>
-          <option value="name-desc" id="name-desc">
-            Ordem nome (Z-A)
-          </option>
-          <option value="date-asc" id="date-asc">
-            Ordem data (Mais recente)
-          </option>
-          <option value="date-desc" id="date-desc">
-            Ordem data (Mais antigo)
-          </option>
-        </select> */}
+                  <div className="m-2">
+                    <label
+                      htmlFor="date-asc"
+                      className="inline-flex items-center cursor-pointer select-none font-medium"
+                    >
+                      <input
+                        type="checkbox"
+                        className="peer hidden"
+                        value="date-asc"
+                        name="date-asc"
+                        id="date-asc"
+                        onChange={(e) => setSortOption(e.target.value)}
+                      />
+                      <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                        <img src={iconCheck} alt="Icone Check" />
+                      </span>
+                      Data
+                    </label>
+                  </div>
+
+                  <hr className="border-purpleOutro" />
+
+                  <div className="m-2">
+                    <label
+                      htmlFor="name-asc"
+                      className="inline-flex items-center cursor-pointer select-none font-medium"
+                    >
+                      <input
+                        type="checkbox"
+                        className="peer hidden"
+                        value="name-asc"
+                        name="name-asc"
+                        id="name-asc"
+                        onChange={(e) => setSortOption(e.target.value)}
+                      />
+                      <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                        <img src={iconCheck} alt="Icone Check" />
+                      </span>
+                      Nome
+                    </label>
+                  </div>
+
+                  <hr className="border-purpleOutro" />
+                </div>
+
+                <div className="flex flex-col">
+                  <span className="text-[14px] text-grayMedium m-2 mb-0">
+                    Ordem decrescente
+                  </span>
+
+                  <div className="m-2">
+                    <label
+                      htmlFor="date-desc"
+                      className="inline-flex items-center cursor-pointer select-none font-medium"
+                    >
+                      <input
+                        type="checkbox"
+                        className="peer hidden"
+                        value="date-desc"
+                        name="date-desc"
+                        id="date-desc"
+                        onChange={(e) => setSortOption(e.target.value)}
+                      />
+                      <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                        <img src={iconCheck} alt="Icone Check" />
+                      </span>
+                      Data
+                    </label>
+                  </div>
+
+                  <hr className="border-purpleOutro" />
+
+                  <div className="m-2">
+                    <label
+                      htmlFor="name-desc"
+                      className="inline-flex items-center cursor-pointer select-none font-medium"
+                    >
+                      <input
+                        type="checkbox"
+                        className="peer hidden"
+                        value="name-desc"
+                        name="name-desc"
+                        id="name-desc"
+                        onChange={(e) => setSortOption(e.target.value)}
+                      />
+                      <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                        <img src={iconCheck} alt="Icone Check" />
+                      </span>
+                      Nome
+                    </label>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
           <div className="mb-3 md:mb-0 md:w-40 lg:w-50">
             <Button
@@ -247,12 +281,21 @@ export default function Buildings() {
               />
               Saldo
             </Button>
-            <Modal
-              isOpen={modalBalanceOpen}
-              onClose={() => setModalBalanceOpen(false)}
-            >
-              <h2>Histórico de Saldo</h2>
-              {renderBalances(balances)}
+            <Modal isOpen={modalBalanceOpen}>
+              <div className="flex justify-end">
+                <button
+                  className="border-2 border-redMedium rounded bg-redMedium/15 cursor-pointer hover:bg-redMedium/50"
+                  onClick={() => setModalBalanceOpen(false)}
+                >
+                  <img src={iconUncheck} alt="Icone de x" />
+                </button>
+              </div>
+              <fieldset className="border-3 border-grayPrimary rounded-[20px]">
+                <legend className="font-semibold pl-2 pr-2 text-[20px]">
+                  Histórico de Saldo
+                </legend>
+                {renderBalances(balances)}
+              </fieldset>
             </Modal>
           </div>
 
@@ -276,27 +319,73 @@ export default function Buildings() {
               Criar Edifício
             </Button>
 
-            <Modal
-              isOpen={modalBuildingOpen}
-              onClose={() => setModalBuildingOpen(false)}
-            >
-              <h2>Criar Edifício</h2>
-              <form
-                onSubmit={handleSubmitCreate(handleCreateBuilding)}
-                autoComplete="off"
-              >
-                <label htmlFor="name">Nome:</label>
-                <br />
-                <input type="text" id="name" {...registerCreate("name")} />
-                {createErrors.name && (
-                  <p style={{ color: "red" }}>{createErrors.name.message}</p>
-                )}
-                <br />
+            <Modal isOpen={modalBuildingOpen}>
+              <fieldset className="border-3 border-grayPrimary rounded-[20px] p-5">
+                <legend className="font-semibold pl-2 pr-2 text-[20px]">
+                  Cadastrar Novo Edifício
+                </legend>
+                <form
+                  onSubmit={handleSubmitCreate(handleCreateBuilding)}
+                  autoComplete="off"
+                >
+                  <Input
+                    type="name"
+                    id="name"
+                    label="Nome do Edifício"
+                    register={registerCreate("name")}
+                    error={createErrors.name?.message}
+                  />
 
-                <button style={{ cursor: "pointer" }} type="submit">
-                  Salvar
-                </button>
-              </form>
+                  <div className="flex gap-2 mt-5">
+                    <Button
+                      type="submit"
+                      styleType="button"
+                      onClick={() => setModalBuildingOpen(false)}
+                    >
+                      Cancelar
+                    </Button>
+
+                    <Button type="submit" styleType="submit">
+                      Salvar
+                    </Button>
+                  </div>
+                </form>
+              </fieldset>
+            </Modal>
+
+            {/* Modal de feedback */}
+            <Modal isOpen={feedbackModalOpen}>
+              <div className="text-center">
+                <div className="flex items-center justify-center mb-4 gap-2">
+                  <img
+                    src={feedbackType === "success" ? iconSuccess : iconUncheck}
+                    alt={
+                      feedbackType === "success"
+                        ? "Ícone de Sucesso"
+                        : "Ícone de Erro"
+                    }
+                  />
+                  <h2 className={"text-xl font-semibold"}>
+                    {feedbackType === "success"
+                      ? "Ação concluída"
+                      : "Erro ao cadastrar"}
+                  </h2>
+                </div>
+
+                <p className="mb-6">
+                  {feedbackType === "success"
+                    ? feedbackMessage
+                    : feedbackMessage}
+                </p>
+
+                <Button
+                  type="button"
+                  styleType="submit"
+                  onClick={() => setFeedbackModalOpen(false)}
+                >
+                  OK
+                </Button>
+              </div>
             </Modal>
           </div>
         </div>

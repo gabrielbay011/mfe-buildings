@@ -11,6 +11,5 @@ export function createBuilding(data: CreateBuildingType): CreateBuildingType {
     throw new Error("Prédio já cadastrado");
   }
 
-  alert("Edifício criado com sucesso");
   return newBuilding;
 }

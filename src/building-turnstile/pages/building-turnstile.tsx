@@ -104,10 +104,7 @@ export default function BuildingTurnstile() {
           Adicionar catraca por 10
         </button>
 
-        <Modal
-          isOpen={modalAddTurnstileOpen}
-          onClose={() => setModalAddTurnstileOpen(false)}
-        >
+        <Modal isOpen={modalAddTurnstileOpen}>
           <h2>Confirmar Instalação</h2>
           <RenderConfirm
             cost={10}
@@ -217,10 +214,7 @@ export default function BuildingTurnstile() {
               </tr>
             )}
 
-            <Modal
-              isOpen={modalBrokenOpen}
-              onClose={() => setModalBrokenOpen(false)}
-            >
+            <Modal isOpen={modalBrokenOpen}>
               <h2>Arcar com custo</h2>
               {renderEquipment(
                 selectedEquipment,

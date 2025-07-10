@@ -155,7 +155,7 @@ export default function BuildingProfile() {
           </tbody>
         </table>
 
-        <Modal isOpen={modalPhotoOpen} onClose={() => setModalPhotoOpen(false)}>
+        <Modal isOpen={modalPhotoOpen}>
           <h2>Alterar foto do edifício</h2>
 
           <form
@@ -183,7 +183,7 @@ export default function BuildingProfile() {
           </form>
         </Modal>
 
-        <Modal isOpen={modalNameOpen} onClose={() => setModalNameOpen(false)}>
+        <Modal isOpen={modalNameOpen}>
           <h2>Alterar nome do edifício</h2>
 
           <form
@@ -248,7 +248,7 @@ export default function BuildingProfile() {
           Ver histórico completo
         </button>
 
-        <Modal isOpen={modalFlowOpen} onClose={() => setModalFlowOpen(false)}>
+        <Modal isOpen={modalFlowOpen}>
           <h2>Fluxo por Mês</h2>
           <RenderFlowHistory building={mockData} />
         </Modal>
@@ -332,10 +332,7 @@ export default function BuildingProfile() {
           </button>
         )}
 
-        <Modal
-          isOpen={modalPersonOpen}
-          onClose={() => setModalPersonOpen(false)}
-        >
+        <Modal isOpen={modalPersonOpen}>
           <h2>Dados Cadastrais</h2>
           {renderPerson(selectedPerson)}
         </Modal>
@@ -407,10 +404,7 @@ export default function BuildingProfile() {
           </button>
         )}
 
-        <Modal
-          isOpen={modalBrokenOpen}
-          onClose={() => setModalBrokenOpen(false)}
-        >
+        <Modal isOpen={modalBrokenOpen}>
           <h2>Arcar com custo</h2>
           {renderEquipment(
             selectedEquipment,

@@ -195,10 +195,7 @@ export default function BuildingFloor() {
       ))}
 
       {/* Modal para adicionar um novo atendente */}
-      <Modal
-        isOpen={modalAttendantOpen}
-        onClose={() => setModalAttendantOpen(false)}
-      >
+      <Modal isOpen={modalAttendantOpen}>
         <h2>Confirmar Contratação</h2>
         <RenderConfirm
           cost={20}
@@ -211,7 +208,7 @@ export default function BuildingFloor() {
       </Modal>
 
       {/* Modal para adicionar uma nova câmera */}
-      <Modal isOpen={modalCameraOpen} onClose={() => setModalCameraOpen(false)}>
+      <Modal isOpen={modalCameraOpen}>
         <h2>Confirmar Instalação</h2>
         <RenderConfirm
           cost={5}

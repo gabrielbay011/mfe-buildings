@@ -229,10 +229,7 @@ export default function BuildingCamera() {
               </tr>
             )}
 
-            <Modal
-              isOpen={modalBrokenOpen}
-              onClose={() => setModalBrokenOpen(false)}
-            >
+            <Modal isOpen={modalBrokenOpen}>
               <h2>Arcar com custo</h2>
               {renderEquipment(
                 selectedEquipment,

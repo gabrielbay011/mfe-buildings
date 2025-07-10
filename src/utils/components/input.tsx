@@ -18,17 +18,19 @@ export default function Input({
   const isPassword = type === "password";
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
   const searchStyle =
-    "border-2 border-grayPrimary rounded-l-[15px] border-r-0 px-2 py-2 placeholder:text-grayPrimary text-[20px] w-full";
+    "border-2 border-grayPrimary rounded-l-[15px] border-r-0 px-2 py-2 placeholder:text-grayPrimary text-[20px] w-full focus:outline-grayMedium";
 
   return (
     <div className="w-full">
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className="font-semibold text-[16px]">
+        {label}
+      </label>
       <div className="relative flex">
         <input
           className={
             type == "search"
               ? searchStyle
-              : "rounded-[10px] bg-white p-1 w-full"
+              : "rounded-[10px] bg-white h-10 w-full pl-2 border-2 border-purpleMedium focus:outline-purpleDark"
           }
           type={inputType}
           id={id}
