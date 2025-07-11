@@ -263,6 +263,7 @@ export default function Buildings() {
             )}
           </div>
 
+          {/* Botão e modal para exibir o histórico de saldo */}
           <div className="mb-3 md:mb-0 md:w-40 lg:w-50">
             <Button
               type="button"
@@ -281,6 +282,8 @@ export default function Buildings() {
               />
               Saldo
             </Button>
+
+            {/* Modal para exibir histórico de saldo */}
             <Modal isOpen={modalBalanceOpen}>
               <div className="flex justify-end">
                 <button
@@ -290,7 +293,7 @@ export default function Buildings() {
                   <img src={iconUncheck} alt="Icone de x" />
                 </button>
               </div>
-              <fieldset className="border-3 border-grayPrimary rounded-[20px]">
+              <fieldset className="border-3 border-grayPrimary rounded-[20px] h-100 overflow-y-auto">
                 <legend className="font-semibold pl-2 pr-2 text-[20px]">
                   Histórico de Saldo
                 </legend>

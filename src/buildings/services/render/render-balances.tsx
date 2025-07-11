@@ -16,7 +16,9 @@ export function renderBalances(balances: Balance[]) {
       {balances.map((balance, index) => (
         <div
           key={index}
-          className="border-t-2 border-grayPrimary px-4 py-2 flex flex-col gap-1"
+          className={`${
+            index == 0 ? "border-t-2 border-b-2" : "border-b-2"
+          }  border-grayPrimary px-4 py-2 flex flex-col gap-1`}
         >
           <span className="text-grayPrimary text-[12px] font-semibold">
             {["Manutenção", "Compra"].includes(balance.type)
