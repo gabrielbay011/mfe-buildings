@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,17 +26,18 @@ import iconOrderHover from "../../public/images/icon-order-white.svg";
 import iconCheck from "../../public/images/icon-check-checkbox.svg";
 import iconUncheck from "../../public/images/icon-uncheck.svg";
 import iconSuccess from "../../public/images/icon-success.svg";
+import Carousel from "../components/carousel";
 
 //Página de edifícios
 export default function Buildings() {
-  const navigate = useNavigate();
-
   //States relacionados aos dados que serão exiidos
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [filteredBuildings, setFilteredBuildings] =
     useState<Building[]>(mockBuildings);
   const [balances, setBalances] = useState<Balance[]>([]);
   const [sortOption, setSortOption] = useState("");
+
+  const items = ["Slide 1", "Slide 2", "Slide 3", "Slide 4", "Slide 5"];
 
   //State relacioando a exibição das inputs de ordenação
   const [inputOrderVisible, setInputOrderVisible] = useState(false);
@@ -393,6 +393,10 @@ export default function Buildings() {
             </Modal>
           </div>
         </div>
+      </div>
+
+      <div className="pl-20 pr-20">
+        <Carousel items={items} />
       </div>
 
       {/* Renderiza todos os edifícios */}
