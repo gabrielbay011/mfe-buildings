@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { InputProps } from "../types/input-types";
-import eyeClose from "../../public/images/icon-eye-close.svg";
-import eyeOpen from "../../public/images/icon-eye-open.svg";
+import eyeClose from "../../../public/images/icon-eye-close.svg";
+import eyeOpen from "../../../public/images/icon-eye-open.svg";
 import Button from "./button";
-import iconSearch from "../../public/images/icon-search.svg";
+import iconSearch from "../../../public/images/icon-search.svg";
 
 export default function Input({
   type,
@@ -18,7 +18,7 @@ export default function Input({
   const isPassword = type === "password";
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
   const searchStyle =
-    "border-2 border-grayPrimary rounded-l-[15px] border-r-0 px-2 py-2 placeholder:text-grayPrimary text-[20px] w-full focus:outline-grayMedium";
+    "border-2 border-grayPrimary rounded-l-[15px] border-r-0 px-2 py-1.5 placeholder:text-grayPrimary text-[20px] w-full focus:outline-grayMedium";
 
   return (
     <div className="w-full">
@@ -53,7 +53,7 @@ export default function Input({
         )}
         {type == "search" && (
           <Button type="submit" styleType="search">
-            <img src={iconSearch} alt="Icone Pesquisar" />
+            <img src={iconSearch} alt="Icone Pesquisar" className="w-[80%]" />
           </Button>
         )}
       </div>

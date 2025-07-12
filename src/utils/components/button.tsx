@@ -13,12 +13,12 @@ export default function Button({
       "bg-purpleDark text-white hover:bg-gradient-to-b from-purpleMedium to-[#52377B] w-full px-4 py-[10px] rounded-[10px]",
     button: {
       parent:
-        "bg-gradient-to-b from-purpleMedium to-[#52377B] p-[2px] rounded-[10px] h-[44px]",
+        "bg-gradient-to-b from-purpleMedium to-[#52377B] p-[2px] rounded-[10px] h-[38px]",
       child:
-        "bg-white text-purpleMedium w-full justify-center hover:bg-transparent hover:text-white py-[8px] rounded-[8px]",
+        "bg-white text-purpleMedium w-full justify-center hover:bg-transparent hover:text-white py-[5px] rounded-[8px]",
     },
     search:
-      "border-2 border-grayPrimary rounded-r-[15px] p-2 bg-white hover:bg-grayLight",
+      "border-2 border-grayPrimary rounded-r-[15px] px-4 bg-white flex justify-center hover:bg-grayLight",
   };
 
   if (styleType === "button") {

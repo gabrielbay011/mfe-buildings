@@ -1,4 +1,5 @@
 import sha512 from "crypto-js/sha512";
+import buildingPhoto from "../../public/images/foto-edificio.png";
 
 //Dados fictícios dos usuários
 export const mockUsers = [
@@ -16,7 +17,7 @@ export const mockUsers = [
 export const mockBuildings = [
   {
     id: "1",
-    photo: "FotoPredio1",
+    photo: buildingPhoto,
     name: "Baymetrics",
     creationDate: "2024-06-01",
     qtyFloors: 3,

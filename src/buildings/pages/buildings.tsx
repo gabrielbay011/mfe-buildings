@@ -17,15 +17,15 @@ import { listBalances } from "../services/list/list-balance";
 import { Balance } from "../types/balance-type";
 import Input from "../../utils/components/input";
 import Button from "../../utils/components/button";
-import iconBalance from "../../public/images/icon-balance.svg";
-import iconAdd from "../../public/images/icon-add.svg";
-import iconOrder from "../../public/images/icon-order.svg";
-import iconBalanceHover from "../../public/images/icon-balance-white.svg";
-import iconAddHover from "../../public/images/icon-add-white.svg";
-import iconOrderHover from "../../public/images/icon-order-white.svg";
-import iconCheck from "../../public/images/icon-check-checkbox.svg";
-import iconUncheck from "../../public/images/icon-uncheck.svg";
-import iconSuccess from "../../public/images/icon-success.svg";
+import iconBalance from "../../../public//images/icon-balance.svg";
+import iconAdd from "../../../public/images/icon-add.svg";
+import iconOrder from "../../../public//images/icon-order.svg";
+import iconBalanceHover from "../../../public//images/icon-balance-white.svg";
+import iconAddHover from "../../../public//images/icon-add-white.svg";
+import iconOrderHover from "../../../public//images/icon-order-white.svg";
+import iconCheck from "../../../public//images/icon-check-checkbox.svg";
+import iconUncheck from "../../../public//images/icon-uncheck.svg";
+import iconSuccess from "../../../public//images/icon-success.svg";
 import Carousel from "../components/carousel";
 
 //Página de edifícios
@@ -113,9 +113,8 @@ export default function Buildings() {
   return (
     <div>
       {/* Campo para pesquisar edifício */}
-
-      <div className="m-10 md:mt-10 md:mb-10 md:ml-30 md:mr-30 lg:mt-20 lg:mb-15 lg:mr-40 lg:ml-40">
-        <div className="mb-5 md:mb-10 flex justify-center lg:mb-15">
+      <div className="m-10 md:mt-10 md:mb-10 md:ml-30 md:mr-30 lg:mt-15 lg:mb-10 lg:ml-50 lg:mr-50 xl:mr-60 xl:ml-60">
+        <div className="mb-5 md:mb-10 flex justify-center">
           <form
             onSubmit={handleSubmitSearch(handleSearchBuilding)}
             autoComplete="off"
@@ -131,13 +130,11 @@ export default function Buildings() {
         </div>
         <div className="flex flex-col md:flex-row md:justify-between">
           <div
-            className={`mb-3 md:mb-0 md:w-40 ${
-              inputOrderVisible == true ? "lg:w-60" : "lg:w-50"
-            } ${
-              inputOrderVisible == true && "xl:w-85"
-            } flex flex-col lg:flex-row`}
+            className={
+              "relative mb-3 md:mb-0 flex flex-col xl:flex-row xl:items-start"
+            }
           >
-            <div className="lg:w-70 xl:w-50">
+            <div className="z-10 md:w-50">
               <Button
                 type="button"
                 styleType="button"
@@ -161,7 +158,9 @@ export default function Buildings() {
               </Button>
             </div>
             {inputOrderVisible == true && (
-              <div className="bg-white border border-purpleOutro rounded-b-[10px] lg:rounded-tr-[10px] lg:w-100 xl:w-36">
+              <div
+                className={`bg-white border border-purpleOutro rounded-[10px] w-full z-40 md:absolute md:w-50 md:left-0 md:top-full xl:absolute xl:w-50 xl:left-full xl:top-0`}
+              >
                 <div className="flex flex-col">
                   <span className="text-[14px] text-grayMedium m-2 mb-0">
                     Ordem crescente
@@ -264,7 +263,11 @@ export default function Buildings() {
           </div>
 
           {/* Botão e modal para exibir o histórico de saldo */}
-          <div className="mb-3 md:mb-0 md:w-40 lg:w-50">
+          <div
+            className={`mb-3 md:mb-0 md:w-40 lg:w-50 ${
+              inputOrderVisible && "xl:ml-50"
+            }`}
+          >
             <Button
               type="button"
               styleType="button"
@@ -395,16 +398,14 @@ export default function Buildings() {
         </div>
       </div>
 
-      <div className="pl-20 pr-20">
-        <Carousel items={items} />
-      </div>
-
-      {/* Renderiza todos os edifícios */}
-      <div className="flex justify-center border border-black">
+      {/* Carrossel exibindo os edifícios */}
+      <div className="pl-5 pr-5 md:pl-10 md:pr-10 lg:pl-20 lg:pr-20 pb-5">
         {filteredBuildings.length == 0 ? (
-          <p>Nenhum edifício encontrado</p>
+          <div className="rounded-[20px] bg-white shadow-lg border border-grayDark">
+            Nenhum edifício encontrado
+          </div>
         ) : (
-          <RenderBuildings building={filteredBuildings} />
+          <Carousel building={filteredBuildings} />
         )}
       </div>
     </div>
