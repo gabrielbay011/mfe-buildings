@@ -10,7 +10,7 @@ export default function Button({
 
   const style = {
     submit:
-      "bg-purpleDark text-white hover:bg-gradient-to-b from-purpleMedium to-[#52377B] w-full px-4 py-[10px] rounded-[10px]",
+      "bg-purpleDark text-white hover:bg-gradient-to-b from-purpleMedium to-[#52377B] w-full px-4 py-[5px] rounded-[10px]",
     button: {
       parent:
         "bg-gradient-to-b from-purpleMedium to-[#52377B] p-[2px] rounded-[10px] h-[38px]",

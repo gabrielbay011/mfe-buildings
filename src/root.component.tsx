@@ -7,20 +7,60 @@ import BuildingTurnstile from "./building-turnstile/pages/building-turnstile";
 import BuildingCamera from "./building-camera/pages/building-camera";
 import { ApolloProvider } from "@apollo/client";
 import { apolloPublicClient } from "./lib/apollo-client";
+import { PrivateRoute } from "../src/utils/auth/private-route";
+import { NhostProvider } from "@nhost/react";
+import { nhost } from "../src/lib/nhost";
 
 export default function Root(props) {
   return (
-    <ApolloProvider client={apolloPublicClient}>
-      <BrowserRouter basename="/buildings">
-        <Routes>
-          <Route path="/" element={<Buildings />} />
-          <Route path="/profile/:id" element={<BuildingProfile />} />
-          <Route path="/floor/:id" element={<BuildingFloor />} />
-          <Route path="/turnstile/:id" element={<BuildingTurnstile />} />
-          <Route path="/camera/:id" element={<BuildingCamera />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </ApolloProvider>
+    <NhostProvider nhost={nhost}>
+      <ApolloProvider client={apolloPublicClient}>
+        <BrowserRouter basename="/buildings">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Buildings />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile/:id"
+              element={
+                <PrivateRoute>
+                  <BuildingProfile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/floor/:id"
+              element={
+                <PrivateRoute>
+                  <BuildingFloor />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/turnstile/:id"
+              element={
+                <PrivateRoute>
+                  <BuildingTurnstile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/camera/:id"
+              element={
+                <PrivateRoute>
+                  <BuildingCamera />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </ApolloProvider>
+    </NhostProvider>
   );
 }

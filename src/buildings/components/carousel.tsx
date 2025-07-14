@@ -15,7 +15,7 @@ export default function Carousel({ building }: Props) {
 
   if (building.length === 0) {
     return (
-      <div className="rounded-[20px] bg-white shadow-lg border border-grayDark">
+      <div className="rounded-[20px] bg-white shadow-lg border border-grayDark text-center p-10">
         Você ainda não tem nenhum edifício cadastrado
       </div>
     );

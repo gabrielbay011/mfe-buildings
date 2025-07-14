@@ -37,8 +37,6 @@ export default function Buildings() {
   const [balances, setBalances] = useState<Balance[]>([]);
   const [sortOption, setSortOption] = useState("");
 
-  const items = ["Slide 1", "Slide 2", "Slide 3", "Slide 4", "Slide 5"];
-
   //State relacioando a exibição das inputs de ordenação
   const [inputOrderVisible, setInputOrderVisible] = useState(false);
 
@@ -110,10 +108,31 @@ export default function Buildings() {
     setFilteredBuildings(ordered);
   }, [sortOption]);
 
+  //States relacionados aos campos de ordenação
+  const [ascendingSelected, setAscendingSelected] = useState(false);
+  const [descendingSelected, setDescendingSelected] = useState(false);
+
+  const handleSortChange = (value: string) => {
+    if (sortOption === value) {
+      setSortOption("");
+      setAscendingSelected(false);
+      setDescendingSelected(false);
+    } else {
+      setSortOption(value);
+      if (value.endsWith("asc")) {
+        setAscendingSelected(true);
+        setDescendingSelected(false);
+      } else if (value.endsWith("desc")) {
+        setDescendingSelected(true);
+        setAscendingSelected(false);
+      }
+    }
+  };
+
   return (
     <div>
       {/* Campo para pesquisar edifício */}
-      <div className="m-10 md:mt-10 md:mb-10 md:ml-30 md:mr-30 lg:mt-15 lg:mb-10 lg:ml-50 lg:mr-50 xl:mr-60 xl:ml-60">
+      <div className="m-10 md:mt-10 md:mb-10 md:ml-30 md:mr-30 lg:mt-10 lg:mb-10 lg:ml-50 lg:mr-50 xl:mr-60 xl:ml-60">
         <div className="mb-5 md:mb-10 flex justify-center">
           <form
             onSubmit={handleSubmitSearch(handleSearchBuilding)}
@@ -169,7 +188,11 @@ export default function Buildings() {
                   <div className="m-2">
                     <label
                       htmlFor="date-asc"
-                      className="inline-flex items-center cursor-pointer select-none font-medium"
+                      className={`inline-flex items-center select-none font-medium ${
+                        descendingSelected && sortOption !== "date-asc"
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
                     >
                       <input
                         type="checkbox"
@@ -177,9 +200,21 @@ export default function Buildings() {
                         value="date-asc"
                         name="date-asc"
                         id="date-asc"
-                        onChange={(e) => setSortOption(e.target.value)}
+                        checked={sortOption === "date-asc"}
+                        disabled={
+                          descendingSelected && sortOption !== "date-asc"
+                        }
+                        onChange={(e) => handleSortChange(e.target.value)}
                       />
-                      <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                      <span
+                        className={`w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center mr-2
+                         peer-checked:bg-purpleMedium peer-checked:border-purpleMedium
+                         ${
+                           descendingSelected && sortOption !== "date-asc"
+                             ? "opacity-50 cursor-not-allowed"
+                             : ""
+                         }`}
+                      >
                         <img src={iconCheck} alt="Icone Check" />
                       </span>
                       Data
@@ -191,7 +226,11 @@ export default function Buildings() {
                   <div className="m-2">
                     <label
                       htmlFor="name-asc"
-                      className="inline-flex items-center cursor-pointer select-none font-medium"
+                      className={`inline-flex items-center select-none font-medium ${
+                        descendingSelected && sortOption !== "name-asc"
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
                     >
                       <input
                         type="checkbox"
@@ -199,9 +238,21 @@ export default function Buildings() {
                         value="name-asc"
                         name="name-asc"
                         id="name-asc"
-                        onChange={(e) => setSortOption(e.target.value)}
+                        checked={sortOption === "name-asc"}
+                        disabled={
+                          descendingSelected && sortOption !== "name-asc"
+                        }
+                        onChange={(e) => handleSortChange(e.target.value)}
                       />
-                      <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                      <span
+                        className={`w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center mr-2
+                        peer-checked:bg-purpleMedium peer-checked:border-purpleMedium
+                        ${
+                          descendingSelected && sortOption !== "name-asc"
+                            ? "opacity-50 cursor-not-allowed"
+                            : ""
+                        }`}
+                      >
                         <img src={iconCheck} alt="Icone Check" />
                       </span>
                       Nome
@@ -219,7 +270,11 @@ export default function Buildings() {
                   <div className="m-2">
                     <label
                       htmlFor="date-desc"
-                      className="inline-flex items-center cursor-pointer select-none font-medium"
+                      className={`inline-flex items-center select-none font-medium ${
+                        ascendingSelected && sortOption !== "date-desc"
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
                     >
                       <input
                         type="checkbox"
@@ -227,9 +282,21 @@ export default function Buildings() {
                         value="date-desc"
                         name="date-desc"
                         id="date-desc"
-                        onChange={(e) => setSortOption(e.target.value)}
+                        checked={sortOption === "date-desc"}
+                        disabled={
+                          ascendingSelected && sortOption !== "date-desc"
+                        }
+                        onChange={(e) => handleSortChange(e.target.value)}
                       />
-                      <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                      <span
+                        className={`w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center mr-2
+                       peer-checked:bg-purpleMedium peer-checked:border-purpleMedium
+                       ${
+                         ascendingSelected && sortOption !== "date-desc"
+                           ? "opacity-50 cursor-not-allowed"
+                           : ""
+                       }`}
+                      >
                         <img src={iconCheck} alt="Icone Check" />
                       </span>
                       Data
@@ -241,7 +308,11 @@ export default function Buildings() {
                   <div className="m-2">
                     <label
                       htmlFor="name-desc"
-                      className="inline-flex items-center cursor-pointer select-none font-medium"
+                      className={`inline-flex items-center select-none font-medium ${
+                        ascendingSelected && sortOption !== "name-desc"
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
                     >
                       <input
                         type="checkbox"
@@ -249,9 +320,21 @@ export default function Buildings() {
                         value="name-desc"
                         name="name-desc"
                         id="name-desc"
-                        onChange={(e) => setSortOption(e.target.value)}
+                        checked={sortOption === "name-desc"}
+                        disabled={
+                          ascendingSelected && sortOption !== "name-desc"
+                        }
+                        onChange={(e) => handleSortChange(e.target.value)}
                       />
-                      <span className="w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center peer-checked:bg-purpleMedium peer-checked:border-purpleMedium mr-2">
+                      <span
+                        className={`w-6 h-6 rounded-[5px] border border-purpleMedium flex items-center justify-center mr-2
+                        peer-checked:bg-purpleMedium peer-checked:border-purpleMedium
+                        ${
+                          ascendingSelected && sortOption !== "name-desc"
+                            ? "opacity-50 cursor-not-allowed"
+                            : ""
+                        }`}
+                      >
                         <img src={iconCheck} alt="Icone Check" />
                       </span>
                       Nome
@@ -401,7 +484,7 @@ export default function Buildings() {
       {/* Carrossel exibindo os edifícios */}
       <div className="pl-5 pr-5 md:pl-10 md:pr-10 lg:pl-20 lg:pr-20 pb-5">
         {filteredBuildings.length == 0 ? (
-          <div className="rounded-[20px] bg-white shadow-lg border border-grayDark">
+          <div className="rounded-[20px] bg-white shadow-lg border border-grayDark p-10 text-center">
             Nenhum edifício encontrado
           </div>
         ) : (
