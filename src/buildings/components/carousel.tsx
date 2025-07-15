@@ -5,6 +5,7 @@ import "swiper/css/navigation";
 import buttonAdvance from "../../../public//images/button-advance.svg";
 import { Building } from "../../utils/types/building-type";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 type Props = {
   building: Building[];
@@ -12,6 +13,22 @@ type Props = {
 
 export default function Carousel({ building }: Props) {
   const navigate = useNavigate();
+
+  const [slidesPerView, setSlidesPerView] = useState(4);
+
+  useEffect(() => {
+    const updateSlidesPerView = () => {
+      const width = window.innerWidth;
+      if (width < 640) setSlidesPerView(1);
+      else if (width < 768) setSlidesPerView(2);
+      else if (width < 1024) setSlidesPerView(3);
+      else setSlidesPerView(4);
+    };
+
+    updateSlidesPerView();
+    window.addEventListener("resize", updateSlidesPerView);
+    return () => window.removeEventListener("resize", updateSlidesPerView);
+  }, []);
 
   if (building.length === 0) {
     return (
@@ -21,12 +38,14 @@ export default function Carousel({ building }: Props) {
     );
   }
 
+  const enableLoop = building.length > slidesPerView;
+
   return (
     <div className="relative w-full">
       <Swiper
         modules={[Navigation]}
         spaceBetween={20}
-        slidesPerView={4}
+        slidesPerView={slidesPerView}
         breakpoints={{
           320: {
             slidesPerView: 1,
@@ -44,7 +63,7 @@ export default function Carousel({ building }: Props) {
         navigation={{
           nextEl: ".custom-next",
         }}
-        loop={true}
+        loop={enableLoop}
         className="!px-6"
       >
         {building.map((building, index) => (

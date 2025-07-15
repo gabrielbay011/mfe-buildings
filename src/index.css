@@ -22,4 +22,5 @@
 
 body {
   @apply font-nunito;
+  padding-top: 70px;
 }
