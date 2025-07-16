@@ -32,22 +32,17 @@ export default function BuildingFloor() {
   const [modalCameraOpen, setModalCameraOpen] = useState(false);
 
   return (
-    <div>
+    <div className="p-3">
       {/* Botão para voltar ao perfil e título */}
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div className="flex gap-2 pb-5">
         <button
-          style={{
-            height: "30px",
-            width: "30px",
-            marginTop: "25px",
-            cursor: "pointer",
-          }}
+          className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
           onClick={() => navigate(`/profile/${buildingData.id}`)}
         >
           &lt;-
         </button>
 
-        <h1>Andares</h1>
+        <h1 className="text-2xl font-bold">Andares</h1>
       </div>
 
       {floors.map((floor, index) => (
@@ -73,7 +68,7 @@ export default function BuildingFloor() {
               <>
                 <tr>
                   <td>
-                    <b>Recepção</b>
+                    <b className="text-lg">Recepção</b>
                   </td>
                 </tr>
                 <tr>
@@ -84,7 +79,7 @@ export default function BuildingFloor() {
                 <tr>
                   <td>
                     <button
-                      style={{ cursor: "pointer" }}
+                      className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
                       onClick={() => {
                         setSelectedFloorIndex(index);
                         setModalAttendantOpen(true);
@@ -99,7 +94,7 @@ export default function BuildingFloor() {
               <>
                 <tr>
                   <td>
-                    <b>Empresas:</b>
+                    <b className="text-lg">Empresas:</b>
                   </td>
                 </tr>
 
@@ -121,7 +116,7 @@ export default function BuildingFloor() {
                               hovered.floorIndex === index &&
                               hovered.entIndex === entIndex && (
                                 <button
-                                  style={{ cursor: "pointer" }}
+                                  className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
                                   onClick={() =>
                                     deleteEnterprise(
                                       enterprise.id,
@@ -148,7 +143,7 @@ export default function BuildingFloor() {
                       <tr>
                         <td>
                           <button
-                            style={{ cursor: "pointer" }}
+                            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
                             onClick={() => createEnterprise(index, setFloors)}
                           >
                             Adicionar empresa
@@ -161,7 +156,7 @@ export default function BuildingFloor() {
                   <tr>
                     <td>
                       <button
-                        style={{ cursor: "pointer" }}
+                        className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
                         onClick={() => createEnterprise(index, setFloors)}
                       >
                         Adicionar empresa
@@ -180,7 +175,7 @@ export default function BuildingFloor() {
             <tr>
               <td>
                 <button
-                  style={{ cursor: "pointer" }}
+                  className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
                   onClick={() => {
                     setSelectedFloorIndex(index);
                     setModalCameraOpen(true);
@@ -196,7 +191,15 @@ export default function BuildingFloor() {
 
       {/* Modal para adicionar um novo atendente */}
       <Modal isOpen={modalAttendantOpen}>
-        <h2>Confirmar Contratação</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="font-bold text-lg">Confirmar Contratação</h2>
+          <button
+            className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+            onClick={() => setModalAttendantOpen(false)}
+          >
+            X
+          </button>
+        </div>
         <RenderConfirm
           cost={20}
           onConfirm={() =>
@@ -209,7 +212,15 @@ export default function BuildingFloor() {
 
       {/* Modal para adicionar uma nova câmera */}
       <Modal isOpen={modalCameraOpen}>
-        <h2>Confirmar Instalação</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="font-bold text-lg">Confirmar Instalação</h2>
+          <button
+            className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+            onClick={() => setModalCameraOpen(false)}
+          >
+            X
+          </button>
+        </div>
         <RenderConfirm
           cost={5}
           onConfirm={() =>
@@ -221,7 +232,7 @@ export default function BuildingFloor() {
       </Modal>
 
       <button
-        style={{ cursor: "pointer" }}
+        className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
         onClick={() => createFloor(floors, setFloors)}
       >
         Adicionar Andar

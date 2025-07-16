@@ -45,27 +45,22 @@ export default function BuildingCamera() {
   };
 
   return (
-    <div>
+    <div className="p-3">
       {/* Botão para voltar ao perfil e título */}
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div className="flex gap-2 pb-5">
         <button
-          style={{
-            height: "30px",
-            width: "30px",
-            marginTop: "25px",
-            cursor: "pointer",
-          }}
+          className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
           onClick={() => navigate(`/profile/${buildingData.id}`)}
         >
           &lt;-
         </button>
 
-        <h1>Câmeras</h1>
+        <h1 className="text-2xl font-bold">Câmeras</h1>
       </div>
 
       {/* Exibe as informações gerais das câmeras */}
       <div>
-        <h2>Informações Gerais:</h2>
+        <h2 className="font-bold text-lg">Informações Gerais:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -110,15 +105,13 @@ export default function BuildingCamera() {
       </div>
 
       {/* Exibe as informações de captura por câmera */}
-      <div>
-        <h2 style={{ margin: "0px", marginTop: "20px" }}>
-          Capturas por Câmera
-        </h2>
+      <div className="pt-5">
+        <h2 className="font-bold text-lg">Capturas por Câmera:</h2>
 
         <table>
           {buildingData.cameras.length > 0 ? (
             buildingData.cameras.slice(0, visibleCameraCount).map((camera) => (
-              <tbody key={camera.id} style={{ border: "1px solid black" }}>
+              <tbody key={camera.id}>
                 {visibleCameraCount > 0 && (
                   <tr>
                     <td colSpan={2} style={{ height: "20px" }}></td>
@@ -177,7 +170,7 @@ export default function BuildingCamera() {
 
         {buildingData.cameras.length > 3 && (
           <button
-            style={{ cursor: "pointer" }}
+            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
             onClick={() =>
               toggleList(
                 visibleCameraCount,
@@ -194,8 +187,8 @@ export default function BuildingCamera() {
       </div>
 
       {/* Exibe os equipamentos quebrados e modal para arcar com o custo do equipamento */}
-      <div>
-        <h2>Equipamentos Quebrados:</h2>
+      <div className="pt-5">
+        <h2 className="font-bold text-lg">Equipamentos Quebrados:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -230,7 +223,15 @@ export default function BuildingCamera() {
             )}
 
             <Modal isOpen={modalBrokenOpen}>
-              <h2>Arcar com custo</h2>
+              <div className="flex justify-between items-center">
+                <h2 className="font-bold text-lg">Arcar com custo</h2>
+                <button
+                  className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+                  onClick={() => setModalBrokenOpen(false)}
+                >
+                  X
+                </button>
+              </div>
               {renderEquipment(
                 selectedEquipment,
                 brokenEquipments,
@@ -245,7 +246,7 @@ export default function BuildingCamera() {
 
         {brokenEquipments.length > 3 && (
           <button
-            style={{ cursor: "pointer" }}
+            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
@@ -262,8 +263,8 @@ export default function BuildingCamera() {
       </div>
 
       {/*  */}
-      <div>
-        <h2>Equipamentos em Manutenção:</h2>
+      <div className="pt-5">
+        <h2 className="font-bold text-lg">Equipamentos em Manutenção:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -303,7 +304,7 @@ export default function BuildingCamera() {
 
         {maintenanceEquipments.length > 3 && (
           <button
-            style={{ cursor: "pointer" }}
+            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,

@@ -16,7 +16,10 @@ export default function RenderConfirm({
 
   return (
     <div>
-      <button style={{ cursor: "pointer" }} onClick={handleConfirm}>
+      <button
+        className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
+        onClick={handleConfirm}
+      >
         Sim
       </button>
     </div>

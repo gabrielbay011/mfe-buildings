@@ -68,27 +68,22 @@ export default function BuildingTurnstile() {
   };
 
   return (
-    <div>
+    <div className="p-3">
       {/* Botão para voltar ao perfil e título */}
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div className="flex gap-2 pb-5">
         <button
-          style={{
-            height: "30px",
-            width: "30px",
-            marginTop: "25px",
-            cursor: "pointer",
-          }}
+          className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
           onClick={() => navigate(`/profile/${buildingData.id}`)}
         >
           &lt;-
         </button>
 
-        <h1>Catracas</h1>
+        <h1 className="text-2xl font-bold">Catracas</h1>
       </div>
 
       {/* Exibe quantidade de catracas e botão para adicionar uma nova catraca */}
       <div>
-        <h2>Informações Gerais:</h2>
+        <h2 className="font-bold">Informações Gerais:</h2>
 
         <p>
           <b>Quantidade de catracas: </b>
@@ -96,7 +91,7 @@ export default function BuildingTurnstile() {
         </p>
 
         <button
-          style={{ cursor: "pointer" }}
+          className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
           onClick={() => {
             setModalAddTurnstileOpen(true);
           }}
@@ -105,7 +100,15 @@ export default function BuildingTurnstile() {
         </button>
 
         <Modal isOpen={modalAddTurnstileOpen}>
-          <h2>Confirmar Instalação</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold text-lg">Confirmar Instalação</h2>
+            <button
+              className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+              onClick={() => setModalAddTurnstileOpen(false)}
+            >
+              X
+            </button>
+          </div>
           <RenderConfirm
             cost={10}
             onConfirm={() => setBuilding((prev) => addTurnstile(prev))}
@@ -115,8 +118,8 @@ export default function BuildingTurnstile() {
       </div>
 
       {/* Exibe o fluxo de pessos por catraca */}
-      <div>
-        <h2>Tráfego de Pessoas por Catraca:</h2>
+      <div className="pt-5">
+        <h2 className="font-bold">Tráfego de Pessoas por Catraca:</h2>
 
         <table style={{ border: "1px solid black" }}>
           {Object.entries(groupedEntries).map(([catracaId, entries]) => {
@@ -126,7 +129,9 @@ export default function BuildingTurnstile() {
               <tbody key={catracaId}>
                 <tr>
                   <th style={{ border: "1px solid black" }}>Id Catraca</th>
-                  <td style={{ border: "1px solid black" }}>{catracaId}</td>
+                  <td style={{ border: "1px solid black" }} colSpan={3}>
+                    {catracaId}
+                  </td>
                 </tr>
                 <tr>
                   <th style={{ border: "1px solid black" }}>Foto</th>
@@ -160,7 +165,7 @@ export default function BuildingTurnstile() {
                   <tr>
                     <td>
                       <button
-                        style={{ cursor: "pointer" }}
+                        className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
                         onClick={() =>
                           toggleGroupedList(catracaId, entries.length)
                         }
@@ -179,8 +184,8 @@ export default function BuildingTurnstile() {
       </div>
 
       {/* Exibe os equipamentos quebrados e modal para arcar com o custo do equipamento */}
-      <div>
-        <h2>Equipamentos Quebrados:</h2>
+      <div className="pt-5">
+        <h2 className="font-bold">Equipamentos Quebrados:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -215,7 +220,15 @@ export default function BuildingTurnstile() {
             )}
 
             <Modal isOpen={modalBrokenOpen}>
-              <h2>Arcar com custo</h2>
+              <div className="flex justify-between items-center">
+                <h2 className="font-bold text-lg">Arcar com Custo</h2>
+                <button
+                  className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+                  onClick={() => setModalBrokenOpen(false)}
+                >
+                  X
+                </button>
+              </div>
               {renderEquipment(
                 selectedEquipment,
                 brokenEquipments,
@@ -230,7 +243,7 @@ export default function BuildingTurnstile() {
 
         {brokenEquipments.length > 3 && (
           <button
-            style={{ cursor: "pointer" }}
+            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
@@ -247,8 +260,8 @@ export default function BuildingTurnstile() {
       </div>
 
       {/* Exibe as catracas que estão em manutenção */}
-      <div>
-        <h2>Equipamentos em Manutenção:</h2>
+      <div className="pt-5">
+        <h2 className="font-bold">Equipamentos em Manutenção:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -288,7 +301,7 @@ export default function BuildingTurnstile() {
 
         {maintenanceEquipments.length > 3 && (
           <button
-            style={{ cursor: "pointer" }}
+            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,

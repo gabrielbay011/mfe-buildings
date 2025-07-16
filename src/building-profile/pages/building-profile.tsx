@@ -71,27 +71,22 @@ export default function BuildingProfile() {
   }
 
   return (
-    <div>
+    <div className="p-3">
       {/* Botão para voltar ao perfil e título */}
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div className="flex gap-2">
         <button
-          style={{
-            height: "30px",
-            width: "30px",
-            marginTop: "25px",
-            cursor: "pointer",
-          }}
+          className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
           onClick={() => navigate("/")}
         >
           &lt;-
         </button>
 
-        <h1>Perfil de Edifício</h1>
+        <h1 className="text-2xl font-bold">Perfil de Edifício</h1>
       </div>
 
       {/* Exibe os dados gerais do edifício */}
       <div>
-        <h2>Dados Gerais:</h2>
+        <h2 className="font-bold pt-5">Dados Gerais:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -156,7 +151,15 @@ export default function BuildingProfile() {
         </table>
 
         <Modal isOpen={modalPhotoOpen}>
-          <h2>Alterar foto do edifício</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold text-lg">Alterar Foto do Edifício</h2>
+            <button
+              className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+              onClick={() => setModalPhotoOpen(false)}
+            >
+              X
+            </button>
+          </div>
 
           <form
             onSubmit={handleSubmitPhoto((data) => {
@@ -167,6 +170,7 @@ export default function BuildingProfile() {
             <label htmlFor="photo">Foto:</label>
             <br />
             <input
+              className="border border-black p-1 rounded-sm"
               type="text"
               id="photo"
               {...registerPhoto("photo", {
@@ -174,7 +178,10 @@ export default function BuildingProfile() {
               })}
             />
             <br />
-            <button style={{ cursor: "pointer" }} type="submit">
+            <button
+              className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
+              type="submit"
+            >
               Alterar
             </button>
             {typeof photoErrors.photo?.message === "string" && (
@@ -184,7 +191,15 @@ export default function BuildingProfile() {
         </Modal>
 
         <Modal isOpen={modalNameOpen}>
-          <h2>Alterar nome do edifício</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold text-lg">Alterar Nome do Edifício</h2>
+            <button
+              className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+              onClick={() => setModalNameOpen(false)}
+            >
+              X
+            </button>
+          </div>
 
           <form
             onSubmit={handleSubmitName((data) => {
@@ -195,6 +210,7 @@ export default function BuildingProfile() {
             <label htmlFor="name">Nome:</label>
             <br />
             <input
+              className="border border-black p-1 rounded-sm"
               type="text"
               id="name"
               {...registerName("name", {
@@ -202,7 +218,10 @@ export default function BuildingProfile() {
               })}
             />
             <br />
-            <button style={{ cursor: "pointer" }} type="submit">
+            <button
+              className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
+              type="submit"
+            >
               Alterar
             </button>
             {typeof nameErrors.name?.message === "string" && (
@@ -214,7 +233,7 @@ export default function BuildingProfile() {
 
       {/* Exibe o fluxo de pessoas e modal pra ver fluxo completo */}
       <div>
-        <h2>Fluxo de Pessoas:</h2>
+        <h2 className="font-bold pt-5">Fluxo de Pessoas:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -242,21 +261,29 @@ export default function BuildingProfile() {
         </table>
 
         <button
-          style={{ cursor: "pointer" }}
+          className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
           onClick={() => setModalFlowOpen(true)}
         >
           Ver histórico completo
         </button>
 
         <Modal isOpen={modalFlowOpen}>
-          <h2>Fluxo por Mês</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold text-lg">Fluxo por Mês</h2>
+            <button
+              className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+              onClick={() => setModalFlowOpen(false)}
+            >
+              X
+            </button>
+          </div>
           <RenderFlowHistory building={mockData} />
         </Modal>
       </div>
 
       {/* Exibe os registros de entrada e saída e modal para exibir as informações das pessoas */}
       <div>
-        <h2>Entradas e Saídas:</h2>
+        <h2 className="font-bold pt-5">Entradas e Saídas:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -317,7 +344,7 @@ export default function BuildingProfile() {
 
         {mockData.inputsAndOutput.length > 3 && (
           <button
-            style={{ cursor: "pointer" }}
+            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
             onClick={() =>
               toggleList(
                 visibleEntriesCount,
@@ -333,14 +360,22 @@ export default function BuildingProfile() {
         )}
 
         <Modal isOpen={modalPersonOpen}>
-          <h2>Dados Cadastrais</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold">Dados Cadastrais</h2>
+            <button
+              className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+              onClick={() => setModalPersonOpen(false)}
+            >
+              X
+            </button>
+          </div>
           {renderPerson(selectedPerson)}
         </Modal>
       </div>
 
       {/* Exibe os equipamentos quebrados e modal para arcar com o custo do equipamento */}
       <div>
-        <h2>Equipamentos Quebrados:</h2>
+        <h2 className="font-bold pt-5">Equipamentos Quebrados:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -389,7 +424,7 @@ export default function BuildingProfile() {
 
         {brokenEquipments.length > 3 && (
           <button
-            style={{ cursor: "pointer" }}
+            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
             onClick={() =>
               toggleList(
                 visibleBrokenCount,
@@ -405,7 +440,15 @@ export default function BuildingProfile() {
         )}
 
         <Modal isOpen={modalBrokenOpen}>
-          <h2>Arcar com custo</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold text-lg">Arcar com Custo</h2>
+            <button
+              className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
+              onClick={() => setModalBrokenOpen(false)}
+            >
+              X
+            </button>
+          </div>
           {renderEquipment(
             selectedEquipment,
             brokenEquipments,
@@ -419,7 +462,7 @@ export default function BuildingProfile() {
 
       {/* Exibe os equipamento em manutenção */}
       <div>
-        <h2>Equipamentos em manutenção:</h2>
+        <h2 className="font-bold pt-5">Equipamentos em Manutenção:</h2>
 
         <table style={{ border: "1px solid black" }}>
           <tbody>
@@ -465,7 +508,7 @@ export default function BuildingProfile() {
 
         {maintenanceEquipments.length > 3 && (
           <button
-            style={{ cursor: "pointer" }}
+            className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
             onClick={() =>
               toggleList(
                 visibleMaintenanceCount,

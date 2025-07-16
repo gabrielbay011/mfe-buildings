@@ -45,7 +45,10 @@ export function renderEquipment(
       <p>Equipamento: {equipment.type}</p>
       <p>Status: {equipment.status}</p>
       <p>Custo: {equipment.cost}</p>
-      <button style={{ cursor: "pointer" }} onClick={handleEquipment}>
+      <button
+        className="bg-gray-200 border border-gray-700 p-1 cursor-pointer rounded-sm hover:bg-gray-300"
+        onClick={handleEquipment}
+      >
         Sim
       </button>
     </div>
