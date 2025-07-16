@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Este micro front-end é reponsável pelas funcionaliades de edifícios. Ele faz parte da arquitetura de micro-front-ends da aplicação principal via `root-config` utilizando o `single-spa`.
+Este microfrontend é reponsável pelas funcionaliades de edifícios. Ele faz parte da arquitetura de micro-front-ends da aplicação principal via `root-config` utilizando o `single-spa`.
 
 ## Como rodar localmente
 
@@ -30,5 +30,5 @@ http://localhost:9000/buildings
 
 ## Integração com o root-config
 
-- Nome do micro front-end registrado: `@mfe/buildings`
+- Nome do microfrontend registrado: `@mfe/buildings`
 - Caminho da rota configurada: `/buildings`
