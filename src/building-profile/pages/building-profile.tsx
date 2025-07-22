@@ -9,6 +9,21 @@ import { useForm } from "react-hook-form";
 import { Person } from "../types/person-type";
 import { MaintenanceEquipment } from "../../utils/types/maintenance-equipment";
 import { BrokenEquipment } from "../../utils/types/broken-equipment";
+import { SlashIcon } from "lucide-react";
+import iconHome from "../../../public/images/icon-home.svg";
+import iconStair from "../../../public/images/icon-stair.svg";
+import iconCamera from "../../../public/images/icon-camera.svg";
+import iconTurnstile from "../../../public/images/icon-turnstile.svg";
+import iconElevator from "../../../public/images/icon-elevator.svg";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "../../components/ui/breadcrumb";
+import Button from "../../../src/utils/components/button";
+import CardEquipment from "../components/card-equipment";
 
 export default function BuildingProfile() {
   const navigate = useNavigate();
@@ -71,21 +86,97 @@ export default function BuildingProfile() {
   }
 
   return (
-    <div className="p-3">
-      {/* Botão para voltar ao perfil e título */}
-      <div className="flex gap-2">
-        <button
-          className="bg-gray-200 border border-gray-700 px-2 cursor-pointer rounded-sm hover:bg-gray-300"
-          onClick={() => navigate("/")}
-        >
-          &lt;-
-        </button>
+    <div className="p-5 py-12 md:px-15 md:py-10">
+      {/* Componente do breadcrumb */}
+      <div className="mb-5 md:mb-10">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/buildings">
+                <img src={iconHome} alt="Icone Home" />
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator>
+              <SlashIcon className="text-grayMedium" />
+            </BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href={`/buildings/profile/${mockData.id}`}
+                className="font-semibold text-grayMedium text-2xl hover:text-grayDark"
+              >
+                Perfil do Edifício
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
 
-        <h1 className="text-2xl font-bold">Perfil de Edifício</h1>
+      <div className="flex flex-col">
+        <div className="flex flex-col items-center gap-4 mb-10">
+          <div className="relative w-72 [280px] h-96 [380px]">
+            <img
+              src={photo}
+              alt="Imagem Edifício"
+              className="rounded-[10px] object-cover w-full h-full"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-white/30 backdrop-blur-[1px]">
+              <div className="w-full mx-15">
+                <Button
+                  type="button"
+                  styleType="button"
+                  onClick={() => {
+                    setModalPhotoOpen(true);
+                  }}
+                >
+                  Alterar imagem
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full max-w-[280px] text-left">
+            <p className="mb-1">Nome do edifício:</p>
+            <Button
+              type="button"
+              styleType="button"
+              onClick={() => {
+                setModalNameOpen(true);
+              }}
+            >
+              {name}
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:ml-10">
+          <CardEquipment
+            label="Andares"
+            qtyEquipment={mockData.qtyFloors}
+            image={iconStair}
+            onClick={() => navigate(`/floor/${mockData.id}`)}
+          />
+          <CardEquipment
+            label="Câmeras"
+            qtyEquipment={mockData.qtyCameras}
+            image={iconCamera}
+            onClick={() => navigate(`/camera/${mockData.id}`)}
+          />
+          <CardEquipment
+            label="Catracas"
+            qtyEquipment={mockData.qtyTurnstiles}
+            image={iconTurnstile}
+            onClick={() => navigate(`/turnstile/${mockData.id}`)}
+          />
+          <CardEquipment
+            label="Elevadores"
+            qtyEquipment={mockData.qtyElevators}
+            image={iconElevator}
+          />
+        </div>
       </div>
 
       {/* Exibe os dados gerais do edifício */}
-      <div>
+      <div className="overflow-x-auto">
         <h2 className="font-bold pt-5">Dados Gerais:</h2>
 
         <table style={{ border: "1px solid black" }}>
@@ -96,6 +187,7 @@ export default function BuildingProfile() {
                 onClick={() => {
                   setModalPhotoOpen(true);
                 }}
+                className="break-words"
               >
                 {photo || "--"}
               </th>
@@ -461,7 +553,7 @@ export default function BuildingProfile() {
       </div>
 
       {/* Exibe os equipamento em manutenção */}
-      <div>
+      <div className="overflow-x-auto">
         <h2 className="font-bold pt-5">Equipamentos em Manutenção:</h2>
 
         <table style={{ border: "1px solid black" }}>
@@ -471,7 +563,7 @@ export default function BuildingProfile() {
               <th style={{ border: "1px solid black" }}>
                 Data Inicial do Conserto
               </th>
-              <th style={{ border: "1px solid black" }}>
+              <th style={{ border: "1px solid black" }} className="break-words">
                 Data Prevista do Fim do Conserto
               </th>
             </tr>
