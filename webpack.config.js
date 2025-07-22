@@ -1,5 +1,6 @@
 const { merge } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-react-ts");
+const path = require("path");
 
 module.exports = (webpackConfigEnv, argv) => {
   const defaultConfig = singleSpaDefaults({
@@ -17,6 +18,12 @@ module.exports = (webpackConfigEnv, argv) => {
           use: ["postcss-loader"],
         },
       ],
+    },
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+      },
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
     },
   });
 };

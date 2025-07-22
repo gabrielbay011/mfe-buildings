@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  },
+  "css": "src/index.css",
+  "uses": [
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge",
+    "tw-animate-css"
+  ],
+  "autoDetect": true
+}
