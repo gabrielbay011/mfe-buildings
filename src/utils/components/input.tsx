@@ -22,7 +22,7 @@ export default function Input({
 
   return (
     <div className="w-full">
-      <label htmlFor={id} className="font-semibold text-[16px]">
+      <label htmlFor={id} className="text-[16px] text-grayDark">
         {label}
       </label>
       <div className="relative flex">

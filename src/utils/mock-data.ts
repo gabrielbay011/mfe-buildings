@@ -1,5 +1,6 @@
 import sha512 from "crypto-js/sha512";
-import buildingPhoto from "../../public/images/foto-edificio.png";
+import buildingPhoto from "../../public/images/building.svg";
+import profilePhoto from "../../public/images/image-profile.svg";
 
 //Dados fictícios dos usuários
 export const mockUsers = [
@@ -107,7 +108,7 @@ export const mockBuildings = [
     inputsAndOutput: [
       {
         idTurnstile: "1",
-        photo: "FotoPessoa1",
+        photo: profilePhoto,
         name: "João Silva",
         surname: "Silva",
         entered: false,
@@ -126,7 +127,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "1",
-        photo: "FotoPessoa2",
+        photo: profilePhoto,
         name: "Maria Souza",
         surname: "Souza",
         entered: true,
@@ -145,7 +146,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "1",
-        photo: "FotoPessoa3",
+        photo: profilePhoto,
         name: "Carlos Mendes",
         surname: "Mendes",
         entered: false,
@@ -164,7 +165,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "2",
-        photo: "FotoPessoa4",
+        photo: profilePhoto,
         name: "Ana Clara",
         surname: "Ferreira",
         entered: true,
@@ -183,7 +184,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "2",
-        photo: "FotoPessoa5",
+        photo: profilePhoto,
         name: "Lucas Rocha",
         surname: "Rocha",
         entered: true,
@@ -202,7 +203,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "3",
-        photo: "FotoPessoa6",
+        photo: profilePhoto,
         name: "Beatriz Lima",
         surname: "Lima",
         entered: true,
@@ -385,7 +386,7 @@ export const mockBuildings = [
     inputsAndOutput: [
       {
         idTurnstile: "1",
-        photo: "FotoPessoa1",
+        photo: profilePhoto,
         name: "João Silva",
         surname: "Silva",
         entered: false,
@@ -404,7 +405,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "1",
-        photo: "FotoPessoa2",
+        photo: profilePhoto,
         name: "Maria Souza",
         surname: "Souza",
         entered: true,
@@ -423,7 +424,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "1",
-        photo: "FotoPessoa3",
+        photo: profilePhoto,
         name: "Carlos Mendes",
         surname: "Mendes",
         entered: false,
@@ -442,7 +443,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "2",
-        photo: "FotoPessoa4",
+        photo: profilePhoto,
         name: "Ana Clara",
         surname: "Ferreira",
         entered: true,
@@ -461,7 +462,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "2",
-        photo: "FotoPessoa5",
+        photo: profilePhoto,
         name: "Lucas Rocha",
         surname: "Rocha",
         entered: true,
@@ -480,7 +481,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "3",
-        photo: "FotoPessoa6",
+        photo: profilePhoto,
         name: "Beatriz Lima",
         surname: "Lima",
         entered: true,
@@ -582,7 +583,7 @@ export const mockBuildings = [
     inputsAndOutput: [
       {
         idTurnstile: "1",
-        photo: "FotoPessoa1",
+        photo: profilePhoto,
         name: "João Silva",
         surname: "Silva",
         entered: false,
@@ -601,7 +602,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "1",
-        photo: "FotoPessoa2",
+        photo: profilePhoto,
         name: "Maria Souza",
         surname: "Souza",
         entered: true,
@@ -620,7 +621,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "1",
-        photo: "FotoPessoa3",
+        photo: profilePhoto,
         name: "Carlos Mendes",
         surname: "Mendes",
         entered: false,
@@ -639,7 +640,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "2",
-        photo: "FotoPessoa4",
+        photo: profilePhoto,
         name: "Ana Clara",
         surname: "Ferreira",
         entered: true,
@@ -658,7 +659,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "2",
-        photo: "FotoPessoa5",
+        photo: profilePhoto,
         name: "Lucas Rocha",
         surname: "Rocha",
         entered: true,
@@ -677,7 +678,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "3",
-        photo: "FotoPessoa6",
+        photo: profilePhoto,
         name: "Beatriz Lima",
         surname: "Lima",
         entered: true,
@@ -826,7 +827,7 @@ export const mockBuildings = [
     inputsAndOutput: [
       {
         idTurnstile: "1",
-        photo: "FotoPessoa7",
+        photo: profilePhoto,
         name: "Fernanda Costa",
         surname: "Costa",
         entered: true,
@@ -845,7 +846,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "2",
-        photo: "FotoPessoa8",
+        photo: profilePhoto,
         name: "Rafael Martins",
         surname: "Martins",
         entered: false,
@@ -971,7 +972,7 @@ export const mockBuildings = [
     inputsAndOutput: [
       {
         idTurnstile: "1",
-        photo: "FotoPessoa9",
+        photo: profilePhoto,
         name: "Daniel Ribeiro",
         surname: "Ribeiro",
         entered: true,
@@ -990,7 +991,7 @@ export const mockBuildings = [
       },
       {
         idTurnstile: "2",
-        photo: "FotoPessoa10",
+        photo: profilePhoto,
         name: "Juliana Lopes",
         surname: "Lopes",
         entered: false,
